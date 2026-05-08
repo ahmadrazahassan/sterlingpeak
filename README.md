@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SterlingPeak
 
-## Getting Started
+Production-oriented Next.js site for **sterlingpeak.uk**: UK SME finance and business software publication with Supabase CMS, Cloudinary media, and a full `/admin` editorial panel.
 
-First, run the development server:
+## Requirements
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Node 20+
+- [Supabase](https://supabase.com) project
+- [Cloudinary](https://cloudinary.com) account (images only — not Supabase Storage)
+- Optional: Vercel for hosting
+
+## Environment
+
+Copy `.env.example` to `.env.local` and fill in:
+
+- `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY` (server-only; optional unless you use service-role scripts)
+- Cloudinary: `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`
+- `NEXT_PUBLIC_SITE_URL` (e.g. `https://sterlingpeak.uk` or `http://localhost:3000`)
+
+## Database
+
+1. In the Supabase SQL editor, run migrations in order:
+   - [`supabase/migrations/20260508180000_init.sql`](supabase/migrations/20260508180000_init.sql)
+   - [`supabase/migrations/20260508180001_seed.sql`](supabase/migrations/20260508180001_seed.sql)
+2. Create an auth user (Authentication → Users → Add user).
+3. Grant admin access:
+
+```sql
+update public.profiles
+set role = 'admin'
+where email = 'your-admin@email.com';
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Develop
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm install
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- Public site: [http://localhost:3000](http://localhost:3000)
+- Admin: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
 
-## Learn More
+## Deploy (Vercel)
 
-To learn more about Next.js, take a look at the following resources:
+- Import the repo; set the same env vars as `.env.example`.
+- Connect `sterlingpeak.uk` in Vercel project domains.
+- Point Supabase Auth redirect URLs to your production URL if you use magic links.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Spec
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Product and design requirements live in the repo root: [`../sterlingpeak_cursor_prompt_dynamic_sections.md`](../sterlingpeak_cursor_prompt_dynamic_sections.md).
