@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { deleteArticleForm } from "@/app/admin/actions";
+import { deleteArticleForm, toggleArticleStatus, duplicateArticle } from "@/app/admin/actions";
 import { adminListArticles } from "@/lib/queries/admin";
 import { cn } from "@/lib/utils";
+import { Pencil, Trash2, Copy, Eye, ArrowUpCircle, ArrowDownCircle } from "lucide-react";
 
 export default async function AdminArticlesPage() {
   const rows = await adminListArticles();
@@ -29,8 +30,8 @@ export default async function AdminArticlesPage() {
           >
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <Link href={`/admin/articles/${row.id}`} className="truncate text-[14px] font-medium text-brand hover:text-cta">
-                  {row.title}
+                <Link href={`/admin/articles/${row.id}`} className="truncate text-[14px] font-medium text-brand hover:text-cta transition-colors">
+                  {row.title || "(Untitled)"}
                 </Link>
                 <span className={cn(
                   "shrink-0 rounded-md px-2 py-0.5 text-[10px] font-semibold uppercase",
@@ -46,12 +47,74 @@ export default async function AdminArticlesPage() {
                 {row.updated_at && ` · ${new Date(row.updated_at).toLocaleDateString("en-GB")}`}
               </p>
             </div>
-            <form action={deleteArticleForm}>
-              <input type="hidden" name="id" value={row.id} />
-              <button type="submit" className="rounded-lg px-2.5 py-1 text-[11px] font-medium text-red-400 opacity-0 transition-opacity hover:bg-red-50 hover:text-red-600 group-hover:opacity-100">
-                Delete
-              </button>
-            </form>
+
+            {/* Action buttons */}
+            <div className="flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
+              {/* Publish / Unpublish */}
+              <form action={toggleArticleStatus}>
+                <input type="hidden" name="id" value={row.id} />
+                <input type="hidden" name="new_status" value={row.status === "published" ? "draft" : "published"} />
+                <button
+                  type="submit"
+                  title={row.status === "published" ? "Unpublish" : "Publish"}
+                  className={cn(
+                    "flex h-7 w-7 items-center justify-center rounded-lg transition-colors",
+                    row.status === "published"
+                      ? "text-amber-500 hover:bg-amber-50"
+                      : "text-cta hover:bg-cta/10",
+                  )}
+                >
+                  {row.status === "published" ? (
+                    <ArrowDownCircle className="h-3.5 w-3.5" />
+                  ) : (
+                    <ArrowUpCircle className="h-3.5 w-3.5" />
+                  )}
+                </button>
+              </form>
+
+              {/* View on site */}
+              <Link
+                href={`/article/${row.slug}`}
+                target="_blank"
+                title="View on site"
+                className="flex h-7 w-7 items-center justify-center rounded-lg text-brand/40 transition-colors hover:bg-brand/[0.04] hover:text-brand/70"
+              >
+                <Eye className="h-3.5 w-3.5" />
+              </Link>
+
+              {/* Edit */}
+              <Link
+                href={`/admin/articles/${row.id}`}
+                title="Edit"
+                className="flex h-7 w-7 items-center justify-center rounded-lg text-brand/40 transition-colors hover:bg-brand/[0.04] hover:text-brand/70"
+              >
+                <Pencil className="h-3.5 w-3.5" />
+              </Link>
+
+              {/* Duplicate */}
+              <form action={duplicateArticle}>
+                <input type="hidden" name="id" value={row.id} />
+                <button
+                  type="submit"
+                  title="Duplicate"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg text-brand/40 transition-colors hover:bg-brand/[0.04] hover:text-brand/70"
+                >
+                  <Copy className="h-3.5 w-3.5" />
+                </button>
+              </form>
+
+              {/* Delete */}
+              <form action={deleteArticleForm}>
+                <input type="hidden" name="id" value={row.id} />
+                <button
+                  type="submit"
+                  title="Delete"
+                  className="flex h-7 w-7 items-center justify-center rounded-lg text-red-400 transition-colors hover:bg-red-50 hover:text-red-600"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                </button>
+              </form>
+            </div>
           </div>
         ))}
         {rows.length === 0 && (

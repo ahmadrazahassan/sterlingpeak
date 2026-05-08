@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { ArticleForm } from "@/components/admin/article-form";
+import { ArticleForm } from "@/components/admin/article-form"
 import { adminGetArticle, adminListAuthors, adminListCategories } from "@/lib/queries/admin";
 
 type Props = { params: Promise<{ id: string }> };

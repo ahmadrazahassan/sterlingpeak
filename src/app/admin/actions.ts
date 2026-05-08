@@ -23,6 +23,42 @@ export async function deleteArticleForm(formData: FormData) {
   if (id) await deleteArticle(id);
 }
 
+export async function toggleArticleStatus(formData: FormData) {
+  const id = formData.get("id") as string;
+  const newStatus = formData.get("new_status") as string;
+  if (!id || !newStatus) return;
+  const supabase = await createClient();
+  const updates: Record<string, unknown> = {
+    status: newStatus,
+    updated_at: new Date().toISOString(),
+  };
+  if (newStatus === "published") {
+    updates.published_at = new Date().toISOString();
+  }
+  await supabase.from("articles").update(updates).eq("id", id);
+  revalidatePath("/admin/articles");
+  revalidatePath("/");
+}
+
+export async function duplicateArticle(formData: FormData) {
+  const id = formData.get("id") as string;
+  if (!id) return;
+  const supabase = await createClient();
+  const { data: original } = await supabase.from("articles").select("*").eq("id", id).maybeSingle();
+  if (!original) return;
+  const { id: _id, created_at: _ca, updated_at: _ua, published_at: _pa, slug, ...rest } = original;
+  await supabase.from("articles").insert({
+    ...rest,
+    slug: `${slug}-copy-${Date.now()}`,
+    title: `${original.title} (Copy)`,
+    status: "draft",
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    published_at: null,
+  });
+  revalidatePath("/admin/articles");
+}
+
 export async function deleteCategory(id: string) {
   const supabase = await createClient();
   await supabase.from("categories").delete().eq("id", id);

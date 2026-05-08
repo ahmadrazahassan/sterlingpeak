@@ -1,4 +1,4 @@
-import { ArticleForm } from "@/components/admin/article-form";
+import { ArticleForm } from "@/components/admin/article-form"
 import { adminListAuthors, adminListCategories } from "@/lib/queries/admin";
 
 export default async function NewArticlePage() {
