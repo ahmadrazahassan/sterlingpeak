@@ -27,7 +27,6 @@ const company = [
   { label: "Contact", href: "/contact" },
   { label: "Editorial Policy", href: "/editorial-policy" },
   { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
-  { label: "Write for us", href: "/write-for-us" },
 ];
 
 const legal = [
