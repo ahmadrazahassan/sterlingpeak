@@ -14,13 +14,22 @@ export function extractToc(content: string) {
   const toc: { level: number; text: string; id: string }[] = [];
   if (!content) return toc;
 
+  const seen = new Map<string, number>();
+
+  function uniqueId(text: string): string {
+    const base = slugifyHeading(text);
+    const count = seen.get(base) ?? 0;
+    seen.set(base, count + 1);
+    return count === 0 ? base : `${base}-${count}`;
+  }
+
   const htmlHeadingRegex = /<h([23])[^>]*>([\s\S]*?)<\/h\1>/gi;
   let match: RegExpExecArray | null;
   while ((match = htmlHeadingRegex.exec(content)) !== null) {
     const level = parseInt(match[1], 10);
     const text = match[2].replace(/<[^>]+>/g, "").trim();
     if (text) {
-      toc.push({ level, text, id: slugifyHeading(text) });
+      toc.push({ level, text, id: uniqueId(text) });
     }
   }
 
@@ -32,7 +41,7 @@ export function extractToc(content: string) {
     if (m) {
       const level = m[1].length;
       const text = m[2].trim();
-      toc.push({ level, text, id: slugifyHeading(text) });
+      toc.push({ level, text, id: uniqueId(text) });
     }
   }
   return toc;

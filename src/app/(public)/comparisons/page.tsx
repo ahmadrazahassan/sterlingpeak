@@ -66,8 +66,17 @@ export default async function ComparisonsPage({
       <div className="mx-auto max-w-7xl px-4 py-14 md:px-8">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filtered.map((a) => (
-            <Link key={a.id} href={`/article/${a.slug}`}>
-              <Card className="h-full border-border-subtle transition-shadow hover:shadow-card">
+            <Link key={a.id} href={`/article/${a.slug}`} className="group">
+              <Card className="h-full overflow-hidden border-border-subtle transition-shadow hover:shadow-card">
+                {a.thumbnail_url && (
+                  <div className="aspect-[16/9] w-full overflow-hidden">
+                    <img
+                      src={a.thumbnail_url}
+                      alt={a.title}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                )}
                 <CardContent className="p-6">
                   <div className="flex flex-wrap gap-2">
                     {["Pricing", "VAT", "Payroll", "Reporting"].map((chip) => (

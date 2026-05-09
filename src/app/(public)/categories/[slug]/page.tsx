@@ -63,11 +63,23 @@ export default async function CategoryPage({ params }: Props) {
         {featured && (
           <section>
             <h2 className="font-heading text-xl font-semibold text-brand">Featured</h2>
-            <Link href={`/article/${featured.slug}`} className="mt-4 block">
+            <Link href={`/article/${featured.slug}`} className="group mt-4 block">
               <Card className="overflow-hidden border-border-subtle transition-shadow hover:shadow-card">
-                <CardContent className="grid gap-6 p-0 md:grid-cols-2">
-                  <div className="aspect-video bg-page md:aspect-auto md:min-h-[240px]" />
-                  <div className="p-6">
+                <CardContent className="grid gap-0 p-0 md:grid-cols-2">
+                  <div className="aspect-video overflow-hidden bg-page md:aspect-auto md:min-h-[280px]">
+                    {featured.thumbnail_url ? (
+                      <img
+                        src={featured.thumbnail_url}
+                        alt={featured.title}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
+                        No image
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6 md:p-8">
                     <Badge variant="accent">Featured</Badge>
                     <h3 className="mt-3 font-heading text-2xl font-semibold text-brand">
                       {featured.title}
@@ -86,8 +98,17 @@ export default async function CategoryPage({ params }: Props) {
           <h2 className="font-heading text-xl font-semibold text-brand">Latest</h2>
           <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {articles.map((a) => (
-              <Link key={a.id} href={`/article/${a.slug}`}>
-                <Card className="h-full border-border-subtle transition-shadow hover:shadow-card">
+              <Link key={a.id} href={`/article/${a.slug}`} className="group">
+                <Card className="h-full overflow-hidden border-border-subtle transition-shadow hover:shadow-card">
+                  {a.thumbnail_url && (
+                    <div className="aspect-[16/9] w-full overflow-hidden">
+                      <img
+                        src={a.thumbnail_url}
+                        alt={a.title}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
+                  )}
                   <CardContent className="p-5">
                     <p className="font-heading font-semibold text-brand line-clamp-2">{a.title}</p>
                     {a.excerpt && (
@@ -113,8 +134,17 @@ export default async function CategoryPage({ params }: Props) {
             </h2>
             <div className="mt-6 grid gap-4 md:grid-cols-2">
               {comparisons.slice(0, 4).map((a) => (
-                <Link key={a.id} href={`/article/${a.slug}`}>
-                  <Card className="border-border-subtle hover:border-accent/40">
+                <Link key={a.id} href={`/article/${a.slug}`} className="group">
+                  <Card className="overflow-hidden border-border-subtle hover:border-accent/40">
+                    {a.thumbnail_url && (
+                      <div className="aspect-[2/1] w-full overflow-hidden">
+                        <img
+                          src={a.thumbnail_url}
+                          alt={a.title}
+                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
+                      </div>
+                    )}
                     <CardContent className="p-5">
                       <Badge variant="cta" className="text-[10px]">
                         Comparison
