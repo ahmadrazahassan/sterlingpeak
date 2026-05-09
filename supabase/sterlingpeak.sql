@@ -8,7 +8,7 @@
 -- ============================================================================
 
 -- ────────────────────────────────────────────────────────────────────────────
--- EXTENSIONS
+-- EXTENSIONSa
 -- ────────────────────────────────────────────────────────────────────────────
 
 create extension if not exists "pgcrypto";
@@ -440,7 +440,7 @@ on conflict (slug) do nothing;
 
 insert into public.authors (name, slug, bio, role, is_active)
 values
-  ('Abdul Rehman Ch', 'abdul-rehman-ch',
+  ('Hafiza Ayesha Waheed', 'hafiza-ayesha-waheed',
    'Founder and lead editor at SterlingPeak. Covers UK accounting software, payroll systems, and compliance for SMEs.',
    'Editor-in-Chief', true)
 on conflict (slug) do nothing;
