@@ -36,6 +36,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   robots: { index: true, follow: true },
+  other: {
+    "impact-site-verification": "fdb5ed90-b8f3-4624-b062-3fef178dc996",
+  },
 };
 
 export default function RootLayout({
