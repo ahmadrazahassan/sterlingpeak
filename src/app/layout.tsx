@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import { DM_Sans, Inter } from "next/font/google";
+import { ConsentAnalytics } from "@/components/public/consent-analytics";
+import { CookieConsent } from "@/components/public/cookie-consent";
 import "./globals.css";
 
 const inter = Inter({
@@ -35,6 +36,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
   },
   robots: { index: true, follow: true },
+  other: {
+    "impact-site-verification": "fdb5ed90-b8f3-4624-b062-3fef178dc996",
+  },
 };
 
 export default function RootLayout({
@@ -49,7 +53,8 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
-        <Analytics />
+        <CookieConsent />
+        <ConsentAnalytics />
       </body>
     </html>
   );

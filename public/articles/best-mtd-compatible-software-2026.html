@@ -1,0 +1,735 @@
+<article class="sp-article">
+  <style>
+    .sp-article {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+      color: #1f2f34;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.78;
+      background: transparent;
+    }
+    .sp-article * { box-sizing: border-box; }
+    .sp-article h2,
+    .sp-article h3 {
+      font-family: "DM Sans", "Inter", system-ui, sans-serif;
+      color: #003748;
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+    }
+    .sp-article h2 { font-size: 32px; margin: 48px 0 18px; }
+    .sp-article h3 { font-size: 23px; margin: 34px 0 12px; }
+    .sp-article p { margin: 0 0 22px; }
+    .sp-article .lead {
+      font-size: 20px;
+      line-height: 1.75;
+      color: #003748;
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+    .sp-article ul { margin: 18px 0 28px; padding-left: 22px; }
+    .sp-article li { margin: 0 0 10px; padding-left: 4px; }
+    .sp-article li::marker { color: #22ad01; }
+    .sp-article strong { color: #003748; font-weight: 700; }
+    .sp-note {
+      margin: 30px 0;
+      padding: 20px 22px;
+      border-left: 3px solid #22ad01;
+      background: rgba(0, 55, 72, 0.035);
+    }
+    .sp-note p { margin-bottom: 0; }
+    .sp-summary {
+      margin: 32px 0;
+      border-top: 1px solid rgba(0, 55, 72, 0.14);
+      border-bottom: 1px solid rgba(0, 55, 72, 0.14);
+    }
+    .sp-summary-row {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 24px;
+      padding: 17px 0;
+      border-bottom: 1px solid rgba(0, 55, 72, 0.12);
+    }
+    .sp-summary-row:last-child { border-bottom: 0; }
+    .sp-summary-label {
+      font-family: "DM Sans", "Inter", system-ui, sans-serif;
+      font-weight: 700;
+      color: #003748;
+    }
+    .sp-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 26px 0 34px;
+      border: 1px solid rgba(0, 55, 72, 0.14);
+      background: #ffffff;
+    }
+    .sp-article table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: collapse;
+      background: #ffffff;
+    }
+    .sp-article th,
+    .sp-article td {
+      padding: 15px 17px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(0, 55, 72, 0.12);
+      font-size: 15.5px;
+      line-height: 1.62;
+    }
+    .sp-article th {
+      font-family: "DM Sans", "Inter", system-ui, sans-serif;
+      color: #003748;
+      font-weight: 700;
+      background: rgba(0, 55, 72, 0.04);
+    }
+    .sp-article tr:last-child td { border-bottom: 0; }
+    .sp-muted { color: #5f737a; font-size: 15px; line-height: 1.7; }
+    .sp-divider {
+      border: 0;
+      border-top: 1px solid rgba(0, 55, 72, 0.14);
+      margin: 48px 0;
+    }
+    @media (max-width: 700px) {
+      .sp-article { font-size: 16px; padding: 18px 14px 52px; }
+      .sp-article .lead { font-size: 18px; }
+      .sp-article h2 { font-size: 28px; }
+      .sp-article h3 { font-size: 21px; }
+      .sp-summary-row { grid-template-columns: 1fr; gap: 6px; }
+    }
+  </style>
+
+  <p class="lead">
+    Making Tax Digital (MTD) is HMRC's long-term programme to digitise UK tax reporting. MTD
+    for VAT is already in force for every VAT-registered UK business. MTD for Income Tax
+    starts on <strong>6 April 2026</strong> for sole traders and landlords with qualifying
+    income above £50,000. If you need MTD-compatible software for 2026, this guide walks
+    through the products UK businesses are realistically choosing, what "compatible" actually
+    means, and how to pick the right one for your situation.
+  </p>
+
+  <p>
+    The words "MTD-compatible" cover a lot of ground. HMRC maintains official lists of
+    software that works with both MTD for VAT and MTD for Income Tax, but being on the list
+    is only the starting point. The software also has to fit your business — sole trader
+    versus limited company, VAT scheme, industry, transaction volume, payroll needs, and
+    what your accountant supports.
+  </p>
+
+  <p>
+    This article gives you the regulatory context you need, the criteria that actually
+    matter, and the shortlist of UK products worth evaluating. It is written for UK
+    businesses making a real decision, not for people curious about the policy.
+  </p>
+
+  <div class="sp-summary">
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">MTD for VAT</div>
+      <div>
+        In force for all VAT-registered UK businesses. Must use compatible software or
+        bridging software to keep digital records and submit VAT Returns.
+      </div>
+    </div>
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">MTD for Income Tax</div>
+      <div>
+        From 6 April 2026 for sole traders and landlords with qualifying income over £50,000.
+        From 6 April 2027 the threshold drops; further rollout planned from 6 April 2028.
+      </div>
+    </div>
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">Best all-round choice</div>
+      <div>
+        Sage Accounting — MTD-compatible across VAT and Income Tax, UK-focused, strong
+        accountant support, clear growth path.
+      </div>
+    </div>
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">Best for sole traders</div>
+      <div>
+        Sage Sole Trader or Sage Accounting Start for VAT-registered sole traders; FreeAgent
+        and QuickBooks are credible alternatives.
+      </div>
+    </div>
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">Best for limited companies</div>
+      <div>
+        Sage Accounting or Xero; Sage 50 for established SMBs; Sage 200 or Sage Intacct for
+        growing and mid-market.
+      </div>
+    </div>
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">If you insist on spreadsheets</div>
+      <div>
+        Use an HMRC-approved bridging tool that connects your spreadsheet to HMRC. Workable
+        but adds complexity; for most UK businesses, moving to proper software is simpler.
+      </div>
+    </div>
+  </div>
+
+  <h2>What Making Tax Digital actually requires</h2>
+
+  <p>
+    HMRC's Making Tax Digital programme has two established strands (VAT and Income Tax)
+    with Corporation Tax expected later. The core requirements across both strands are the
+    same in principle:
+  </p>
+
+  <ul>
+    <li><strong>Digital records.</strong> Income and expenses must be kept in a digital format, not in paper ledgers.</li>
+    <li><strong>Digital links.</strong> Data must flow between systems digitally, without manual re-typing between the record-keeping stage and submission.</li>
+    <li><strong>Compatible software.</strong> Submissions to HMRC must be made through HMRC-approved software that connects to HMRC's APIs.</li>
+    <li><strong>Quarterly updates (Income Tax).</strong> For MTD for Income Tax, four quarterly updates per tax year plus a final declaration.</li>
+    <li><strong>Penalties.</strong> A points-based penalty regime applies, with a soft landing period at rollout.</li>
+  </ul>
+
+  <p>
+    HMRC publishes official lists of compatible software on gov.uk, one for MTD for VAT and
+    one for MTD for Income Tax. The lists are regularly updated as vendors complete their
+    certifications.
+  </p>
+
+  <h2>MTD for VAT — the current rules</h2>
+
+  <p>
+    All VAT-registered UK businesses must use compatible software to keep VAT records and
+    file VAT Returns. The HMRC guidance is clear: there is either a compatible software
+    package that keeps digital records and submits VAT Returns, or bridging software that
+    connects non-compatible software (typically a spreadsheet) to HMRC systems. Manual entry
+    into HMRC's online VAT return form is no longer permitted for UK VAT-registered
+    businesses.
+  </p>
+
+  <p>
+    In practice this means:
+  </p>
+
+  <ul>
+    <li>Sales and purchase records must be captured in digital form.</li>
+    <li>The VAT return must be prepared from those digital records without manual re-keying.</li>
+    <li>Submission to HMRC must happen through software that talks to HMRC's VAT API.</li>
+    <li>When software grants authority to HMRC, the authority lasts 18 months and can be checked or withdrawn at any time.</li>
+  </ul>
+
+  <h2>MTD for Income Tax — the 2026 change</h2>
+
+  <p>
+    MTD for Income Tax is the most significant UK tax admin change since MTD for VAT. The
+    rollout is staged:
+  </p>
+
+  <ul>
+    <li><strong>6 April 2026</strong> — sole traders and landlords with qualifying income over £50,000 must start using MTD for Income Tax.</li>
+    <li><strong>6 April 2027</strong> — the threshold drops (watch HMRC publications for the final figure).</li>
+    <li><strong>6 April 2028</strong> — further rollout to smaller sole traders and landlords.</li>
+  </ul>
+
+  <p>
+    For the 2026 rollout, HMRC has confirmed a soft landing: penalty points will not be
+    applied for late quarterly updates in the first tax year (2026 to 2027), though late
+    final declarations and late tax payments will still carry penalties.
+  </p>
+
+  <p>
+    To use MTD for Income Tax you must be registered for Self Assessment and have submitted
+    a tax return in the last two years. You sign up on gov.uk with the user ID and password
+    you used for Self Assessment. Agents can sign up clients on their behalf.
+  </p>
+
+  <div class="sp-note">
+    <p>
+      <strong>Action for sole traders and landlords:</strong> if you expect qualifying income
+      above £50,000 for the 2026 to 2027 tax year, you should choose MTD-compatible software
+      now and consider signing up voluntarily before the April 2026 deadline so you have a
+      clean setup in time.
+    </p>
+  </div>
+
+  <h2>Criteria for picking MTD-compatible software</h2>
+
+  <p>
+    Being "on the HMRC list" is a minimum. Real UK businesses need more than that. Use the
+    following criteria to evaluate MTD-compatible products.
+  </p>
+
+  <ul>
+    <li><strong>HMRC certification scope.</strong> Is the product certified for MTD for VAT, MTD for Income Tax, or both?</li>
+    <li><strong>Business type fit.</strong> Is it designed for sole traders, landlords, limited companies, or all three?</li>
+    <li><strong>VAT scheme support.</strong> Does it support standard, cash, flat-rate, and margin schemes if you use them?</li>
+    <li><strong>Bank feed coverage.</strong> Does it connect to your UK bank automatically for transaction import?</li>
+    <li><strong>Accountant support.</strong> Is it widely supported by UK accountants and bookkeepers?</li>
+    <li><strong>Payroll integration.</strong> If you need payroll, does the product pair cleanly with MTD-compatible payroll?</li>
+    <li><strong>Growth path.</strong> Does the product have higher tiers you can grow into, or are you limited by its ceiling?</li>
+    <li><strong>UK pricing clarity.</strong> Is pricing published in GBP with clear tiers?</li>
+    <li><strong>Mobile support.</strong> Can you raise invoices and capture expenses on a phone?</li>
+    <li><strong>Customer support.</strong> Is UK-based support included, and at what hours?</li>
+  </ul>
+
+  <h2>Sage Accounting</h2>
+
+  <p>
+    Sage Accounting is the most broadly recommended MTD-compatible choice for UK small
+    businesses in 2026. It is MTD-compatible across VAT and Income Tax (as HMRC rolls out
+    ITSA), supports UK VAT schemes including flat rate, offers strong UK bank feed support,
+    and is widely supported by UK accountants and bookkeepers.
+  </p>
+
+  <p>
+    The three tiers — Start, Standard, Plus — are publicly priced around £18, £39, and £59
+    + VAT per month. Sage Copilot is included across tiers. Sage Accounting is the natural
+    starting point for UK VAT-registered small businesses and the product most likely to
+    grow with the business.
+  </p>
+
+  <ul>
+    <li>Best for: VAT-registered UK small businesses and limited companies.</li>
+    <li>Strengths: UK focus, broad accountant support, clear Sage growth path (to Sage 50, Sage 200, Sage Intacct).</li>
+    <li>Weaknesses: higher tiers priced above some competitors; overkill for very simple sole traders.</li>
+  </ul>
+
+  <h2>Sage Sole Trader</h2>
+
+  <p>
+    Sage Sole Trader is the entry product for UK sole traders, freelancers, and small
+    landlords who need a simple, MTD-aware way to track income and expenses and prepare Self
+    Assessment figures. It is the right starting point for non-VAT sole traders who want a
+    Sage product without the weight of full Sage Accounting.
+  </p>
+
+  <ul>
+    <li>Best for: non-VAT sole traders and small landlords.</li>
+    <li>Strengths: simple, MTD-aware, low monthly cost.</li>
+    <li>Weaknesses: limited depth; growing businesses will upgrade to Sage Accounting.</li>
+  </ul>
+
+  <h2>Xero</h2>
+
+  <p>
+    Xero is the other mainstream UK cloud accounting product with broad MTD compatibility.
+    It is widely used by UK accountants and bookkeepers, has a large UK app marketplace, and
+    suits small businesses that want a modern cloud experience. For VAT-registered UK SMEs,
+    Xero is a credible alternative to Sage Accounting; the choice often comes down to
+    accountant preference.
+  </p>
+
+  <ul>
+    <li>Best for: small UK businesses with modern cloud workflows.</li>
+    <li>Strengths: UX, marketplace breadth, widely supported by UK accountants.</li>
+    <li>Weaknesses: UK pricing has risen over time; less integrated with UK mid-market upgrades compared to Sage.</li>
+  </ul>
+
+  <h2>QuickBooks</h2>
+
+  <p>
+    QuickBooks UK is a strong MTD-compatible choice, particularly for UK sole traders and
+    early-stage limited companies. Solid UK pricing, good Self Assessment support, and
+    effective mobile workflows.
+  </p>
+
+  <ul>
+    <li>Best for: UK sole traders and small limited companies.</li>
+    <li>Strengths: competitive pricing, strong mobile, widely known brand.</li>
+    <li>Weaknesses: less compelling at the mid-market tier; UK features sometimes lag US feature releases.</li>
+  </ul>
+
+  <h2>FreeAgent</h2>
+
+  <p>
+    FreeAgent is MTD-compatible and markets itself around simple self-employed accounting. It
+    is particularly attractive when available through banking-partner arrangements. Good for
+    freelancers, contractors, and landlords; less suitable for growing UK SMEs with more
+    complex needs.
+  </p>
+
+  <ul>
+    <li>Best for: UK freelancers, contractors, landlords.</li>
+    <li>Strengths: simple UX, strong self-employed focus, MTD positioning clear.</li>
+    <li>Weaknesses: less suitable for VAT complexity, stock, multi-currency, or growth.</li>
+  </ul>
+
+  <h2>Sage 50 and Sage 200</h2>
+
+  <p>
+    For established UK SMBs that have outgrown cloud accounting, <strong>Sage 50</strong>
+    offers deeper stock and reporting in a hybrid desktop-plus-cloud model and is
+    MTD-compatible for VAT. <strong>Sage 200</strong> is a business management solution
+    covering finance plus sales, inventory, and pricing for growing UK SMEs, with Sage 200
+    Standard commonly referenced at around £393 per month for 3 desktop users and 1 company.
+    Both are MTD-compatible for VAT and well supported by UK accountants.
+  </p>
+
+  <h2>Sage Intacct</h2>
+
+  <p>
+    For UK mid-market finance teams, <strong>Sage Intacct</strong> is MTD-compatible for
+    VAT and is the strongest cloud financial management platform in the Sage UK portfolio.
+    It is a fit for multi-entity groups, subscription businesses, professional services
+    firms, and non-profits. Indicative UK ranges sit between £30,000 and £300,000 per year
+    depending on users and modules.
+  </p>
+
+  <h2>Bridging software — when spreadsheets are still part of the picture</h2>
+
+  <p>
+    HMRC allows bridging software as a valid MTD route. Bridging software connects a
+    spreadsheet (or other non-compatible software) to HMRC via the MTD API, maintaining the
+    digital link. This is a genuine option for businesses where finance processes are still
+    spreadsheet-based.
+  </p>
+
+  <p>Common UK-focused bridging tools include:</p>
+
+  <ul>
+    <li>Sage's bridging solutions within its product family.</li>
+    <li>Tax Systems and other specialist UK bridging products.</li>
+    <li>Vitaltax, 123Sheets, and Absolute Excel VAT.</li>
+  </ul>
+
+  <p>
+    Bridging software works, but it rarely reduces complexity. For most UK SMEs, moving
+    directly to proper MTD-compatible accounting software is simpler and cheaper over time
+    than maintaining a spreadsheet-plus-bridging stack. Bridging is most justifiable for
+    businesses with unusual reporting requirements, bespoke internal systems, or transition
+    scenarios during a migration.
+  </p>
+
+  <h2>UK MTD-compatible software at a glance</h2>
+
+  <div class="sp-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>MTD scope</th>
+          <th>Best for</th>
+          <th>UK pricing note</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Sage Sole Trader</strong></td>
+          <td>MTD-aware for sole traders and Income Tax rollout.</td>
+          <td>Non-VAT UK sole traders, landlords.</td>
+          <td>Monthly subscription on sage.com.</td>
+        </tr>
+        <tr>
+          <td><strong>Sage Accounting</strong></td>
+          <td>MTD for VAT; MTD for Income Tax as rollout progresses.</td>
+          <td>VAT-registered UK small businesses.</td>
+          <td>~£18, £39, £59 + VAT/month (Start, Standard, Plus).</td>
+        </tr>
+        <tr>
+          <td><strong>Xero</strong></td>
+          <td>MTD for VAT; MTD for Income Tax in progress.</td>
+          <td>UK small businesses, modern cloud UX.</td>
+          <td>Mid-range UK pricing; check xero.com.</td>
+        </tr>
+        <tr>
+          <td><strong>QuickBooks</strong></td>
+          <td>MTD for VAT; strong Self Assessment support.</td>
+          <td>UK sole traders and small Ltd.</td>
+          <td>Competitive UK pricing; check quickbooks.co.uk.</td>
+        </tr>
+        <tr>
+          <td><strong>FreeAgent</strong></td>
+          <td>MTD-compatible positioning across VAT and Income Tax.</td>
+          <td>UK freelancers, contractors, landlords.</td>
+          <td>Pricing varies by business type; banking partnerships offer discounts.</td>
+        </tr>
+        <tr>
+          <td><strong>Sage 50</strong></td>
+          <td>MTD for VAT.</td>
+          <td>Established UK SMBs with stock and reporting needs.</td>
+          <td>Mid-tier subscription.</td>
+        </tr>
+        <tr>
+          <td><strong>Sage 200</strong></td>
+          <td>MTD for VAT.</td>
+          <td>Growing UK SMEs needing business management.</td>
+          <td>From ~£393/month (Standard, 3 users, 1 company).</td>
+        </tr>
+        <tr>
+          <td><strong>Sage Intacct</strong></td>
+          <td>MTD for VAT.</td>
+          <td>UK mid-market finance teams, multi-entity.</td>
+          <td>~£30,000–£300,000 per year, quote-based.</td>
+        </tr>
+        <tr>
+          <td><strong>Bridging software</strong></td>
+          <td>MTD for VAT via digital link to a spreadsheet.</td>
+          <td>Businesses with bespoke spreadsheet processes.</td>
+          <td>Varies by vendor.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p class="sp-muted">
+    Pricing is indicative. Always confirm current UK pricing directly with each vendor and
+    check HMRC's official MTD-compatible software lists on gov.uk before buying.
+  </p>
+
+  <h2>Sole trader decision path</h2>
+
+  <p>
+    If you are a UK sole trader or landlord who will be inside MTD for Income Tax from April
+    2026:
+  </p>
+
+  <ul>
+    <li>Not yet VAT-registered, simple finances: Sage Sole Trader, FreeAgent, or QuickBooks Sole Trader.</li>
+    <li>VAT-registered: Sage Accounting Start or Standard, or Xero.</li>
+    <li>Multiple income sources (self-employment + property + ad-hoc): Sage Accounting with Self Assessment module, or your accountant's recommended platform.</li>
+    <li>Accountant-led: follow the accountant's stack. They will have a standard for MTD clients.</li>
+  </ul>
+
+  <p>
+    Sign up voluntarily for MTD for Income Tax if you want time to adjust. HMRC has
+    confirmed that quarterly-update penalties will not apply in the first tax year for
+    required users, but signing up early reduces risk regardless.
+  </p>
+
+  <h2>Limited company decision path</h2>
+
+  <p>
+    UK limited companies are already inside MTD for VAT if they are VAT-registered. For them:
+  </p>
+
+  <ul>
+    <li>Small companies: Sage Accounting or Xero.</li>
+    <li>Established SMBs with stock: Sage 50 or Sage 200 Standard.</li>
+    <li>Mid-market with multi-entity or reporting complexity: Sage Intacct (or Intacct Essentials for a lighter start).</li>
+  </ul>
+
+  <p>
+    MTD for Corporation Tax has been signalled but not yet confirmed for rollout. Limited
+    companies should pick software that is MTD-ready rather than future-proofing for a
+    programme whose final design is still being finalised.
+  </p>
+
+  <h2>Common UK MTD mistakes</h2>
+
+  <ul>
+    <li>Assuming any accounting software is MTD-compatible — always check HMRC's published list.</li>
+    <li>Leaving the move too late and trying to migrate during a busy tax quarter.</li>
+    <li>Picking software that does not fit the accountant's practice, creating handoff friction.</li>
+    <li>Choosing a bridging tool as a permanent solution when proper software would be cheaper overall.</li>
+    <li>Ignoring the £50,000 threshold for MTD for Income Tax and missing the April 2026 start.</li>
+    <li>Signing up multiple MTD licences by accident — one for VAT, another for Income Tax, when one product covers both.</li>
+  </ul>
+
+  <hr class="sp-divider" />
+
+  <h2>How to move next</h2>
+
+  <p>
+    A practical next-step checklist for UK businesses needing MTD-compatible software:
+  </p>
+
+  <ul>
+    <li>Confirm your MTD status — VAT, Income Tax, both, or not yet.</li>
+    <li>List your current finance tools and note which are MTD-compatible.</li>
+    <li>Check HMRC's compatible-software lists on gov.uk for your situation.</li>
+    <li>Shortlist 2–3 products that fit your business size and accountant preference.</li>
+    <li>Check UK pricing directly with each vendor.</li>
+    <li>Trial the software (most offer free trials) before committing.</li>
+    <li>Set a migration date aligned to your VAT quarter or tax-year boundary.</li>
+    <li>Sign up to MTD on gov.uk once the software is chosen and configured.</li>
+  </ul>
+
+  <p>
+    Making Tax Digital is not going away, and the compliance bar will only rise. Picking a
+    proper MTD-compatible platform now — ideally one that grows with your business — saves
+    time, reduces risk, and keeps HMRC happy. For most UK businesses in 2026, Sage
+    Accounting is the sensible default; the alternatives are credible, but the decision
+    should be grounded in HMRC certification, accountant preference, and a realistic view of
+    where your business will be in three years.
+  </p>
+
+  <h2>Setting up MTD on a new product</h2>
+
+  <p>
+    Once you have chosen MTD-compatible software, the setup itself is straightforward but
+    must be done in the right order. The sequence below applies to any MTD for VAT product.
+  </p>
+
+  <h3>Step 1: configure the business profile</h3>
+
+  <p>
+    Enter the company name, VAT registration number, VAT scheme, VAT periods, and company
+    address. Double-check the VAT number because an error here will cause submissions to
+    fail.
+  </p>
+
+  <h3>Step 2: connect the product to HMRC</h3>
+
+  <p>
+    Inside the VAT module the software will prompt you to grant authority to HMRC via the
+    Government Gateway. Sign in with your business's Government Gateway credentials, and
+    authorise the software to submit on your behalf. The authority lasts 18 months.
+  </p>
+
+  <h3>Step 3: import or enter opening balances</h3>
+
+  <p>
+    Set the first period as the one starting immediately after your last submitted VAT
+    Return. Opening balances for debtors, creditors, VAT control, and bank should match the
+    position at that date. Ask your accountant if there is any doubt.
+  </p>
+
+  <h3>Step 4: configure VAT codes</h3>
+
+  <p>
+    Make sure every VAT rate your business uses is configured: standard (20%), reduced
+    (5%), zero-rated, exempt, outside the scope, and any margin or reverse-charge codes you
+    need. Map them to the default nominal accounts.
+  </p>
+
+  <h3>Step 5: run a test submission</h3>
+
+  <p>
+    Generate a draft VAT Return for the current period (even if incomplete) and walk
+    through the submission screens without actually submitting. Confirm the software can
+    reach HMRC and retrieve open obligations. This is the equivalent of a dry-run.
+  </p>
+
+  <h3>Step 6: set up Direct Debit</h3>
+
+  <p>
+    Direct Debit for VAT is set up in the HMRC Gateway, not in your accounting software.
+    Once set up, HMRC collects the VAT due three working days after the submission
+    deadline, which removes the risk of forgetting to pay.
+  </p>
+
+  <h2>What to do when software says "not compatible"</h2>
+
+  <p>
+    Occasionally HMRC's MTD API rejects a submission with an error about compatibility or
+    authorisation. The usual causes and fixes:
+  </p>
+
+  <ul>
+    <li><strong>Authority expired</strong> — renew via the software's reconnect flow.</li>
+    <li><strong>Wrong VAT number</strong> — double-check the registration number format.</li>
+    <li><strong>Wrong VAT period selected</strong> — match the period shown in HMRC's open obligations.</li>
+    <li><strong>Scheme mismatch</strong> — software configured for standard VAT while HMRC has you on flat rate (or vice versa). Reconcile.</li>
+    <li><strong>Gateway credentials wrong</strong> — sign in directly on HMRC first to verify the credentials work.</li>
+  </ul>
+
+  <p>
+    Most UK MTD issues boil down to one of those five causes. The vendor's support team is
+    the first port of call; HMRC's VAT helpline can help with scheme and obligation
+    questions but will not debug the software.
+  </p>
+
+  <h2>A reusable UK MTD evaluation scorecard</h2>
+
+  <p>
+    If you are comparing two or three MTD-compatible products for your UK business, score
+    each against the following criteria on a 1–5 scale. The product with the highest total
+    is usually the right choice.
+  </p>
+
+  <ul>
+    <li>HMRC certification covers your current and near-future MTD obligations.</li>
+    <li>UK VAT scheme support matches your scheme.</li>
+    <li>Bank feed coverage includes your UK business bank.</li>
+    <li>Accountant supports the product.</li>
+    <li>Pricing is competitive for your tier and includes the features you need.</li>
+    <li>Growth path into higher tiers exists without vendor switch.</li>
+    <li>Mobile app supports your on-the-go bookkeeping needs.</li>
+    <li>UK-based customer support is available on your working hours.</li>
+    <li>Product has a good reputation among UK bookkeepers and accountants.</li>
+    <li>Implementation and migration effort is manageable for your team.</li>
+  </ul>
+
+  <p>
+    Run that scorecard honestly and the answer is usually clear. The most expensive product
+    on the list is not always the right one, and the cheapest product is almost never the
+    right one for a UK business with growth ambitions.
+  </p>
+
+  <h2>Looking ahead: what to expect after 2026</h2>
+
+  <p>
+    Making Tax Digital will continue to evolve across the second half of the decade. UK
+    businesses that are adopting MTD-compatible software now should also plan for:
+  </p>
+
+  <ul>
+    <li>
+      <strong>MTD for Income Tax threshold drops.</strong> The £50,000 threshold from April
+      2026 is the first step; from April 2027 the threshold lowers and from April 2028 the
+      rollout expands further down the market.
+    </li>
+    <li>
+      <strong>MTD for Corporation Tax.</strong> HMRC has signalled intent but has not yet
+      confirmed a final rollout date. Limited companies should pick MTD-ready software
+      with strong compliance pedigree.
+    </li>
+    <li>
+      <strong>Wider digital links requirements.</strong> HMRC expects the chain from
+      record-keeping to submission to stay digital. Expect stricter enforcement.
+    </li>
+    <li>
+      <strong>Greater API use.</strong> HMRC continues to expand the scope of data
+      exchanged via API, which only works with proper MTD-compatible software.
+    </li>
+  </ul>
+
+  <p>
+    Future-proofing against the direction of travel is a real consideration for UK
+    businesses. Choosing software that is already on HMRC's compatible-software list and
+    that has a track record of supporting new MTD obligations as they roll out is the safer
+    bet over a 3–5 year horizon.
+  </p>
+
+  <h2>How accountants choose MTD software for UK clients</h2>
+
+  <p>
+    UK accountants and bookkeepers tend to standardise on one or two MTD-compatible
+    platforms across their client base. The reasons are practical:
+  </p>
+
+  <ul>
+    <li>Training overhead is lower if the whole practice is on the same stack.</li>
+    <li>Client handover is simpler inside a standardised product.</li>
+    <li>Practice management tools (like Sage for Accountants) integrate best with their matching small business product.</li>
+    <li>Fee quoting is easier because the time commitment is predictable.</li>
+    <li>Quality control is simpler when every client file has the same structure.</li>
+  </ul>
+
+  <p>
+    What this means for UK business owners: your accountant's preference carries weight.
+    If your accountant runs a Sage-first practice, moving to Xero is cheap for you but
+    expensive for them, and the fee picture usually follows. Align the software with the
+    practice unless there is a specific reason not to.
+  </p>
+
+  <h2>A closing recommendation</h2>
+
+  <p>
+    For most UK small businesses needing MTD-compatible software in 2026, the decision
+    comes down to: Sage Accounting, Xero, QuickBooks, or FreeAgent. Each is on HMRC's
+    compatible-software list, each has a real UK track record, and each has a large base
+    of UK accountants who know it well.
+  </p>
+
+  <p>
+    Sage Accounting is the most commonly recommended choice for UK VAT-registered small
+    businesses with growth ambitions, because it sits in a portfolio that extends up to
+    Sage 50, Sage 200, and Sage Intacct without vendor change. Xero is the natural
+    alternative for cloud-first UK SMEs with modern workflow preferences. QuickBooks is
+    strong for UK sole traders and smaller limited companies. FreeAgent is strong for UK
+    freelancers, contractors, and landlords with simple finances.
+  </p>
+
+  <p>
+    Make the decision deliberately, align with your accountant, and stick with it unless
+    there is a clear reason to switch. The worst MTD strategy is repeatedly switching
+    software every 18 months; the best is picking a solid fit and letting the platform
+    compound value over time.
+  </p>
+</article>

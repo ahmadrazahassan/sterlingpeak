@@ -1,0 +1,682 @@
+<article class="sp-article">
+  <style>
+    .sp-article {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 24px 18px 64px;
+      color: #1f2f34;
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 17px;
+      line-height: 1.78;
+      background: transparent;
+    }
+    .sp-article * { box-sizing: border-box; }
+    .sp-article h2,
+    .sp-article h3 {
+      font-family: "DM Sans", "Inter", system-ui, sans-serif;
+      color: #003748;
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+    }
+    .sp-article h2 { font-size: 32px; margin: 48px 0 18px; }
+    .sp-article h3 { font-size: 23px; margin: 34px 0 12px; }
+    .sp-article p { margin: 0 0 22px; }
+    .sp-article .lead {
+      font-size: 20px;
+      line-height: 1.75;
+      color: #003748;
+      font-weight: 500;
+      margin-bottom: 28px;
+    }
+    .sp-article ul { margin: 18px 0 28px; padding-left: 22px; }
+    .sp-article li { margin: 0 0 10px; padding-left: 4px; }
+    .sp-article li::marker { color: #22ad01; }
+    .sp-article strong { color: #003748; font-weight: 700; }
+    .sp-note {
+      margin: 30px 0;
+      padding: 20px 22px;
+      border-left: 3px solid #22ad01;
+      background: rgba(0, 55, 72, 0.035);
+    }
+    .sp-note p { margin-bottom: 0; }
+    .sp-summary {
+      margin: 32px 0;
+      border-top: 1px solid rgba(0, 55, 72, 0.14);
+      border-bottom: 1px solid rgba(0, 55, 72, 0.14);
+    }
+    .sp-summary-row {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 24px;
+      padding: 17px 0;
+      border-bottom: 1px solid rgba(0, 55, 72, 0.12);
+    }
+    .sp-summary-row:last-child { border-bottom: 0; }
+    .sp-summary-label {
+      font-family: "DM Sans", "Inter", system-ui, sans-serif;
+      font-weight: 700;
+      color: #003748;
+    }
+    .sp-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 26px 0 34px;
+      border: 1px solid rgba(0, 55, 72, 0.14);
+      background: #ffffff;
+    }
+    .sp-article table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: collapse;
+      background: #ffffff;
+    }
+    .sp-article th,
+    .sp-article td {
+      padding: 15px 17px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(0, 55, 72, 0.12);
+      font-size: 15.5px;
+      line-height: 1.62;
+    }
+    .sp-article th {
+      font-family: "DM Sans", "Inter", system-ui, sans-serif;
+      color: #003748;
+      font-weight: 700;
+      background: rgba(0, 55, 72, 0.04);
+    }
+    .sp-article tr:last-child td { border-bottom: 0; }
+    .sp-muted { color: #5f737a; font-size: 15px; line-height: 1.7; }
+    .sp-divider {
+      border: 0;
+      border-top: 1px solid rgba(0, 55, 72, 0.14);
+      margin: 48px 0;
+    }
+    @media (max-width: 700px) {
+      .sp-article { font-size: 16px; padding: 18px 14px 52px; }
+      .sp-article .lead { font-size: 18px; }
+      .sp-article h2 { font-size: 28px; }
+      .sp-article h3 { font-size: 21px; }
+      .sp-summary-row { grid-template-columns: 1fr; gap: 6px; }
+    }
+  </style>
+
+  <p class="lead">
+    Every VAT-registered UK business has to submit VAT Returns to HMRC, and since Making Tax
+    Digital for VAT went into full effect, the submission has to be made through
+    MTD-compatible accounting software. This guide walks UK businesses through the full
+    process: from getting the numbers right inside the accounting software, to reviewing the
+    nine boxes on the return, to authorising software with HMRC, to submitting and paying.
+    It covers Sage Accounting, Sage 50, Sage 200, and Sage Intacct at the UK-specific steps
+    that matter.
+  </p>
+
+  <p>
+    VAT is one of the most common areas where UK small businesses get penalised. Not because
+    the return itself is complicated, but because the records behind it are messy, the
+    scheme is wrong, or the deadline is missed. Using proper accounting software removes
+    most of that risk — if you use it correctly.
+  </p>
+
+  <p>
+    This article is written for UK business owners and bookkeepers preparing their own VAT
+    Returns, and for anyone who wants to understand what their accountant is actually doing
+    each quarter. We focus on the practical workflow rather than the policy.
+  </p>
+
+  <div class="sp-summary">
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">Who must submit</div>
+      <div>
+        Every VAT-registered UK business, usually on a quarterly basis under MTD for VAT.
+      </div>
+    </div>
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">How</div>
+      <div>
+        Through MTD-compatible accounting software or bridging software that connects to
+        HMRC's VAT API. Manual entry into the old HMRC online form is no longer allowed.
+      </div>
+    </div>
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">When</div>
+      <div>
+        One calendar month and seven days after the end of the VAT period. For a quarter
+        ending 31 March, the VAT Return is due by 7 May.
+      </div>
+    </div>
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">What to submit</div>
+      <div>
+        A nine-box VAT Return generated automatically by the software from the digital
+        records held inside it.
+      </div>
+    </div>
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">Payment</div>
+      <div>
+        By Direct Debit (set up in the HMRC Gateway), BACS, Faster Payments, or CHAPS by the
+        same deadline as submission.
+      </div>
+    </div>
+    <div class="sp-summary-row">
+      <div class="sp-summary-label">Common mistakes</div>
+      <div>
+        Wrong VAT scheme, unreconciled bank, missing supplier invoices, reclaiming VAT on
+        disallowed expenses, late submission or late payment.
+      </div>
+    </div>
+  </div>
+
+  <h2>Before you start: five things that must be in place</h2>
+
+  <p>
+    Submitting a VAT Return is the last step in a longer process. Get these five things
+    right first and the submission itself takes minutes.
+  </p>
+
+  <h3>1. Your software must be MTD-compatible</h3>
+
+  <p>
+    Check that your accounting software appears on HMRC's list of MTD-compatible software
+    for VAT. Sage Accounting, Sage 50, Sage 200, Sage Intacct, Xero, QuickBooks, and
+    FreeAgent are all MTD-compatible. If you are still on an older desktop version that
+    predates MTD, upgrade first.
+  </p>
+
+  <h3>2. You must be signed up to MTD for VAT with HMRC</h3>
+
+  <p>
+    Every VAT-registered UK business should already be signed up. If for some reason you
+    are not, sign up on gov.uk using your Government Gateway credentials before you try to
+    file.
+  </p>
+
+  <h3>3. The correct VAT scheme must be configured</h3>
+
+  <p>
+    The software needs to know which VAT scheme you are on:
+  </p>
+
+  <ul>
+    <li><strong>Standard VAT accounting</strong> — VAT due on invoice date.</li>
+    <li><strong>Cash accounting scheme</strong> — VAT due when payment is received/made.</li>
+    <li><strong>Flat rate scheme</strong> — a fixed percentage of gross turnover.</li>
+    <li><strong>Annual accounting scheme</strong> — single annual return with instalments.</li>
+    <li><strong>Margin schemes</strong> — for second-hand goods, antiques, art, etc.</li>
+  </ul>
+
+  <p>
+    Configure this once, in the software's VAT settings, and every transaction from that
+    point on will use the correct scheme. Changing schemes mid-quarter is rarely a good
+    idea.
+  </p>
+
+  <h3>4. Your bank account must be reconciled</h3>
+
+  <p>
+    Every transaction on the bank statement should match a transaction in the accounting
+    software, and the closing balance in the software must match the bank's closing
+    balance. If the bank is not reconciled, the VAT Return is based on incomplete data.
+  </p>
+
+  <h3>5. All sales and purchase invoices for the period must be entered</h3>
+
+  <p>
+    The nine-box VAT Return is generated from the invoices in the accounting ledger. Any
+    invoice not yet entered will be missing from the return. A short cut-off checklist:
+  </p>
+
+  <ul>
+    <li>All sales invoices dated within the period are entered and finalised.</li>
+    <li>All purchase invoices dated within the period are entered and finalised.</li>
+    <li>All credit notes are issued and linked to the correct invoices.</li>
+    <li>All expenses (card payments, cash receipts) are recorded.</li>
+    <li>All bank transactions are reconciled.</li>
+  </ul>
+
+  <h2>The UK nine-box VAT Return</h2>
+
+  <p>
+    Every UK VAT Return uses the same nine boxes. Your software calculates them for you,
+    but you should know what each box means.
+  </p>
+
+  <div class="sp-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Box</th>
+          <th>What it represents</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Box 1</strong></td><td>VAT due on sales and other outputs.</td></tr>
+        <tr><td><strong>Box 2</strong></td><td>VAT due on acquisitions from EU member states (if applicable; changed post-Brexit).</td></tr>
+        <tr><td><strong>Box 3</strong></td><td>Total VAT due (Box 1 + Box 2).</td></tr>
+        <tr><td><strong>Box 4</strong></td><td>VAT reclaimed on purchases and other inputs.</td></tr>
+        <tr><td><strong>Box 5</strong></td><td>Net VAT to pay or reclaim (Box 3 − Box 4).</td></tr>
+        <tr><td><strong>Box 6</strong></td><td>Total value of sales and other outputs, excluding VAT.</td></tr>
+        <tr><td><strong>Box 7</strong></td><td>Total value of purchases and other inputs, excluding VAT.</td></tr>
+        <tr><td><strong>Box 8</strong></td><td>Total value of goods supplied to EU member states (post-Brexit this is largely retained for Northern Ireland).</td></tr>
+        <tr><td><strong>Box 9</strong></td><td>Total value of acquisitions from EU member states (post-Brexit largely retained for Northern Ireland).</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The step-by-step submission process</h2>
+
+  <p>
+    The steps below apply, with small variations, to every major UK accounting product.
+    Screens and menu labels differ but the sequence is the same.
+  </p>
+
+  <h3>Step 1: Close the period</h3>
+
+  <p>
+    Open the VAT module and confirm the period-end date. For quarterly VAT, this is the
+    last day of the VAT quarter (e.g. 31 March, 30 June, 30 September, or 31 December for
+    the most common quarter pattern).
+  </p>
+
+  <h3>Step 2: Run the draft VAT Return</h3>
+
+  <p>
+    Generate the draft VAT Return from the software. You should see all nine boxes
+    populated automatically. The draft is a working document until submitted.
+  </p>
+
+  <h3>Step 3: Review the boxes against expectations</h3>
+
+  <p>
+    Do not submit without reviewing. Practical checks:
+  </p>
+
+  <ul>
+    <li>Does Box 1 (VAT on sales) look reasonable compared to last quarter?</li>
+    <li>Does Box 4 (VAT reclaimed) look reasonable compared to Box 1?</li>
+    <li>Does Box 6 (total sales excluding VAT) match the sales ledger total for the quarter?</li>
+    <li>Does Box 7 (total purchases excluding VAT) match the purchase ledger total for the quarter?</li>
+    <li>Is there any number that is dramatically higher or lower than the previous quarter? Investigate the reason.</li>
+  </ul>
+
+  <h3>Step 4: Drill into any unusual figures</h3>
+
+  <p>
+    Every good accounting product lets you click from a box on the VAT Return down to the
+    individual transactions that make it up. Use this. If Box 4 looks suspiciously high,
+    drill into purchases and check for an invoice in the wrong period, a duplicate, or a
+    transaction where VAT has been claimed on a non-business expense.
+  </p>
+
+  <h3>Step 5: Make corrections in the ledger, not in the return</h3>
+
+  <p>
+    If something is wrong, correct it in the underlying invoice, bill, or journal. Then
+    re-run the draft VAT Return. Never override the numbers on the return itself — that
+    breaks the digital link that MTD requires.
+  </p>
+
+  <h3>Step 6: Authorise the software with HMRC</h3>
+
+  <p>
+    The first time you submit from any piece of software, HMRC will ask you to grant
+    authority. The authority lasts 18 months, after which it can be renewed. You can check
+    or withdraw permissions at any time via your HMRC Government Gateway account.
+  </p>
+
+  <h3>Step 7: Submit the return</h3>
+
+  <p>
+    Click submit (or "File" or "Submit to HMRC" — the wording varies). The software sends
+    the nine-box data to HMRC's VAT API and returns a receipt reference. Save that
+    reference; it is the confirmation that HMRC received the return.
+  </p>
+
+  <h3>Step 8: Pay the VAT</h3>
+
+  <p>
+    Payment is due by the same deadline as the submission (one month and seven days after
+    the period end). Options:
+  </p>
+
+  <ul>
+    <li><strong>Direct Debit</strong> — set up in the HMRC Gateway; HMRC collects automatically three working days after the deadline.</li>
+    <li><strong>Faster Payments</strong> — same-day transfer.</li>
+    <li><strong>BACS</strong> — takes three working days; plan ahead.</li>
+    <li><strong>CHAPS</strong> — same-day, higher-value option.</li>
+    <li><strong>Card payment</strong> — via HMRC's online payment service.</li>
+  </ul>
+
+  <div class="sp-note">
+    <p>
+      <strong>Direct Debit is the safest option</strong> for most UK businesses. It removes
+      the risk of forgetting to pay, which carries interest and penalty charges. Set it up
+      once in the HMRC Gateway and leave it running.
+    </p>
+  </div>
+
+  <h2>How Sage products handle VAT submission</h2>
+
+  <p>
+    Sage's UK products all use the same principles, with slightly different interfaces:
+  </p>
+
+  <h3>Sage Accounting</h3>
+
+  <p>
+    VAT Return generation is a core feature across Start, Standard, and Plus tiers. Navigate
+    to the VAT module, choose the period, review the draft, drill into transactions, and
+    submit directly to HMRC from within the product. Sage Copilot can answer
+    natural-language questions about the return figures.
+  </p>
+
+  <h3>Sage 50</h3>
+
+  <p>
+    Sage 50 has mature VAT return workflows. The VAT Return wizard walks through period
+    selection, reconciliation of unreconciled transactions, and submission to HMRC through
+    the built-in MTD module.
+  </p>
+
+  <h3>Sage 200</h3>
+
+  <p>
+    Sage 200 VAT handling is more elaborate because the ledger is deeper. VAT codes are
+    applied at transaction entry, the nine-box return is generated from posted ledgers, and
+    submission is made through the MTD module. Partial exemption and multi-rate businesses
+    are supported.
+  </p>
+
+  <h3>Sage Intacct</h3>
+
+  <p>
+    Sage Intacct supports UK VAT including standard, reduced, zero, exempt, and outside-scope
+    rates, plus partial exemption, flat-rate scheme, and the domestic reverse charge for
+    construction (CIS). Submission to HMRC is made either through direct API integration or
+    an approved bridging route, depending on partner setup.
+  </p>
+
+  <h2>VAT schemes: pick the right one</h2>
+
+  <p>
+    The scheme you are on affects how the software calculates the return.
+  </p>
+
+  <div class="sp-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Scheme</th>
+          <th>How VAT is calculated</th>
+          <th>Best for</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Standard</strong></td>
+          <td>VAT due on invoice date (output and input).</td>
+          <td>Most UK businesses with straightforward invoicing.</td>
+        </tr>
+        <tr>
+          <td><strong>Cash accounting</strong></td>
+          <td>VAT due when payment is received/made.</td>
+          <td>UK small businesses with taxable turnover under £1.35m who want to smooth cash flow.</td>
+        </tr>
+        <tr>
+          <td><strong>Flat rate</strong></td>
+          <td>A fixed percentage of gross VAT-inclusive turnover.</td>
+          <td>Small UK businesses with low expenses; simpler admin, generally cannot reclaim VAT on purchases.</td>
+        </tr>
+        <tr>
+          <td><strong>Annual accounting</strong></td>
+          <td>One return per year with interim payments on account.</td>
+          <td>Businesses wanting to reduce administrative frequency.</td>
+        </tr>
+        <tr>
+          <td><strong>Margin scheme</strong></td>
+          <td>VAT charged on the margin (sale price − purchase price) for eligible goods.</td>
+          <td>Second-hand goods, antiques, art, collectibles.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Choosing the wrong scheme is a common mistake. If you are uncertain, ask your
+    accountant. Changing schemes requires HMRC agreement and should not be done mid-quarter.
+  </p>
+
+  <h2>Common UK VAT return errors</h2>
+
+  <ul>
+    <li><strong>Reclaiming VAT on non-business expenses</strong> — personal use should be excluded.</li>
+    <li><strong>Reclaiming VAT on entertainment</strong> — client entertainment is generally not reclaimable; staff entertainment is limited.</li>
+    <li><strong>Reclaiming VAT on fuel without keeping proper mileage records</strong> — use the HMRC scale charge or the actual business-use basis consistently.</li>
+    <li><strong>Charging the wrong VAT rate</strong> — check zero-rated vs exempt vs standard for the specific goods or services.</li>
+    <li><strong>Missing reverse charge for construction (CIS)</strong> — the domestic reverse charge applies to certain construction services between VAT-registered businesses.</li>
+    <li><strong>Applying VAT on outside-the-scope supplies</strong> — donations, dividends, and some insurance payouts are outside VAT entirely.</li>
+    <li><strong>Forgetting to adjust for bad debts</strong> — VAT can be reclaimed on bad debts that meet HMRC's conditions.</li>
+    <li><strong>Mixing gross and net amounts</strong> — in spreadsheet-based processes; software avoids this by forcing VAT codes.</li>
+  </ul>
+
+  <h2>Late submissions and penalties</h2>
+
+  <p>
+    HMRC moved to a points-based penalty regime for VAT in 2023. Late submissions accumulate
+    points; once a threshold is reached, a £200 penalty is charged for every subsequent late
+    submission. Points expire after a period of compliant filing. Late payment penalties
+    apply separately, calculated as a percentage of the unpaid VAT, with interest also
+    charged from the original due date.
+  </p>
+
+  <p>
+    The practical rule: file on time, pay on time. Set up a Direct Debit to remove the
+    payment risk, and put a calendar reminder in place two weeks before each VAT deadline.
+  </p>
+
+  <h2>A reusable monthly/quarterly VAT checklist</h2>
+
+  <p>
+    Most UK businesses benefit from a standard checklist. Run through this every month if
+    you are on annual accounting, and every quarter otherwise:
+  </p>
+
+  <ul>
+    <li>All sales invoices for the period are raised and posted.</li>
+    <li>All purchase invoices for the period are entered and coded.</li>
+    <li>All expense receipts are captured (card payments, cash, staff claims).</li>
+    <li>Bank accounts are fully reconciled to statement.</li>
+    <li>Credit cards and merchant accounts are reconciled.</li>
+    <li>Any payroll journals are posted.</li>
+    <li>Recurring invoices and standing journals are up to date.</li>
+    <li>VAT-eligible expense categories (motor, subsistence, entertainment) are reviewed.</li>
+    <li>CIS reverse charge entries (construction) are reviewed.</li>
+    <li>Draft VAT Return run and reviewed against prior period.</li>
+    <li>Any anomalies drilled into and corrected in the ledger.</li>
+    <li>VAT Return submitted via MTD software before deadline.</li>
+    <li>VAT paid via Direct Debit, Faster Payments, or CHAPS before deadline.</li>
+    <li>Submission receipt saved with the quarter's records.</li>
+  </ul>
+
+  <hr class="sp-divider" />
+
+  <h2>Key points to remember</h2>
+
+  <p>
+    UK VAT submission in 2026 is a reliable process if the underlying records are clean and
+    the software is set up correctly. The real work is done throughout the quarter —
+    entering invoices, reconciling the bank, applying consistent VAT codes — not in the last
+    hour before submission.
+  </p>
+
+  <p>
+    Use MTD-compatible accounting software, keep the scheme configured correctly, reconcile
+    every bank account every month, review each draft VAT Return against the prior quarter,
+    and pay by Direct Debit. Follow that routine and VAT is a small, predictable part of
+    running a UK business rather than a quarterly fire drill.
+  </p>
+
+  <p>
+    If the process still feels fragile, it is usually a sign that either the software is
+    wrong for the business, the scheme is misconfigured, or the bookkeeping discipline
+    behind it needs tightening up. Fix the cause, not the VAT Return itself.
+  </p>
+
+  <h2>Submitting a correction after the fact</h2>
+
+  <p>
+    Occasionally a submitted VAT Return turns out to be wrong. The rules depend on the size
+    of the error.
+  </p>
+
+  <ul>
+    <li>
+      <strong>Small errors</strong> (net value under the HMRC threshold and not deliberate)
+      can be adjusted on the next VAT Return. The accounting software's VAT adjustment
+      function handles this; document the reason in the supporting notes.
+    </li>
+    <li>
+      <strong>Larger errors</strong> or deliberate ones must be disclosed to HMRC formally
+      using the VAT error correction process (VAT652 or the online equivalent). Interest
+      may apply; penalties depend on behaviour.
+    </li>
+  </ul>
+
+  <p>
+    Do not repeatedly adjust VAT on successive returns to "fix" previous returns. It looks
+    like error stacking to HMRC and attracts review. One clean correction is always
+    preferable to three small adjustments across quarters.
+  </p>
+
+  <h2>Tips for a painless UK VAT quarter</h2>
+
+  <p>
+    A few practical habits that UK bookkeepers rely on to keep VAT quarters uneventful:
+  </p>
+
+  <ul>
+    <li>Reconcile every bank account weekly, not at quarter-end.</li>
+    <li>Capture supplier invoices as they arrive, not in a batch at month-end.</li>
+    <li>Use bank rules in the accounting software for recurring transactions.</li>
+    <li>Use document capture tools (Dext, AutoEntry, Hubdoc) to get supplier bills into the ledger quickly.</li>
+    <li>Close each month's VAT-related transactions before the next month starts.</li>
+    <li>Review the VAT liability account monthly for unusual balances.</li>
+    <li>Keep a short "VAT notes" document recording any unusual treatments, rulings, or adjustments during the quarter.</li>
+    <li>Set reminders 10 days and 2 days before the submission deadline.</li>
+    <li>Run the draft VAT Return at least a week before the deadline so there is time to investigate anomalies.</li>
+    <li>Keep the accountant in the loop on anything unusual — changes of scheme, new types of supply, cross-border transactions.</li>
+  </ul>
+
+  <h2>Training and handover inside the business</h2>
+
+  <p>
+    VAT submission is often owned by one person in a UK small business. That is a risk. If
+    that person leaves or is ill, someone else has to run the quarter. Training a
+    secondary user who understands the VAT workflow — even at a light touch — is worth the
+    time. Most accounting software lets you add additional users with VAT permissions;
+    use this to document the process, not just to provide cover.
+  </p>
+
+  <p>
+    A short internal handover document covering the VAT scheme in use, the deadline
+    cadence, the software submission process, the Direct Debit setup, and the accountant's
+    contact details makes the whole process resilient.
+  </p>
+
+  <h2>How Making Tax Digital changes the submission workflow</h2>
+
+  <p>
+    Before Making Tax Digital, UK businesses could type the nine boxes directly into
+    HMRC's online VAT return form. That is no longer allowed. Under MTD, the submission
+    must happen through software that holds the underlying digital records and transmits
+    them through HMRC's VAT API.
+  </p>
+
+  <p>What this means practically:</p>
+
+  <ul>
+    <li>Records must be kept in a digital format — accounting software or a spreadsheet plus bridging tool.</li>
+    <li>The link between records and the submitted return must be digital — no manual typing in between.</li>
+    <li>HMRC's old VAT online filing form is closed to most UK businesses.</li>
+    <li>Corrections must also flow through compatible software; they cannot be typed into HMRC's web form.</li>
+    <li>The authorisation your software has with HMRC lasts 18 months and can be renewed.</li>
+  </ul>
+
+  <p>
+    This shift is permanent. UK businesses still running on paper ledgers or pure
+    spreadsheets without bridging tools are out of compliance.
+  </p>
+
+  <h2>Quarterly vs annual vs monthly VAT periods</h2>
+
+  <p>
+    Most UK VAT-registered businesses submit quarterly. Some options exist:
+  </p>
+
+  <ul>
+    <li>
+      <strong>Quarterly (standard)</strong> — four VAT Returns per year. The default.
+    </li>
+    <li>
+      <strong>Monthly</strong> — twelve returns per year. Used mainly by businesses in
+      repayment position (reclaiming more VAT than they charge, e.g. exporters or
+      zero-rated suppliers) to receive repayments faster.
+    </li>
+    <li>
+      <strong>Annual accounting scheme</strong> — one annual return with interim payments
+      on account. Reduces admin frequency but requires reconciling payments on account at
+      year-end.
+    </li>
+  </ul>
+
+  <p>
+    Changing VAT period frequency requires HMRC agreement and is normally a good
+    conversation to have with your accountant before requesting.
+  </p>
+
+  <h2>What HMRC actually checks</h2>
+
+  <p>
+    HMRC's VAT compliance activity varies, but the common checks you can expect during a
+    review include:
+  </p>
+
+  <ul>
+    <li>Consistency between Box 6 and your declared turnover on other tax returns.</li>
+    <li>Ratio of VAT reclaimed (Box 4) to VAT charged (Box 1) — anomalies get flagged.</li>
+    <li>Supporting documentation for every item over a materiality threshold.</li>
+    <li>Proper VAT invoices on all reclaimed purchases.</li>
+    <li>Correct VAT treatment of cross-border supplies (post-Brexit rules).</li>
+    <li>Proper CIS reverse charge treatment for UK construction businesses.</li>
+    <li>Evidence of partial exemption calculations where applicable.</li>
+  </ul>
+
+  <p>
+    Accounting software produces much of this automatically if set up correctly. The key
+    is that the records are genuine and complete, not just that the software is modern.
+  </p>
+
+  <h2>When to get professional help</h2>
+
+  <p>
+    Most UK small businesses can handle VAT submission themselves once the software is set
+    up. Situations where professional help is worth the fee:
+  </p>
+
+  <ul>
+    <li>First VAT Return after registration — get the setup right from day one.</li>
+    <li>Moving between VAT schemes.</li>
+    <li>Partial exemption calculations.</li>
+    <li>Cross-border VAT, post-Brexit imports, EU Northern Ireland protocol.</li>
+    <li>CIS reverse charge in construction.</li>
+    <li>Margin schemes (second-hand goods, antiques, art).</li>
+    <li>Any HMRC investigation, even a routine check.</li>
+    <li>Error corrections above the HMRC threshold.</li>
+  </ul>
+
+  <p>
+    A good UK accountant charges far less for this kind of targeted help than the penalty
+    cost of getting it wrong. Know what you can handle and what you should outsource.
+  </p>
+</article>
