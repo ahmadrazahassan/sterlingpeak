@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mail, Mountain } from "lucide-react";
+import { ManageCookiesLink } from "@/components/public/manage-cookies-link";
 import { NewsletterForm } from "@/components/public/newsletter-form";
 
 type FooterSettings = {
@@ -102,6 +103,11 @@ export function SiteFooter({ footer }: Props) {
                         </Link>
                       </li>
                     ))}
+                    {col.title === "Legal" && (
+                      <li>
+                        <ManageCookiesLink />
+                      </li>
+                    )}
                   </ul>
                 </div>
               ))}

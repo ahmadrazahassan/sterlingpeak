@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
 import { DM_Sans, Inter } from "next/font/google";
+import { ConsentAnalytics } from "@/components/public/consent-analytics";
+import { CookieConsent } from "@/components/public/cookie-consent";
 import "./globals.css";
 
 const inter = Inter({
@@ -49,7 +50,8 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         {children}
-        <Analytics />
+        <CookieConsent />
+        <ConsentAnalytics />
       </body>
     </html>
   );
