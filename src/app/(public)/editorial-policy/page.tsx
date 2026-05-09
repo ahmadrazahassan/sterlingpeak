@@ -103,6 +103,23 @@ export default function EditorialPolicyPage() {
             </p>
           </Section>
 
+          <Section title="Pricing verification">
+            <p>
+              Software pricing changes frequently. We verify pricing information
+              at the time of publication and note the date of our most recent
+              check within each article. Readers should always confirm current
+              pricing directly with the provider before making a purchase
+              decision.
+            </p>
+            <p>
+              If you notice outdated pricing on any SterlingPeak article, please{" "}
+              <Link href="/contact" className="text-accent hover:underline">
+                contact our editorial team
+              </Link>{" "}
+              and we will update it promptly.
+            </p>
+          </Section>
+
           <Section title="Affiliate disclosure practices">
             <p>
               Pages containing affiliate links display a clear disclosure notice

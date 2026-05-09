@@ -56,23 +56,9 @@ export default function NewsletterPage() {
           </p>
         </div>
 
-        {/* Stats strip */}
-        <div className="mt-10 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-border-subtle bg-border-subtle">
-          {[
-            { label: "Every Thursday", value: "Weekly" },
-            { label: "Always", value: "Free" },
-            { label: "Read time", value: "5 min" },
-          ].map((s) => (
-            <div key={s.value} className="bg-white px-4 py-5 text-center">
-              <p className="font-heading text-lg font-semibold text-brand">
-                {s.value}
-              </p>
-              <p className="mt-0.5 text-[11px] text-muted-foreground">
-                {s.label}
-              </p>
-            </div>
-          ))}
-        </div>
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          Sent weekly on Thursdays. Free. Takes about 5 minutes to read.
+        </p>
 
         {/* What you get */}
         <div className="mt-14 space-y-6">
@@ -99,15 +85,17 @@ export default function NewsletterPage() {
           ))}
         </div>
 
-        {/* Trust note */}
-        <div className="mt-14 rounded-2xl bg-brand p-8 text-center">
-          <p className="font-heading text-lg font-semibold text-white">
-            Trusted by UK finance professionals
+        {/* Editorial note */}
+        <div className="mt-14 rounded-2xl border border-border-subtle bg-card p-6">
+          <p className="font-heading text-[15px] font-semibold text-brand">
+            Why subscribe?
           </p>
-          <p className="mx-auto mt-2 max-w-sm text-sm text-white/55">
-            SterlingPeak is read by accountants, bookkeepers, finance directors,
-            and founders across the United Kingdom who need reliable,
-            independent software intelligence.
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+            UK accounting and payroll regulations change frequently — MTD
+            deadlines shift, VAT thresholds get reviewed, software providers
+            update pricing without notice. The SterlingPeak Briefing tracks
+            these changes so you don&apos;t have to monitor them yourself.
+            Every issue is written by our editorial team, not auto-generated.
           </p>
         </div>
       </div>

@@ -57,8 +57,11 @@ export default async function ComparisonsPage({
             ))}
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
-            Additional filters (business size, industry, software type) can be layered as your
-            content library grows.
+            Every comparison evaluates real pricing, UK compliance support, feature
+            depth, and operational fit.{" "}
+            <Link href="/editorial-policy" className="text-accent hover:underline">
+              Read our methodology
+            </Link>
           </p>
         </div>
       </section>
@@ -79,21 +82,21 @@ export default async function ComparisonsPage({
                 )}
                 <CardContent className="p-6">
                   <div className="flex flex-wrap gap-2">
-                    {["Pricing", "VAT", "Payroll", "Reporting"].map((chip) => (
-                      <span
-                        key={chip}
-                        className="rounded-full bg-brand/5 px-2 py-0.5 text-[10px] font-medium text-brand"
-                      >
-                        {chip}
+                    {a.category && (
+                      <span className="rounded-full bg-accent/10 px-2 py-0.5 text-[10px] font-medium text-accent">
+                        {a.category.name}
                       </span>
-                    ))}
+                    )}
+                    <span className="rounded-full bg-brand/5 px-2 py-0.5 text-[10px] font-medium text-brand">
+                      Comparison
+                    </span>
+                    {a.reading_time != null && (
+                      <span className="rounded-full bg-brand/5 px-2 py-0.5 text-[10px] font-medium text-brand">
+                        {a.reading_time} min read
+                      </span>
+                    )}
                   </div>
-                  {a.category && (
-                    <p className="mt-3 text-xs uppercase tracking-wide text-muted-foreground">
-                      {a.category.name}
-                    </p>
-                  )}
-                  <h2 className="mt-2 font-heading text-lg font-semibold text-brand">{a.title}</h2>
+                  <h2 className="mt-3 font-heading text-lg font-semibold text-brand">{a.title}</h2>
                   {a.excerpt && (
                     <p className="mt-2 text-sm text-muted-foreground line-clamp-3">{a.excerpt}</p>
                   )}

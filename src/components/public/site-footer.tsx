@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mountain } from "lucide-react";
+import { Mail, Mountain } from "lucide-react";
 import { NewsletterForm } from "@/components/public/newsletter-form";
 
 type FooterSettings = {
@@ -69,8 +69,16 @@ export function SiteFooter({ footer }: Props) {
                 <p className="font-heading text-lg font-semibold tracking-tight">SterlingPeak</p>
               </div>
               <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-white/50">
-                {footer.supporting}
+                {footer.supporting ||
+                  "Independent UK publication covering accounting software, payroll, tax compliance, and business operations for SMEs and growing companies."}
               </p>
+              <a
+                href="mailto:hello@sterlingpeak.uk"
+                className="mt-4 inline-flex items-center gap-2 text-[13px] text-white/50 transition-colors hover:text-white"
+              >
+                <Mail className="h-3.5 w-3.5" />
+                hello@sterlingpeak.uk
+              </a>
             </div>
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {[

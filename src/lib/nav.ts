@@ -5,6 +5,7 @@ export const MAIN_NAV = [
   { label: "Comparisons", href: "/comparisons" },
   { label: "Payroll", href: "/categories/payroll-hr" },
   { label: "Tax & VAT", href: "/categories/vat-tax" },
+  { label: "Guides", href: "/categories/small-business-guides" },
   { label: "Industries", href: "/categories/industry-solutions" },
 ] as const;
 

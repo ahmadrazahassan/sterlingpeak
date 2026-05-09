@@ -114,9 +114,19 @@ export default async function ArticlePage({ params }: Props) {
           </div>
           {article.affiliate_disclosure_required && (
             <p className="mt-6 max-w-3xl rounded-2xl border border-border-subtle bg-card px-4 py-3 text-sm text-muted-foreground">
-              <strong className="text-brand">Disclosure:</strong> SterlingPeak may earn a
-              commission when you use partner links on this page. Editorial judgments stay
-              independent and practical for UK SMEs.
+              <strong className="text-brand">Disclosure:</strong> Some links in
+              this article are affiliate links. If you click through and sign up,
+              SterlingPeak may earn a commission at no extra cost to you. This
+              does not affect our editorial conclusions — all products are
+              evaluated independently based on features, pricing, compliance
+              support, and suitability for UK businesses. See our full{" "}
+              <Link
+                href="/affiliate-disclosure"
+                className="text-accent hover:underline"
+              >
+                Affiliate Disclosure
+              </Link>
+              .
             </p>
           )}
         </div>
@@ -135,6 +145,22 @@ export default async function ArticlePage({ params }: Props) {
             </div>
           )}
           <ArticleBody content={article.content} />
+
+          {article.updated_at && (
+            <div className="mt-10 rounded-xl border border-border-subtle bg-card px-4 py-3">
+              <p className="text-xs text-muted-foreground">
+                <strong className="text-brand">Pricing &amp; product details</strong>{" "}
+                verified as of{" "}
+                {new Date(article.updated_at).toLocaleDateString("en-GB", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+                . Features and pricing may have changed — visit the provider&apos;s
+                website for current information.
+              </p>
+            </div>
+          )}
         </article>
         <aside className="hidden md:block">
           {toc.length > 0 && (

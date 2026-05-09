@@ -107,6 +107,22 @@ export default function ContactPage() {
               SterlingPeak is based in the United Kingdom. We welcome enquiries
               from readers, software vendors, and media professionals.
             </p>
+            <div className="mt-6 flex items-center gap-3 rounded-xl border border-border-subtle bg-white px-4 py-3">
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-accent/10">
+                <Mail className="h-4 w-4 text-accent" />
+              </div>
+              <div>
+                <p className="text-[11px] font-medium text-muted-foreground/60">
+                  Email us directly
+                </p>
+                <a
+                  href="mailto:hello@sterlingpeak.uk"
+                  className="text-sm font-semibold text-brand hover:text-accent transition-colors"
+                >
+                  hello@sterlingpeak.uk
+                </a>
+              </div>
+            </div>
             <div className="mt-10 space-y-6">
               {contactReasons.map((r) => (
                 <div key={r.title} className="flex gap-4">

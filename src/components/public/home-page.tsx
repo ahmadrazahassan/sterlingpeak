@@ -138,6 +138,29 @@ export function HomePage({
         </div>
       </section>
 
+      {/* ── WHO WE HELP ── */}
+      <section className="border-b border-border-subtle bg-card/50">
+        <div className="mx-auto max-w-7xl px-6 py-5 md:px-8">
+          <div className="flex flex-wrap items-center justify-center gap-x-1.5 gap-y-1 text-[12px] text-brand/45">
+            <span className="font-medium">Written for</span>
+            {[
+              "sole traders",
+              "freelancers",
+              "limited company directors",
+              "finance managers",
+              "bookkeepers",
+              "accountants",
+            ].map((audience, i) => (
+              <span key={audience}>
+                {i > 0 && <span className="text-brand/20 mx-0.5">&middot;</span>}
+                {audience}
+              </span>
+            ))}
+            <span className="font-medium">across the UK</span>
+          </div>
+        </div>
+      </section>
+
       {/* ── LOGO MARQUEE ── */}
       <LogoMarquee />
 
@@ -164,9 +187,22 @@ export function HomePage({
               </div>
             </div>
           ) : (
-            <p className="mt-8 text-sm text-muted-foreground">
-              Articles will appear here once published from the admin panel.
-            </p>
+            <div className="mt-8 rounded-2xl border border-border-subtle bg-card p-8 text-center">
+              <p className="font-heading text-lg font-semibold text-brand">
+                New articles publishing soon
+              </p>
+              <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+                Our editorial team is preparing in-depth reviews, comparisons,
+                and compliance guides for UK businesses. Subscribe to our
+                newsletter to be notified when new content goes live.
+              </p>
+              <Link
+                href="/newsletter"
+                className="mt-5 inline-flex h-10 items-center gap-2 rounded-full bg-brand px-6 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
+              >
+                Get notified <ArrowRight className="h-3.5 w-3.5" />
+              </Link>
+            </div>
           )}
         </div>
       </MotionSection>

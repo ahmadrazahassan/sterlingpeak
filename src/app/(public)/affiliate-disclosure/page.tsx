@@ -50,6 +50,26 @@ export default function AffiliateDisclosurePage() {
 
           <Section title="Our editorial commitment">
             <div className="mt-2 rounded-2xl border border-border-subtle bg-white p-6">
+              <p className="mb-4">
+                SterlingPeak may earn a commission when readers click certain
+                links on this website and go on to sign up for or purchase a
+                product. This commission is paid by the software provider at no
+                additional cost to you. Our editorial team evaluates every
+                product independently using the same criteria, regardless of
+                whether an affiliate relationship exists. Commission arrangements
+                never influence which products we recommend, the conclusions we
+                reach, or the order in which products appear. We regularly
+                recommend products where we have no commercial relationship. If a
+                free or lower-cost tool is the better fit, we say so. For full
+                details on how we research and review products, see our{" "}
+                <Link
+                  href="/editorial-policy"
+                  className="text-accent hover:underline"
+                >
+                  Editorial Policy
+                </Link>
+                .
+              </p>
               <ul className="space-y-4">
                 {[
                   "Affiliate relationships do not influence editorial conclusions. Products are evaluated on features, compliance, usability, and value.",

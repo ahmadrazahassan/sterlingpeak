@@ -1,0 +1,74 @@
+import Link from "next/link";
+import { Mountain, ArrowRight, Search } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Page not found — SterlingPeak",
+  description:
+    "The page you're looking for doesn't exist. Browse our UK accounting, payroll, and business software guides instead.",
+};
+
+export default function NotFound() {
+  return (
+    <div className="flex min-h-screen flex-col">
+      <div className="flex flex-1 items-center justify-center px-4 py-20">
+        <div className="mx-auto max-w-lg text-center">
+          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand/[0.06]">
+            <Mountain className="h-7 w-7 text-brand" aria-hidden />
+          </div>
+
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">
+            404 — Page not found
+          </p>
+          <h1 className="mt-4 font-heading text-3xl font-semibold text-brand md:text-4xl">
+            This page doesn&apos;t exist
+          </h1>
+          <p className="mx-auto mt-4 max-w-md text-[15px] leading-relaxed text-muted-foreground">
+            The page you&apos;re looking for may have been moved, removed, or
+            never existed. Try one of the links below to get back on track.
+          </p>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/"
+              className="inline-flex h-11 items-center gap-2 rounded-full bg-brand px-7 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
+            >
+              Go to homepage
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href="/search"
+              className="inline-flex h-11 items-center gap-2 rounded-full border border-border-subtle bg-card px-7 text-sm font-semibold text-brand transition-colors hover:border-accent/40"
+            >
+              <Search className="h-4 w-4" />
+              Search articles
+            </Link>
+          </div>
+
+          <div className="mx-auto mt-12 max-w-sm border-t border-border-subtle pt-8">
+            <p className="text-xs font-heading font-semibold uppercase tracking-wide text-muted-foreground/50">
+              Popular sections
+            </p>
+            <nav className="mt-4 flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm">
+              <Link href="/comparisons" className="text-brand hover:text-accent">
+                Comparisons
+              </Link>
+              <Link href="/categories/accounting" className="text-brand hover:text-accent">
+                Accounting
+              </Link>
+              <Link href="/categories/payroll-hr" className="text-brand hover:text-accent">
+                Payroll & HR
+              </Link>
+              <Link href="/categories/vat-tax" className="text-brand hover:text-accent">
+                VAT & Tax
+              </Link>
+              <Link href="/contact" className="text-brand hover:text-accent">
+                Contact
+              </Link>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

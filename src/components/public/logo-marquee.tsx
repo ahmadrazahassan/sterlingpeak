@@ -28,7 +28,7 @@ export function LogoMarquee() {
         {/* Left label */}
         <div className="shrink-0 border-r border-brand/10 pr-6 md:pr-8">
           <span className="text-[11px] font-heading font-semibold uppercase tracking-[0.15em] text-brand/40">
-            We cover
+            Platforms we cover editorially
           </span>
         </div>
 

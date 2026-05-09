@@ -50,6 +50,9 @@ export function SiteHeader({ softwareFeatured, comparisonArticles }: Props) {
         </span>
         <span className="sm:hidden">UK SME software insights</span>
         <nav className="flex items-center gap-4" aria-label="Utility">
+          <Link href="/about" className="hover:text-accent transition-colors">
+            About
+          </Link>
           <Link href="/editorial-policy" className="hover:text-accent transition-colors">
             Editorial Policy
           </Link>
@@ -318,6 +321,9 @@ export function SiteHeader({ softwareFeatured, comparisonArticles }: Props) {
               </Link>
             </Button>
             <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
+              <Link href="/about" onClick={() => setMobileOpen(false)}>
+                About
+              </Link>
               <Link href="/editorial-policy" onClick={() => setMobileOpen(false)}>
                 Editorial Policy
               </Link>
