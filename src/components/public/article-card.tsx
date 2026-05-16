@@ -36,6 +36,13 @@ function Eyebrow({
   tone?: "accent" | "white";
 }) {
   const color = tone === "white" ? "text-white/85" : "text-accent";
+  const categoryName = article.category?.name?.toLowerCase() ?? "";
+  // Hide the redundant "Comparison" chip when the article is already in
+  // the Comparisons category — otherwise we get COMPARISONS  +  COMPARISON
+  // showing on every card in that section.
+  const showComparisonChip =
+    article.is_comparison && !categoryName.includes("comparison");
+
   return (
     <div className="flex items-center gap-2.5">
       {article.category && (
@@ -48,7 +55,7 @@ function Eyebrow({
           {article.category.name}
         </span>
       )}
-      {article.is_comparison && (
+      {showComparisonChip && (
         <span
           className={cn(
             "rounded-full px-2.5 py-0.5 text-[10px] font-heading font-semibold uppercase tracking-[0.14em]",
@@ -301,6 +308,66 @@ export function ArticleCardHorizontal({ article, className }: BaseProps) {
         <div className="mt-3">
           <Meta article={article} />
         </div>
+      </div>
+    </Link>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   Numbered-rank card. Big numeral on the left, content in the middle,
+   small square thumb on the right. Used for ranked lists like
+   "Recently published" or "Most read this week" — gives the page a
+   distinctly different rhythm from the standard image-on-top grid.
+   ────────────────────────────────────────────────────────────────── */
+
+export function ArticleCardIndex({
+  article,
+  index,
+  className,
+}: BaseProps & { index: number }) {
+  return (
+    <Link
+      href={`/article/${article.slug}`}
+      className={cn(
+        "group grid items-center gap-6 py-7 md:grid-cols-[auto_minmax(0,1fr)_auto] md:gap-10",
+        className,
+      )}
+    >
+      <span
+        className="font-heading text-[3rem] font-semibold leading-none tracking-[-0.04em] text-brand/15 transition-colors duration-300 group-hover:text-accent/80 md:text-[4rem]"
+        aria-hidden
+      >
+        {String(index).padStart(2, "0")}
+      </span>
+
+      <div className="min-w-0">
+        <Eyebrow article={article} />
+        <h3 className="mt-2.5 font-heading text-[1.2rem] font-semibold leading-[1.22] tracking-[-0.01em] text-brand transition-colors group-hover:text-accent line-clamp-2 md:text-[1.45rem]">
+          {article.title}
+        </h3>
+        {article.excerpt && (
+          <p className="mt-2.5 hidden text-[14px] leading-relaxed text-muted-foreground line-clamp-2 md:block">
+            {article.excerpt}
+          </p>
+        )}
+        <div className="mt-3">
+          <Meta article={article} />
+        </div>
+      </div>
+
+      <div className="relative hidden aspect-square w-[140px] shrink-0 overflow-hidden rounded-2xl bg-brand/[0.04] ring-1 ring-inset ring-brand/[0.04] md:block lg:w-[170px]">
+        {article.thumbnail_url ? (
+          <img
+            src={article.thumbnail_url}
+            alt=""
+            loading="lazy"
+            className="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+          />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center text-sm font-medium text-brand/20">
+            SterlingPeak
+          </div>
+        )}
       </div>
     </Link>
   );
