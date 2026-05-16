@@ -7,6 +7,8 @@ export const metadata: Metadata = {
     "How SterlingPeak uses cookies and similar technologies on sterlingpeak.uk.",
 };
 
+const COOKIE_POLICY_LAST_UPDATED = "16 May 2026";
+
 const cookies = [
   {
     category: "Essential",
@@ -42,8 +44,9 @@ export default function CookiePolicyPage() {
           <h1 className="mt-3 font-heading text-4xl font-semibold text-brand">
             Cookie policy
           </h1>
-          <p className="mt-4 text-sm text-muted-foreground">
-            Last updated: 1 May 2026
+          <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-cta/10 px-3 py-1 text-[12px] font-heading font-medium text-cta ring-1 ring-inset ring-cta/15">
+            <span aria-hidden className="inline-block h-[6px] w-[6px] rounded-[1.5px] bg-cta" />
+            Last updated: {COOKIE_POLICY_LAST_UPDATED}
           </p>
         </div>
       </section>

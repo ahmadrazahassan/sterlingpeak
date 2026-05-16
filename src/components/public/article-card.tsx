@@ -18,7 +18,8 @@ import { cn } from "@/lib/utils";
      3. Feature    — primary 2-up card
      4. Standard   — 3-up grid card
      5. Horizontal — compact image-left, text-right
-     6. Poster     — full-bleed image with overlay title (highest impact)
+     6. Index      — numbered ranking entry (square thumb on right)
+     7. Poster     — full-bleed image with overlay headline
    ────────────────────────────────────────────────────────────────── */
 
 type BaseProps = {
@@ -37,7 +38,7 @@ function Eyebrow({
 }) {
   const color = tone === "white" ? "text-white/85" : "text-accent";
   const categoryName = article.category?.name?.toLowerCase() ?? "";
-  // Hide the redundant "Comparison" chip when the article is already in
+  // Hide the redundant Comparison chip when the article is already in
   // the Comparisons category — otherwise we get COMPARISONS  +  COMPARISON
   // showing on every card in that section.
   const showComparisonChip =
@@ -162,9 +163,8 @@ export function ArticleCardHero({ article, className }: BaseProps) {
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   2. MAGAZINE — wide horizontal split. One large image on the left,
-   typography on the right. Used as a full-width single card to break
-   the rhythm of grids.
+   2. MAGAZINE — wide horizontal split. One large image on one side,
+   typography on the other.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardMagazine({
@@ -213,8 +213,7 @@ export function ArticleCardMagazine({
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   3. FEATURE — primary 2-up card. Strong 16:9 image and a confident
-   editorial headline.
+   3. FEATURE — primary 2-up card.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardFeature({ article, className }: BaseProps) {
@@ -243,8 +242,7 @@ export function ArticleCardFeature({ article, className }: BaseProps) {
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   4. STANDARD — 3-up grid card. 16:9 image (matches source artwork
-   so nothing is cropped). Generous typography below.
+   4. STANDARD — 3-up grid card.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardStandard({ article, className }: BaseProps) {
@@ -273,8 +271,7 @@ export function ArticleCardStandard({ article, className }: BaseProps) {
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   5. HORIZONTAL — compact card with the image on the left.
-   Designed for narrow rails next to a hero post.
+   5. HORIZONTAL — compact image-left, text-right.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardHorizontal({ article, className }: BaseProps) {
@@ -314,10 +311,9 @@ export function ArticleCardHorizontal({ article, className }: BaseProps) {
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   Numbered-rank card. Big numeral on the left, content in the middle,
-   small square thumb on the right. Used for ranked lists like
-   "Recently published" or "Most read this week" — gives the page a
-   distinctly different rhythm from the standard image-on-top grid.
+   6. INDEX — numbered ranking entry. Big numeral on the left, content
+   in the middle, small square thumb on the right. Used for ranked
+   editorial lists.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardIndex({
@@ -374,9 +370,7 @@ export function ArticleCardIndex({
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   6. POSTER — full-bleed image with overlay headline. Used for the
-   highest-impact placements (lead of the comparisons section, lead
-   of a category page).
+   7. POSTER — full-bleed image with overlay headline.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardPoster({ article, className }: BaseProps) {

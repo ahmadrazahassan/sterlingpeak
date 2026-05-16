@@ -7,6 +7,8 @@ export const metadata: Metadata = {
     "How SterlingPeak collects, uses, and protects your personal information in accordance with UK GDPR and the Data Protection Act 2018.",
 };
 
+const POLICY_LAST_UPDATED = "16 May 2026";
+
 export default function PrivacyPolicyPage() {
   return (
     <>
@@ -18,8 +20,9 @@ export default function PrivacyPolicyPage() {
           <h1 className="mt-3 font-heading text-4xl font-semibold text-brand">
             Privacy policy
           </h1>
-          <p className="mt-4 text-sm text-muted-foreground">
-            Last updated: 1 May 2026
+          <p className="mt-4 inline-flex items-center gap-2 rounded-full bg-cta/10 px-3 py-1 text-[12px] font-heading font-medium text-cta ring-1 ring-inset ring-cta/15">
+            <span aria-hidden className="inline-block h-[6px] w-[6px] rounded-[1.5px] bg-cta" />
+            Last updated: {POLICY_LAST_UPDATED}
           </p>
         </div>
       </section>
@@ -28,11 +31,21 @@ export default function PrivacyPolicyPage() {
         <div className="space-y-10 text-[15px] leading-relaxed text-muted-foreground">
           <Section title="1. Who we are">
             <p>
-              SterlingPeak (&quot;we&quot;, &quot;our&quot;, &quot;us&quot;)
-              operates sterlingpeak.uk, an independent UK publication covering
-              accounting, payroll, and business software for SMEs. We are the
-              data controller for personal information collected through this
-              website.
+              SterlingPeak (sterlingpeak.uk) is an independent UK editorial
+              publication covering accounting, payroll, tax, and business
+              software for UK SMEs. SterlingPeak is operated by{" "}
+              <strong className="text-brand">Hafiza Ayesha Waheed</strong>, a
+              sole-trader publisher based in Greater Manchester, England,
+              United Kingdom, who is the data controller for personal
+              information collected through this website. You can reach the
+              controller at{" "}
+              <a
+                href="mailto:hello@sterlingpeak.uk"
+                className="text-accent hover:underline"
+              >
+                hello@sterlingpeak.uk
+              </a>
+              .
             </p>
           </Section>
 
@@ -185,11 +198,31 @@ export default function PrivacyPolicyPage() {
 
           <Section title="10. Contact">
             <p>
-              For privacy-related enquiries, please{" "}
+              For privacy-related enquiries, write to{" "}
+              <a
+                href="mailto:hello@sterlingpeak.uk"
+                className="text-accent hover:underline"
+              >
+                hello@sterlingpeak.uk
+              </a>{" "}
+              with the subject &quot;Privacy enquiry&quot;, or{" "}
               <Link href="/contact" className="text-accent hover:underline">
-                contact us
-              </Link>{" "}
-              with the subject &quot;Privacy enquiry&quot;.
+                use the contact form
+              </Link>
+              . You may also lodge a complaint with the Information
+              Commissioner&apos;s Office (ICO) at{" "}
+              <a
+                href="https://ico.org.uk"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-accent hover:underline"
+              >
+                ico.org.uk
+              </a>
+              .
+            </p>
+            <p className="text-[12.5px] text-muted-foreground/70">
+              Last updated: {POLICY_LAST_UPDATED}.
             </p>
           </Section>
         </div>

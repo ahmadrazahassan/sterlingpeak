@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, Inter } from "next/font/google";
+import { DM_Sans, Inter, Caveat } from "next/font/google";
 import { ConsentAnalytics } from "@/components/public/consent-analytics";
 import { CookieConsent } from "@/components/public/cookie-consent";
 import "./globals.css";
@@ -14,6 +14,13 @@ const dmSans = DM_Sans({
   subsets: ["latin"],
   variable: "--font-heading-family",
   display: "swap",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-signature",
+  display: "swap",
+  weight: ["500", "600"],
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sterlingpeak.uk";
@@ -49,7 +56,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${inter.variable} ${dmSans.variable} h-full antialiased`}
+      className={`${inter.variable} ${dmSans.variable} ${caveat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         {children}

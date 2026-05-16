@@ -23,6 +23,7 @@
   --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-heading-family), "Google Sans", "Product Sans",
     var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-signature: var(--font-signature), "Caveat", "Brush Script MT", cursive;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -45,6 +46,10 @@ body {
   font-family: var(--font-heading);
 }
 
+.font-signature {
+  font-family: var(--font-signature);
+}
+
 @keyframes scroll-rtl {
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-25%, 0, 0); }
@@ -64,8 +69,8 @@ body {
    ═══════════════════════════════════════════════════ */
 
 .article-content {
-  font-size: 1.0625rem;
-  line-height: 1.8;
+  font-size: 1.125rem;
+  line-height: 1.78;
   color: var(--muted);
 }
 

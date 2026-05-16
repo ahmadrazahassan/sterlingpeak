@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/client";
-import { Mountain } from "lucide-react";
+import { Logo } from "@/components/public/logo";
 
 const schema = z.object({
   email: z.string().email(),
@@ -47,13 +47,7 @@ export function AdminLoginForm() {
       <div className="w-full max-w-[400px]">
         {/* Logo */}
         <div className="mb-10 flex flex-col items-center">
-          <Link href="/" className="flex items-center gap-2.5">
-            <span className="relative flex h-10 w-10 items-center justify-center rounded-2xl bg-white shadow-sm">
-              <Mountain className="h-5 w-5 text-brand" aria-hidden />
-              <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full border-2 border-[#f5f5f5] bg-cta" />
-            </span>
-            <span className="font-heading text-xl font-semibold text-brand">SterlingPeak</span>
-          </Link>
+          <Logo variant="full" size="lg" />
         </div>
 
         {/* Card */}

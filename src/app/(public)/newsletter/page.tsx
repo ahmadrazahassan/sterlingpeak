@@ -1,7 +1,11 @@
 import Link from "next/link";
 import { Calendar, Check, Mail, ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
+import { LinkedInBrand } from "@/components/public/linkedin-brand";
 import { NewsletterForm } from "@/components/public/newsletter-form";
+
+const EDITOR_LINKEDIN_URL =
+  "https://www.linkedin.com/in/hafiza-ayesha-waheed-4a457440a/";
 
 export const metadata: Metadata = {
   title: "The SterlingPeak Briefing — UK accounting, payroll & MTD intelligence",
@@ -222,7 +226,19 @@ export default function NewsletterPage() {
             Hafiza Ayesha Waheed
           </h2>
           <p className="mt-1 text-[14px] font-medium text-accent">
-            Founder &amp; Editor-in-Chief, SterlingPeak
+            Founder &amp; Editor-in-Chief, SterlingPeak &middot; Greater
+            Manchester, England
+          </p>
+          <p className="mt-3">
+            <a
+              href={EDITOR_LINKEDIN_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-[13px] font-heading font-medium text-brand transition-colors hover:text-cta"
+            >
+              <LinkedInBrand className="h-3.5 w-3.5" />
+              Connect on LinkedIn
+            </a>
           </p>
           <div className="mt-6 space-y-4 text-[15px] leading-relaxed text-muted-foreground">
             <p>

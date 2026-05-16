@@ -123,7 +123,9 @@ export default function EditorialPolicyPage() {
           <Section title="Affiliate disclosure practices">
             <p>
               Pages containing affiliate links display a clear disclosure notice
-              near the top of the article. We also maintain a dedicated{" "}
+              near the top of the article, naming the affiliate relationships
+              that apply, with the date pricing was last verified. We also
+              maintain a dedicated{" "}
               <Link
                 href="/affiliate-disclosure"
                 className="text-accent hover:underline"
@@ -132,6 +134,67 @@ export default function EditorialPolicyPage() {
               </Link>{" "}
               page that explains our commercial relationships in full.
             </p>
+          </Section>
+
+          <Section title="Where Sage fits in our coverage">
+            <p>
+              Sage is the most widely deployed UK accounting and payroll
+              software stack across small business, SMB, and mid-market
+              segments, and it sits at the centre of our reviews because that
+              is where most of our readers operate.
+            </p>
+            <p>
+              We cover the full Sage UK product line at the editorial level —
+              Sage Sole Trader, Sage Accounting, Sage 50, Sage Payroll, Sage
+              HR, Sage 200, Sage Intacct, and Sage X3. SterlingPeak
+              participates in the Sage UK affiliate programme. Where Sage is
+              genuinely the best fit for a UK business profile we say so;
+              where another product is the better fit (FreeAgent for some
+              freelancer setups, BrightPay for some payroll-only users, Xero
+              for some bookkeeping practices), we say that instead.
+            </p>
+            <p>
+              Sage product positioning, pricing, and feature claims are
+              verified each VAT cycle against Sage&apos;s UK pricing pages and
+              Sage UK partner documentation. Where Sage updates pricing,
+              releases new SKUs, or changes plan structure, the relevant
+              article is updated and the verification date refreshed.
+            </p>
+          </Section>
+
+          <Section title="Operating specifics">
+            <ul className="list-disc space-y-2 pl-6">
+              <li>
+                <strong className="text-brand">Pricing re-verification:</strong>{" "}
+                vendor pricing on every active review and comparison is
+                re-verified at the start of each VAT quarter (January, April,
+                July, October).
+              </li>
+              <li>
+                <strong className="text-brand">Minimum article depth:</strong>{" "}
+                product reviews are a minimum 2,000 words and comparisons a
+                minimum 2,500 words. Articles below these thresholds are not
+                published.
+              </li>
+              <li>
+                <strong className="text-brand">Conflict declarations:</strong>{" "}
+                where the editor or contributor has a personal relationship
+                with a named product or vendor, this is declared inline at the
+                top of the article.
+              </li>
+              <li>
+                <strong className="text-brand">Pre-publication review:</strong>{" "}
+                every article is reviewed by the editor for accuracy, UK
+                compliance framing, and disclosure placement before
+                publication.
+              </li>
+              <li>
+                <strong className="text-brand">Correction handling:</strong>{" "}
+                factual corrections are addressed within 24 hours of becoming
+                aware of the error. Material corrections are noted at the foot
+                of the article with the correction date.
+              </li>
+            </ul>
           </Section>
 
           <div className="rounded-2xl border border-border-subtle bg-white p-6">

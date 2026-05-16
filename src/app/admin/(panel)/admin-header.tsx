@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Mountain, Plus, ExternalLink, LogOut, Menu, X } from "lucide-react";
+import { Plus, ExternalLink, LogOut, Menu, X } from "lucide-react";
 import { signOutAdmin } from "@/app/admin/actions";
+import { Logo } from "@/components/public/logo";
 import { cn } from "@/lib/utils";
 
 type NavItem = { href: string; label: string };
@@ -48,14 +49,8 @@ export function AdminHeader({ nav, email }: Props) {
       <header className="mx-auto max-w-6xl rounded-2xl border border-black/[0.05] bg-white/90 shadow-[0_4px_24px_-4px_rgba(0,0,0,0.06)] backdrop-blur-2xl">
         <div className="flex h-12 items-center justify-between gap-3 px-4 md:px-5">
           {/* Left: logo */}
-          <Link href="/admin" className="flex items-center gap-2">
-            <span className="relative flex h-7 w-7 items-center justify-center rounded-lg bg-brand">
-              <Mountain className="h-3.5 w-3.5 text-white" aria-hidden />
-              <span className="absolute -right-0.5 -top-0.5 h-[7px] w-[7px] rounded-full border-[1.5px] border-white bg-cta" />
-            </span>
-            <span className="hidden font-heading text-[13px] font-semibold text-brand sm:inline">
-              SterlingPeak
-            </span>
+          <Link href="/admin" aria-label="SterlingPeak admin" className="flex items-center">
+            <Logo variant="full" size="sm" asLink={false} />
           </Link>
 
           {/* Center: nav pills */}

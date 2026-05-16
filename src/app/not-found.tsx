@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Mountain, ArrowRight, Search } from "lucide-react";
+import { ArrowRight, Search } from "lucide-react";
+import { LogoMark } from "@/components/public/logo";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,8 +14,8 @@ export default function NotFound() {
     <div className="flex min-h-screen flex-col">
       <div className="flex flex-1 items-center justify-center px-4 py-20">
         <div className="mx-auto max-w-lg text-center">
-          <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-brand/[0.06]">
-            <Mountain className="h-7 w-7 text-brand" aria-hidden />
+          <div className="mx-auto mb-6 flex items-center justify-center">
+            <LogoMark size={56} />
           </div>
 
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-accent">

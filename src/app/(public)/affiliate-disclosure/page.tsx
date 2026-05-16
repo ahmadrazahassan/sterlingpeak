@@ -30,21 +30,28 @@ export default function AffiliateDisclosurePage() {
           <Section title="How SterlingPeak earns revenue">
             <p>
               SterlingPeak is free to read. We earn revenue through affiliate
-              commissions — when you click certain links on our site and go on to
-              subscribe to or purchase a product, the software provider may pay
-              us a referral fee. This comes at no extra cost to you. The price
-              you pay is the same whether you use our link or go directly to the
-              provider&apos;s website.
+              commissions when readers click certain links and go on to
+              subscribe to or purchase a product, including but not limited to
+              Sage UK products. Sage UK is our primary editorial focus and our
+              largest affiliate relationship. Commission is paid by the
+              software provider at no extra cost to you, and the price you pay
+              is identical whether you use our link or go directly to the
+              provider&apos;s website. Commission never determines which
+              products we recommend, the order they appear in, or how we score
+              them.
             </p>
           </Section>
 
           <Section title="Which programmes we participate in">
             <p>
-              We participate in affiliate and referral programmes operated by UK
-              accounting, payroll, and business software providers. The specific
-              partnerships we hold may change over time as we expand our
-              coverage. Where an article contains affiliate links, it is clearly
-              marked with a disclosure notice near the top of the page.
+              SterlingPeak participates in affiliate and referral programmes
+              operated by UK accounting, payroll, and business software
+              providers. Our active programmes include the{" "}
+              <strong className="text-brand">Sage UK affiliate programme</strong>{" "}
+              and other UK-relevant providers we cover editorially. Where an
+              article contains affiliate links, it is clearly marked with a
+              disclosure notice near the top of the page, naming the affiliate
+              relationships that apply and the date pricing was last verified.
             </p>
           </Section>
 

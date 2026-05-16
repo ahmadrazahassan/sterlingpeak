@@ -453,8 +453,8 @@ insert into public.site_settings (key, value)
 values
   ('hero', '{
     "eyebrow": "Independent UK Finance Publication",
-    "heading": "The accounting and payroll intelligence UK businesses read first",
-    "description": "SterlingPeak publishes in-depth comparisons, editorial guides, and compliance-focused analysis for Sage, Xero, QuickBooks, and the platforms UK SMEs depend on every day.",
+    "heading": "UK accounting and payroll software, reviewed properly.",
+    "description": "Editorial reviews and head-to-head comparisons of Sage, Xero, QuickBooks, FreeAgent, and the payroll, VAT, and operations software UK SMEs actually run on. Written for HMRC, Making Tax Digital, and UK GAAP — not US tax law translated into pounds.",
     "ctaPrimaryLabel": "Read our comparisons",
     "ctaPrimaryHref": "/comparisons",
     "ctaSecondaryLabel": "Browse editorial guides",
@@ -507,6 +507,26 @@ values
     }
   }'::jsonb)
 on conflict (key) do nothing;
+
+-- ────────────────────────────────────────────────────────────────────────────
+-- HERO COPY — re-apply on every run.
+-- The block above uses `on conflict do nothing` so it will not overwrite a
+-- previously seeded hero row. We deliberately update the hero key on every
+-- run so the live site picks up editorial revisions to the headline.
+-- ────────────────────────────────────────────────────────────────────────────
+
+update public.site_settings
+set value = '{
+  "eyebrow": "Independent UK Finance Publication",
+  "heading": "UK accounting and payroll software, reviewed properly.",
+  "description": "Editorial reviews and head-to-head comparisons of Sage, Xero, QuickBooks, FreeAgent, and the payroll, VAT, and operations software UK SMEs actually run on. Written for HMRC, Making Tax Digital, and UK GAAP — not US tax law translated into pounds.",
+  "ctaPrimaryLabel": "Read the comparisons",
+  "ctaPrimaryHref": "/comparisons",
+  "ctaSecondaryLabel": "Editorial guides",
+  "ctaSecondaryHref": "/categories/accounting"
+}'::jsonb,
+    updated_at = now()
+where key = 'hero';
 
 -- ────────────────────────────────────────────────────────────────────────────
 -- ADMIN USER

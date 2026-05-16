@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none">
+  <!-- iOS strips transparency on home-screen icons, so we render the
+       SterlingPeak mark on a brand-navy plate with comfortable padding.
+       Geometry is identical to the favicon and header LogoMark, scaled
+       up and centred on a 180×180 grid. -->
+  <rect width="180" height="180" rx="40" fill="#003748"/>
+  <g transform="translate(45 45) scale(2.8125)">
+    <rect x="3" y="3" width="10" height="10" rx="2.4" fill="#ffffff"/>
+    <rect x="15" y="15" width="14" height="14" rx="3.2" fill="#ffffff"/>
+    <rect x="13" y="13" width="2.4" height="2.4" rx="0.6" fill="#22ad01"/>
+  </g>
+</svg>

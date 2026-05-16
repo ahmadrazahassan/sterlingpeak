@@ -1,7 +1,12 @@
 import Link from "next/link";
-import { Mail, Mountain } from "lucide-react";
+import { Mail } from "lucide-react";
+import { Logo } from "@/components/public/logo";
+import { LinkedInBrand } from "@/components/public/linkedin-brand";
 import { ManageCookiesLink } from "@/components/public/manage-cookies-link";
 import { NewsletterForm } from "@/components/public/newsletter-form";
+
+const EDITOR_LINKEDIN_URL =
+  "https://www.linkedin.com/in/hafiza-ayesha-waheed-4a457440a/";
 
 type FooterSettings = {
   statement: string;
@@ -62,24 +67,34 @@ export function SiteFooter({ footer }: Props) {
         <div className="mx-auto max-w-7xl px-6 py-14 md:px-8">
           <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
             <div>
-              <div className="flex items-center gap-2">
-                <span className="relative flex h-8 w-8 items-center justify-center rounded-xl bg-white/10">
-                  <Mountain className="h-4 w-4 text-white" aria-hidden />
-                  <span className="absolute -right-0.5 -top-0.5 h-2 w-2 rounded-full bg-cta" />
-                </span>
-                <p className="font-heading text-lg font-semibold tracking-tight">SterlingPeak</p>
-              </div>
-              <p className="mt-3 max-w-xs text-[13px] leading-relaxed text-white/50">
+              <Logo variant="full" size="md" tone="dark" />
+              <p className="mt-4 max-w-xs text-[13px] leading-relaxed text-white/55">
                 {footer.supporting ||
                   "Independent UK publication covering accounting software, payroll, tax compliance, and business operations for SMEs and growing companies."}
               </p>
-              <a
-                href="mailto:hello@sterlingpeak.uk"
-                className="mt-4 inline-flex items-center gap-2 text-[13px] text-white/50 transition-colors hover:text-white"
-              >
-                <Mail className="h-3.5 w-3.5" />
-                hello@sterlingpeak.uk
-              </a>
+              <ul className="mt-6 flex flex-col gap-3 text-[13px]">
+                <li>
+                  <a
+                    href="mailto:hello@sterlingpeak.uk"
+                    className="inline-flex items-center gap-2.5 text-white/55 transition-colors hover:text-white"
+                  >
+                    <Mail className="h-3.5 w-3.5 shrink-0" />
+                    <span>hello@sterlingpeak.uk</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href={EDITOR_LINKEDIN_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Editor on LinkedIn"
+                    className="inline-flex items-center gap-2.5 text-white/55 transition-colors hover:text-white"
+                  >
+                    <LinkedInBrand className="h-3.5 w-3.5 shrink-0" variant="mono" />
+                    <span>LinkedIn</span>
+                  </a>
+                </li>
+              </ul>
             </div>
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {[
@@ -115,14 +130,61 @@ export function SiteFooter({ footer }: Props) {
           </div>
         </div>
 
-        {/* Bottom bar */}
+        {/* Publisher block + bottom bar */}
         <div className="border-t border-white/8">
-          <div className="mx-auto flex max-w-7xl flex-col items-center gap-3 px-6 py-5 text-[11px] text-white/35 sm:flex-row sm:justify-between md:px-8">
-            <p>&copy; {new Date().getFullYear()} SterlingPeak. All rights reserved.</p>
-            <p>sterlingpeak.uk</p>
-            <a href="#top" className="transition-colors hover:text-white">
-              Back to top &uarr;
-            </a>
+          <div className="mx-auto max-w-7xl px-6 py-10 md:px-8">
+            {/* Three-line publisher block */}
+            <dl className="grid gap-x-10 gap-y-5 text-[12.5px] leading-relaxed md:grid-cols-3">
+              <div>
+                <dt className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.22em] text-white/35">
+                  Publisher
+                </dt>
+                <dd className="mt-2 text-white/65">
+                  Hafiza Ayesha Waheed, sole-trader publisher based in
+                  Greater Manchester, England, United Kingdom.
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.22em] text-white/35">
+                  Correspondence
+                </dt>
+                <dd className="mt-2 text-white/65">
+                  <a
+                    href="mailto:hello@sterlingpeak.uk"
+                    className="text-white underline-offset-2 transition-colors hover:text-cta hover:underline"
+                  >
+                    hello@sterlingpeak.uk
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.22em] text-white/35">
+                  Data &amp; privacy
+                </dt>
+                <dd className="mt-2 text-white/65">
+                  See our{" "}
+                  <Link
+                    href="/privacy-policy"
+                    className="text-white underline-offset-2 transition-colors hover:text-cta hover:underline"
+                  >
+                    Privacy Policy
+                  </Link>{" "}
+                  for UK GDPR enquiries.
+                </dd>
+              </div>
+            </dl>
+
+            {/* Bottom rule */}
+            <div className="mt-10 flex flex-col items-start gap-3 border-t border-white/[0.06] pt-6 text-[11px] text-white/35 sm:flex-row sm:items-center sm:justify-between">
+              <p>
+                &copy; {new Date().getFullYear()} SterlingPeak. All rights
+                reserved.
+              </p>
+              <p>sterlingpeak.uk</p>
+              <a href="#top" className="transition-colors hover:text-white">
+                Back to top &uarr;
+              </a>
+            </div>
           </div>
         </div>
       </div>

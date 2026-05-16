@@ -1,21 +1,19 @@
-import type {
-  TrustSectionJson,
-} from "@/lib/settings-types";
+import type { TrustSectionJson } from "@/lib/settings-types";
 
 export const DEFAULT_TRUST: TrustSectionJson = {
-  title: "Our editorial commitments",
+  title: "How we work",
   columns: [
     {
-      title: "Independent editorial",
-      body: "Our writers and editors operate independently. Software vendors have no influence over our conclusions, scores, or recommendations.",
+      title: "UK-only editorial",
+      body: "Every guide is written for HMRC, UK VAT schemes, PAYE RTI, auto-enrolment and Making Tax Digital — not US tax law translated into pounds.",
     },
     {
-      title: "Research-backed analysis",
-      body: "Every comparison evaluates real pricing, actual feature sets, and UK-specific compliance support — not press releases.",
+      title: "Pricing verified each quarter",
+      body: "We verify vendor pricing in GBP with each VAT cycle. Reviews carry a verified date so readers know when the figures were last checked.",
     },
     {
-      title: "Transparent affiliate disclosure",
-      body: "Some links earn SterlingPeak a referral commission. We disclose every affiliate relationship and never let it shape editorial outcomes.",
+      title: "Affiliate disclosure on every page",
+      body: "Where SterlingPeak earns a referral commission, we disclose it inline. Commission never determines what we recommend or how we score it.",
     },
   ],
 };

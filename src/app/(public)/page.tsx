@@ -20,24 +20,24 @@ import { DEFAULT_TRUST } from "@/lib/default-content";
 const fallbacks = {
   hero: {
     eyebrow: "Independent UK Finance Publication",
-    heading: "The accounting and payroll intelligence UK businesses read first",
+    heading: "UK accounting and payroll software, reviewed properly.",
     description:
-      "SterlingPeak publishes in-depth comparisons, editorial guides, and compliance-focused analysis for Sage, Xero, QuickBooks, and the platforms UK SMEs depend on every day.",
-    ctaPrimaryLabel: "Read our comparisons",
+      "Editorial reviews and head-to-head comparisons of Sage, Xero, QuickBooks, FreeAgent, and the payroll, VAT, and operations software UK SMEs actually run on. Written for HMRC, Making Tax Digital, and UK GAAP — not US tax law translated into pounds.",
+    ctaPrimaryLabel: "Read the comparisons",
     ctaPrimaryHref: "/comparisons",
-    ctaSecondaryLabel: "Browse editorial guides",
+    ctaSecondaryLabel: "Editorial guides",
     ctaSecondaryHref: "/categories/accounting",
   } satisfies HeroJson,
   featured_comparisons_section: {
-    title: "Head-to-head software comparisons",
+    title: "Software, compared properly.",
     subtitle:
-      "Side-by-side analysis of UK accounting, payroll, and business platforms — pricing, MTD compliance, integrations, and workflow trade-offs.",
+      "Real GBP pricing, MTD support, payroll and HR fit, and where each platform breaks. Updated as vendors and HMRC rules change.",
   } satisfies FeaturedComparisonsSectionJson,
-  latest_section: { title: "Recently published" } satisfies LatestSectionJson,
+  latest_section: { title: "From the desk" } satisfies LatestSectionJson,
   newsletter_section: {
-    title: "The SterlingPeak Briefing",
+    title: "One UK finance email a week. Worth opening.",
     description:
-      "A weekly dispatch covering UK software updates, HMRC changes, and the editorial analysis our readers rely on.",
+      "Software pricing changes, HMRC updates, MTD deadlines, and the editorial analysis the desk thinks UK finance teams should read this week.",
   } satisfies NewsletterSectionJson,
   trust_section: DEFAULT_TRUST,
 };
