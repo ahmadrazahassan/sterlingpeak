@@ -1,7 +1,15 @@
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { NewsletterForm } from "@/components/public/newsletter-form";
 import { LogoMarquee } from "@/components/public/logo-marquee";
+import {
+  ArticleCardFeature,
+  ArticleCardHero,
+  ArticleCardHorizontal,
+  ArticleCardPoster,
+  ArticleCardStandard,
+  SectionHeader,
+} from "@/components/public/article-card";
 import type { ArticleRow } from "@/lib/queries/articles";
 import type { CategoryRow } from "@/lib/queries/categories";
 import type {
@@ -25,71 +33,6 @@ type Props = {
   articlesByCategory: Record<string, ArticleRow[]>;
 };
 
-function ArticleCard({ article }: { article: ArticleRow }) {
-  return (
-    <Link href={`/article/${article.slug}`} className="group block">
-      <div className="flex gap-4">
-        {article.thumbnail_url ? (
-          <img
-            src={article.thumbnail_url}
-            alt=""
-            className="h-[72px] w-[100px] shrink-0 rounded-xl object-cover bg-brand/[0.03]"
-          />
-        ) : (
-          <div className="h-[72px] w-[100px] shrink-0 rounded-xl bg-brand/[0.03]" />
-        )}
-        <div className="min-w-0 pt-0.5">
-          {article.category && (
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-accent">
-              {article.category.name}
-            </span>
-          )}
-          <p className="font-heading text-[15px] font-semibold leading-snug text-brand group-hover:text-accent transition-colors line-clamp-2">
-            {article.title}
-          </p>
-          <p className="mt-1 text-[11px] text-muted-foreground">
-            {article.author?.name}
-            {article.reading_time ? ` · ${article.reading_time} min read` : ""}
-          </p>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function ArticleCardLarge({ article }: { article: ArticleRow }) {
-  return (
-    <Link href={`/article/${article.slug}`} className="group block">
-      {article.thumbnail_url ? (
-        <img
-          src={article.thumbnail_url}
-          alt=""
-          className="aspect-[16/9] w-full rounded-2xl object-cover bg-brand/[0.03]"
-        />
-      ) : (
-        <div className="aspect-[16/9] w-full rounded-2xl bg-brand/[0.03]" />
-      )}
-      <div className="mt-4">
-        {article.category && (
-          <span className="text-[10px] font-semibold uppercase tracking-wider text-accent">
-            {article.category.name}
-          </span>
-        )}
-        <h3 className="mt-1 font-heading text-xl font-semibold text-brand group-hover:text-accent transition-colors line-clamp-2">
-          {article.title}
-        </h3>
-        {article.excerpt && (
-          <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{article.excerpt}</p>
-        )}
-        <p className="mt-3 text-xs text-muted-foreground">
-          {article.author?.name}
-          {article.reading_time ? ` · ${article.reading_time} min read` : ""}
-        </p>
-      </div>
-    </Link>
-  );
-}
-
 export function HomePage({
   hero,
   featuredSection,
@@ -104,6 +47,13 @@ export function HomePage({
   const topCategories = categories.filter(
     (c) => (articlesByCategory[c.slug]?.length ?? 0) > 0,
   );
+
+  const heroArticle = latestArticles[0];
+  const sideArticles = latestArticles.slice(1, 5);
+  const restLatest = latestArticles.slice(5, 8);
+
+  const featComp0 = featuredComparisons[0];
+  const featCompRest = featuredComparisons.slice(1, 5);
 
   return (
     <>
@@ -164,129 +114,109 @@ export function HomePage({
       {/* ── LOGO MARQUEE ── */}
       <LogoMarquee />
 
-      {/* ── RECENTLY PUBLISHED ── */}
-      <MotionSection className="py-16 md:py-20">
+      {/* ── LATEST — magazine split (hero + 4 horizontal) ── */}
+      <MotionSection className="py-20 md:py-24">
         <div className="mx-auto max-w-7xl px-6 md:px-8">
-          <div className="flex items-end justify-between gap-4">
-            <h2 className="font-heading text-2xl font-semibold text-brand">{latestSection.title}</h2>
-            <Link
-              href="/categories/accounting"
-              className="hidden items-center gap-1.5 rounded-full border border-border-subtle bg-card px-4 py-2 text-xs font-semibold text-brand transition-colors hover:border-accent/40 sm:inline-flex"
-            >
-              View all <ArrowRight className="h-3 w-3" />
-            </Link>
-          </div>
+          <SectionHeader
+            eyebrow="Recently published"
+            title={latestSection.title}
+            href="/categories/accounting"
+            ctaLabel="Browse all articles"
+          />
 
           {latestArticles.length > 0 ? (
-            <div className="mt-8 grid gap-10 lg:grid-cols-[1fr_1fr]">
-              <ArticleCardLarge article={latestArticles[0]} />
-              <div className="space-y-6">
-                {latestArticles.slice(1, 10).map((a) => (
-                  <ArticleCard key={a.id} article={a} />
+            <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-16">
+              {heroArticle && <ArticleCardHero article={heroArticle} />}
+
+              <div className="flex flex-col divide-y divide-border-subtle">
+                {sideArticles.map((a) => (
+                  <div key={a.id} className="py-5 first:pt-0 last:pb-0">
+                    <ArticleCardHorizontal article={a} />
+                  </div>
                 ))}
               </div>
             </div>
           ) : (
-            <div className="mt-8 rounded-2xl border border-border-subtle bg-card p-8 text-center">
-              <p className="font-heading text-lg font-semibold text-brand">
+            <div className="mt-12 rounded-[1.75rem] border border-border-subtle bg-card p-10 text-center">
+              <p className="font-heading text-xl font-semibold text-brand">
                 New articles publishing soon
               </p>
-              <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+              <p className="mx-auto mt-3 max-w-md text-[15px] text-muted-foreground">
                 Our editorial team is preparing in-depth reviews, comparisons,
                 and compliance guides for UK businesses. Subscribe to our
-                newsletter to be notified when new content goes live.
+                briefing to be notified when new content goes live.
               </p>
               <Link
                 href="/newsletter"
-                className="mt-5 inline-flex h-10 items-center gap-2 rounded-full bg-brand px-6 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
+                className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-brand px-7 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
               >
                 Get notified <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>
           )}
+
+          {restLatest.length > 0 && (
+            <div className="mt-16 grid gap-10 border-t border-border-subtle pt-12 md:grid-cols-3">
+              {restLatest.map((a) => (
+                <ArticleCardStandard key={a.id} article={a} />
+              ))}
+            </div>
+          )}
         </div>
       </MotionSection>
 
-      {/* ── COMPARISONS ── */}
+      {/* ── COMPARISONS — poster lead + 2x2 standard grid ── */}
       {featuredComparisons.length > 0 && (
-        <MotionSection className="border-y border-border-subtle bg-card py-16 md:py-20">
+        <MotionSection className="border-y border-border-subtle bg-card py-20 md:py-24">
           <div className="mx-auto max-w-7xl px-6 md:px-8">
-            <h2 className="font-heading text-2xl font-semibold text-brand">{featuredSection.title}</h2>
-            <p className="mt-2 max-w-2xl text-sm text-muted-foreground">{featuredSection.subtitle}</p>
-            <div className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {featuredComparisons.slice(0, 6).map((a) => (
-                <Link
-                  key={a.id}
-                  href={`/article/${a.slug}`}
-                  className="group rounded-2xl border border-border-subtle bg-page p-5 transition-colors hover:border-accent/30"
-                >
-                  {a.category && (
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-accent">
-                      {a.category.name}
-                    </span>
-                  )}
-                  <h3 className="mt-2 font-heading text-[15px] font-semibold text-brand group-hover:text-accent transition-colors line-clamp-2">
-                    {a.title}
-                  </h3>
-                  {a.excerpt && (
-                    <p className="mt-2 text-[13px] text-muted-foreground line-clamp-2">{a.excerpt}</p>
-                  )}
-                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-cta">
-                    Read <ArrowUpRight className="h-3 w-3" />
-                  </span>
-                </Link>
-              ))}
+            <SectionHeader
+              eyebrow="Head-to-head"
+              title={featuredSection.title}
+              description={featuredSection.subtitle}
+              href="/comparisons"
+              ctaLabel="All comparisons"
+            />
+
+            <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-12">
+              {featComp0 && <ArticleCardPoster article={featComp0} />}
+
+              <div className="grid gap-8 sm:grid-cols-2">
+                {featCompRest.map((a) => (
+                  <ArticleCardStandard key={a.id} article={a} />
+                ))}
+              </div>
             </div>
           </div>
         </MotionSection>
       )}
 
-      {/* ── ARTICLES BY CATEGORY ── */}
-      {topCategories.map((cat) => {
+      {/* ── ARTICLES BY CATEGORY — alternating layouts ── */}
+      {topCategories.map((cat, idx) => {
         const articles = articlesByCategory[cat.slug] ?? [];
         if (articles.length === 0) return null;
+
+        // Alternate layout per category for visual rhythm.
+        const variant = idx % 3;
+
         return (
-          <MotionSection key={cat.id} className="py-16 md:py-20">
+          <MotionSection
+            key={cat.id}
+            className={
+              idx % 2 === 0
+                ? "py-20 md:py-24"
+                : "border-y border-border-subtle bg-card/40 py-20 md:py-24"
+            }
+          >
             <div className="mx-auto max-w-7xl px-6 md:px-8">
-              <div className="flex items-end justify-between gap-4">
-                <div>
-                  <h2 className="font-heading text-2xl font-semibold text-brand">{cat.name}</h2>
-                  {cat.description && (
-                    <p className="mt-1 text-sm text-muted-foreground">{cat.description}</p>
-                  )}
-                </div>
-                <Link
-                  href={`/categories/${cat.slug}`}
-                  className="hidden items-center gap-1.5 rounded-full border border-border-subtle bg-card px-4 py-2 text-xs font-semibold text-brand transition-colors hover:border-accent/40 sm:inline-flex"
-                >
-                  All {cat.name} <ArrowRight className="h-3 w-3" />
-                </Link>
-              </div>
-              <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {articles.map((a) => (
-                  <Link key={a.id} href={`/article/${a.slug}`} className="group">
-                    {a.thumbnail_url ? (
-                      <img
-                        src={a.thumbnail_url}
-                        alt=""
-                        className="aspect-[16/9] w-full rounded-2xl object-cover bg-brand/[0.03]"
-                      />
-                    ) : (
-                      <div className="aspect-[16/9] w-full rounded-2xl bg-brand/[0.03]" />
-                    )}
-                    <h3 className="mt-3 font-heading text-[15px] font-semibold text-brand group-hover:text-accent transition-colors line-clamp-2">
-                      {a.title}
-                    </h3>
-                    {a.excerpt && (
-                      <p className="mt-1.5 text-[13px] text-muted-foreground line-clamp-2">{a.excerpt}</p>
-                    )}
-                    <p className="mt-2 text-[11px] text-muted-foreground">
-                      {a.author?.name}
-                      {a.reading_time ? ` · ${a.reading_time} min` : ""}
-                    </p>
-                  </Link>
-                ))}
-              </div>
+              <SectionHeader
+                eyebrow={`Category · ${cat.name}`}
+                title={cat.name}
+                description={cat.description ?? undefined}
+                href={`/categories/${cat.slug}`}
+                ctaLabel={`All ${cat.name}`}
+              />
+
+              <CategorySection articles={articles} variant={variant} />
             </div>
           </MotionSection>
         );
@@ -337,5 +267,62 @@ export function HomePage({
         </div>
       </MotionSection>
     </>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   Internal helper: alternating category layouts give each category
+   block its own visual character without us writing three near-
+   identical sections inline.
+   ────────────────────────────────────────────────────────────────── */
+
+function CategorySection({
+  articles,
+  variant,
+}: {
+  articles: ArticleRow[];
+  variant: number;
+}) {
+  // Variant 0: feature + 3 standard (4 total)
+  if (variant === 0) {
+    const lead = articles[0];
+    const rest = articles.slice(1, 4);
+    return (
+      <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-12">
+        {lead && <ArticleCardFeature article={lead} />}
+        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
+          {rest.map((a) => (
+            <ArticleCardStandard key={a.id} article={a} />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // Variant 1: 3-up standard grid
+  if (variant === 1) {
+    return (
+      <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+        {articles.slice(0, 6).map((a) => (
+          <ArticleCardStandard key={a.id} article={a} />
+        ))}
+      </div>
+    );
+  }
+
+  // Variant 2: poster + 2 horizontal
+  const poster = articles[0];
+  const list = articles.slice(1, 4);
+  return (
+    <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-12">
+      {poster && <ArticleCardPoster article={poster} />}
+      <div className="flex flex-col divide-y divide-border-subtle">
+        {list.map((a) => (
+          <div key={a.id} className="py-5 first:pt-0 last:pb-0">
+            <ArticleCardHorizontal article={a} />
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

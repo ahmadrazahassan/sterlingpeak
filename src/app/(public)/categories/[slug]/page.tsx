@@ -2,8 +2,12 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/public/breadcrumbs";
 import { NewsletterForm } from "@/components/public/newsletter-form";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
+import {
+  ArticleCardHero,
+  ArticleCardHorizontal,
+  ArticleCardStandard,
+  SectionHeader,
+} from "@/components/public/article-card";
 import {
   fetchArticlesByCategory,
   fetchCategoryFeaturedArticle,
@@ -33,13 +37,21 @@ export default async function CategoryPage({ params }: Props) {
     fetchArticlesByCategory(slug, 48),
   ]);
 
-  const comparisons = articles.filter((a) => a.is_comparison);
-  const toolkitHint = articles.slice(0, 3);
+  // De-duplicate the featured from the rest so it doesn't appear twice.
+  const restArticles = featured
+    ? articles.filter((a) => a.id !== featured.id)
+    : articles;
+
+  const sideArticles = restArticles.slice(0, 4);
+  const gridArticles = restArticles.slice(4);
+
+  const comparisons = articles.filter((a) => a.is_comparison).slice(0, 4);
 
   return (
     <div>
+      {/* ── HEADER ── */}
       <section className="border-b border-border-subtle bg-page/50">
-        <div className="mx-auto max-w-7xl px-4 py-14 md:px-8">
+        <div className="mx-auto max-w-7xl px-6 py-14 md:px-8 md:py-20">
           <Breadcrumbs
             items={[
               { label: "Home", href: "/" },
@@ -47,140 +59,114 @@ export default async function CategoryPage({ params }: Props) {
               { label: category.name },
             ]}
           />
-          <p className="mt-4 text-xs font-semibold uppercase tracking-wide text-accent">
+          <p className="mt-6 text-[11px] font-heading font-semibold uppercase tracking-[0.2em] text-accent">
             Category
           </p>
-          <h1 className="mt-2 max-w-3xl font-heading text-4xl font-semibold text-brand md:text-5xl">
+          <h1 className="mt-3 max-w-4xl font-heading text-[2.25rem] font-semibold leading-[1.08] tracking-[-0.022em] text-brand md:text-[3.25rem]">
             {category.hero_title ?? category.name}
           </h1>
           {category.description && (
-            <p className="mt-4 max-w-2xl text-lg text-muted-foreground">{category.description}</p>
+            <p className="mt-5 max-w-3xl text-[1.05rem] leading-relaxed text-muted-foreground">
+              {category.description}
+            </p>
           )}
         </div>
       </section>
 
-      <div className="mx-auto max-w-7xl space-y-16 px-4 py-14 md:px-8">
+      <div className="mx-auto max-w-7xl space-y-20 px-6 py-16 md:space-y-24 md:px-8 md:py-20">
+        {/* ── FEATURE + SIDE ── */}
         {featured && (
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand">Featured</h2>
-            <Link href={`/article/${featured.slug}`} className="group mt-4 block">
-              <Card className="overflow-hidden border-border-subtle transition-shadow hover:shadow-card">
-                <CardContent className="grid gap-0 p-0 md:grid-cols-2">
-                  <div className="aspect-video overflow-hidden bg-page md:aspect-auto md:min-h-[280px]">
-                    {featured.thumbnail_url ? (
-                      <img
-                        src={featured.thumbnail_url}
-                        alt={featured.title}
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-                        No image
-                      </div>
-                    )}
-                  </div>
-                  <div className="p-6 md:p-8">
-                    <Badge variant="accent">Featured</Badge>
-                    <h3 className="mt-3 font-heading text-2xl font-semibold text-brand">
-                      {featured.title}
-                    </h3>
-                    {featured.excerpt && (
-                      <p className="mt-2 text-muted-foreground line-clamp-3">{featured.excerpt}</p>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            </Link>
+            <SectionHeader eyebrow="Featured" title="The lead read in this category" />
+            <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-16">
+              <ArticleCardHero article={featured} />
+              {sideArticles.length > 0 && (
+                <div className="flex flex-col divide-y divide-border-subtle">
+                  {sideArticles.map((a) => (
+                    <div key={a.id} className="py-5 first:pt-0 last:pb-0">
+                      <ArticleCardHorizontal article={a} />
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </section>
         )}
 
-        <section>
-          <h2 className="font-heading text-xl font-semibold text-brand">Latest</h2>
-          <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {articles.map((a) => (
-              <Link key={a.id} href={`/article/${a.slug}`} className="group">
-                <Card className="h-full overflow-hidden border-border-subtle transition-shadow hover:shadow-card">
-                  {a.thumbnail_url && (
-                    <div className="aspect-[16/9] w-full overflow-hidden">
-                      <img
-                        src={a.thumbnail_url}
-                        alt={a.title}
-                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
-                  )}
-                  <CardContent className="p-5">
-                    <p className="font-heading font-semibold text-brand line-clamp-2">{a.title}</p>
-                    {a.excerpt && (
-                      <p className="mt-2 text-sm text-muted-foreground line-clamp-2">{a.excerpt}</p>
-                    )}
-                    <p className="mt-3 text-xs text-muted-foreground">
-                      {a.reading_time != null ? `${a.reading_time} min read` : ""}
-                    </p>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-          {articles.length === 0 && (
-            <p className="mt-6 text-sm text-muted-foreground">No articles in this category yet.</p>
-          )}
-        </section>
+        {/* ── ALL IN CATEGORY ── */}
+        {gridArticles.length > 0 ? (
+          <section>
+            <SectionHeader
+              eyebrow="More from this category"
+              title="All articles"
+            />
+            <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+              {gridArticles.map((a) => (
+                <ArticleCardStandard key={a.id} article={a} />
+              ))}
+            </div>
+          </section>
+        ) : (
+          articles.length === 0 && (
+            <section>
+              <div className="rounded-[1.75rem] border border-border-subtle bg-card p-10 text-center">
+                <p className="font-heading text-lg font-semibold text-brand">
+                  No articles in this category yet
+                </p>
+                <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+                  Our editorial team is working on coverage. Subscribe to the
+                  briefing to be notified when new articles publish.
+                </p>
+              </div>
+            </section>
+          )
+        )}
 
+        {/* ── COMPARISONS WITHIN THIS CATEGORY ── */}
         {comparisons.length > 0 && (
           <section>
-            <h2 className="font-heading text-xl font-semibold text-brand">
-              Popular comparisons
-            </h2>
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
-              {comparisons.slice(0, 4).map((a) => (
-                <Link key={a.id} href={`/article/${a.slug}`} className="group">
-                  <Card className="overflow-hidden border-border-subtle hover:border-accent/40">
-                    {a.thumbnail_url && (
-                      <div className="aspect-[2/1] w-full overflow-hidden">
-                        <img
-                          src={a.thumbnail_url}
-                          alt={a.title}
-                          className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                      </div>
-                    )}
-                    <CardContent className="p-5">
-                      <Badge variant="cta" className="text-[10px]">
-                        Comparison
-                      </Badge>
-                      <p className="mt-2 font-heading font-semibold text-brand">{a.title}</p>
-                    </CardContent>
-                  </Card>
-                </Link>
+            <SectionHeader
+              eyebrow="Head-to-head"
+              title="Popular comparisons"
+              description="Side-by-side analysis from this category."
+              href={`/comparisons?category=${slug}`}
+              ctaLabel="All comparisons"
+            />
+            <div className="mt-12 grid gap-10 sm:grid-cols-2">
+              {comparisons.map((a) => (
+                <ArticleCardStandard key={a.id} article={a} />
               ))}
             </div>
           </section>
         )}
 
-        {toolkitHint.length > 0 && (
-          <section>
-            <h2 className="font-heading text-xl font-semibold text-brand">
-              Related toolkit resources
-            </h2>
-            <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-              {toolkitHint.map((a) => (
-                <li key={a.id}>
-                  <Link href={`/article/${a.slug}`} className="text-brand hover:text-accent">
-                    {a.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
-
-        <section className="rounded-[1.5rem] border border-border-subtle bg-card p-8 shadow-card">
-          <h2 className="font-heading text-xl font-semibold text-brand">Newsletter</h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Practical guides for UK SMEs, straight to your inbox.
-          </p>
-          <NewsletterForm source={`category-${slug}`} className="mt-6 max-w-lg" />
+        {/* ── NEWSLETTER ── */}
+        <section className="rounded-[1.75rem] border border-border-subtle bg-card p-10 shadow-card md:p-12">
+          <div className="grid gap-8 md:grid-cols-[1fr_1.2fr] md:items-center md:gap-12">
+            <div>
+              <p className="text-[11px] font-heading font-semibold uppercase tracking-[0.2em] text-accent">
+                The SterlingPeak Briefing
+              </p>
+              <h2 className="mt-3 font-heading text-[1.75rem] font-semibold leading-tight tracking-[-0.012em] text-brand md:text-[2rem]">
+                Stay current on UK {category.name.toLowerCase()}
+              </h2>
+              <p className="mt-3 text-[14.5px] leading-relaxed text-muted-foreground">
+                A weekly editorial briefing for UK finance professionals. Free,
+                Thursday mornings, around a five-minute read.
+              </p>
+              <p className="mt-4 text-[12px] text-muted-foreground/80">
+                Double opt-in. UK GDPR compliant.{" "}
+                <Link
+                  href="/privacy-policy"
+                  className="text-accent underline-offset-2 hover:underline"
+                >
+                  Privacy Policy
+                </Link>
+                .
+              </p>
+            </div>
+            <NewsletterForm source={`category-${slug}`} className="max-w-lg" />
+          </div>
         </section>
       </div>
     </div>
