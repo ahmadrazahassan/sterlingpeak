@@ -6,6 +6,7 @@ import {
   ArticleCardFeature,
   ArticleCardHero,
   ArticleCardHorizontal,
+  ArticleCardMagazine,
   ArticleCardPoster,
   ArticleCardStandard,
   SectionHeader,
@@ -48,12 +49,15 @@ export function HomePage({
     (c) => (articlesByCategory[c.slug]?.length ?? 0) > 0,
   );
 
+  /* ── partition the latest stream into hierarchy ── */
   const heroArticle = latestArticles[0];
-  const sideArticles = latestArticles.slice(1, 5);
-  const restLatest = latestArticles.slice(5, 8);
+  const sideRail = latestArticles.slice(1, 4); // up to 3 horizontal rail items
+  const featureRow = latestArticles.slice(4, 6); // 2-up feature row
+  const standardRow = latestArticles.slice(6, 9); // 3-up standard row
 
-  const featComp0 = featuredComparisons[0];
-  const featCompRest = featuredComparisons.slice(1, 5);
+  /* ── comparisons partitioning ── */
+  const compHero = featuredComparisons[0];
+  const compRow = featuredComparisons.slice(1, 4);
 
   return (
     <>
@@ -114,8 +118,8 @@ export function HomePage({
       {/* ── LOGO MARQUEE ── */}
       <LogoMarquee />
 
-      {/* ── LATEST — magazine split (hero + 4 horizontal) ── */}
-      <MotionSection className="py-20 md:py-24">
+      {/* ── LATEST: HERO + RAIL ── */}
+      <MotionSection className="py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6 md:px-8">
           <SectionHeader
             eyebrow="Recently published"
@@ -125,49 +129,48 @@ export function HomePage({
           />
 
           {latestArticles.length > 0 ? (
-            <div className="mt-12 grid gap-12 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] lg:gap-16">
+            <div className="mt-14 grid gap-14 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-20">
               {heroArticle && <ArticleCardHero article={heroArticle} />}
 
-              <div className="flex flex-col divide-y divide-border-subtle">
-                {sideArticles.map((a) => (
-                  <div key={a.id} className="py-5 first:pt-0 last:pb-0">
-                    <ArticleCardHorizontal article={a} />
-                  </div>
-                ))}
-              </div>
+              {sideRail.length > 0 && (
+                <div className="flex flex-col divide-y divide-border-subtle">
+                  {sideRail.map((a) => (
+                    <div key={a.id} className="py-6 first:pt-0 last:pb-0">
+                      <ArticleCardHorizontal article={a} />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ) : (
-            <div className="mt-12 rounded-[1.75rem] border border-border-subtle bg-card p-10 text-center">
-              <p className="font-heading text-xl font-semibold text-brand">
-                New articles publishing soon
-              </p>
-              <p className="mx-auto mt-3 max-w-md text-[15px] text-muted-foreground">
-                Our editorial team is preparing in-depth reviews, comparisons,
-                and compliance guides for UK businesses. Subscribe to our
-                briefing to be notified when new content goes live.
-              </p>
-              <Link
-                href="/newsletter"
-                className="mt-6 inline-flex h-11 items-center gap-2 rounded-full bg-brand px-7 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
-              >
-                Get notified <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </div>
-          )}
-
-          {restLatest.length > 0 && (
-            <div className="mt-16 grid gap-10 border-t border-border-subtle pt-12 md:grid-cols-3">
-              {restLatest.map((a) => (
-                <ArticleCardStandard key={a.id} article={a} />
-              ))}
-            </div>
+            <EmptyState />
           )}
         </div>
       </MotionSection>
 
-      {/* ── COMPARISONS — poster lead + 2x2 standard grid ── */}
+      {/* ── LATEST: FEATURE ROW ── */}
+      {featureRow.length > 0 && (
+        <MotionSection className="border-t border-border-subtle bg-card/40 py-20 md:py-24">
+          <div className="mx-auto max-w-7xl px-6 md:px-8">
+            <p className="text-[11px] font-heading font-semibold uppercase tracking-[0.2em] text-accent">
+              Editor&apos;s picks
+            </p>
+            <h2 className="mt-3 max-w-2xl font-heading text-[2rem] font-semibold leading-[1.08] tracking-[-0.018em] text-brand md:text-[2.5rem]">
+              The pieces our readers spent the most time with this week
+            </h2>
+
+            <div className="mt-12 grid gap-12 md:grid-cols-2 md:gap-14">
+              {featureRow.map((a) => (
+                <ArticleCardFeature key={a.id} article={a} />
+              ))}
+            </div>
+          </div>
+        </MotionSection>
+      )}
+
+      {/* ── COMPARISONS: poster + 3 standard ── */}
       {featuredComparisons.length > 0 && (
-        <MotionSection className="border-y border-border-subtle bg-card py-20 md:py-24">
+        <MotionSection className="py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-6 md:px-8">
             <SectionHeader
               eyebrow="Head-to-head"
@@ -177,34 +180,55 @@ export function HomePage({
               ctaLabel="All comparisons"
             />
 
-            <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] lg:gap-12">
-              {featComp0 && <ArticleCardPoster article={featComp0} />}
+            {compHero && (
+              <div className="mt-14">
+                <ArticleCardPoster article={compHero} />
+              </div>
+            )}
 
-              <div className="grid gap-8 sm:grid-cols-2">
-                {featCompRest.map((a) => (
+            {compRow.length > 0 && (
+              <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+                {compRow.map((a) => (
                   <ArticleCardStandard key={a.id} article={a} />
                 ))}
               </div>
+            )}
+          </div>
+        </MotionSection>
+      )}
+
+      {/* ── EXTRA STANDARD ROW (deeper into latest) ── */}
+      {standardRow.length > 0 && (
+        <MotionSection className="border-t border-border-subtle py-20 md:py-24">
+          <div className="mx-auto max-w-7xl px-6 md:px-8">
+            <p className="text-[11px] font-heading font-semibold uppercase tracking-[0.2em] text-accent">
+              More from the desk
+            </p>
+            <h2 className="mt-3 font-heading text-[1.85rem] font-semibold leading-tight tracking-[-0.014em] text-brand md:text-[2.25rem]">
+              More analysis &amp; reviews
+            </h2>
+
+            <div className="mt-12 grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+              {standardRow.map((a) => (
+                <ArticleCardStandard key={a.id} article={a} />
+              ))}
             </div>
           </div>
         </MotionSection>
       )}
 
-      {/* ── ARTICLES BY CATEGORY — alternating layouts ── */}
+      {/* ── ARTICLES BY CATEGORY ── */}
       {topCategories.map((cat, idx) => {
         const articles = articlesByCategory[cat.slug] ?? [];
         if (articles.length === 0) return null;
-
-        // Alternate layout per category for visual rhythm.
-        const variant = idx % 3;
 
         return (
           <MotionSection
             key={cat.id}
             className={
               idx % 2 === 0
-                ? "py-20 md:py-24"
-                : "border-y border-border-subtle bg-card/40 py-20 md:py-24"
+                ? "border-t border-border-subtle py-20 md:py-28"
+                : "border-y border-border-subtle bg-card/40 py-20 md:py-28"
             }
           >
             <div className="mx-auto max-w-7xl px-6 md:px-8">
@@ -216,7 +240,7 @@ export function HomePage({
                 ctaLabel={`All ${cat.name}`}
               />
 
-              <CategorySection articles={articles} variant={variant} />
+              <CategorySection articles={articles} variant={idx % 3} />
             </div>
           </MotionSection>
         );
@@ -271,9 +295,34 @@ export function HomePage({
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   Internal helper: alternating category layouts give each category
-   block its own visual character without us writing three near-
-   identical sections inline.
+   Empty state — only shown when there are no published articles yet.
+   ────────────────────────────────────────────────────────────────── */
+
+function EmptyState() {
+  return (
+    <div className="mt-12 rounded-[1.75rem] border border-border-subtle bg-card p-12 text-center">
+      <p className="font-heading text-xl font-semibold text-brand md:text-2xl">
+        New articles publishing soon
+      </p>
+      <p className="mx-auto mt-3 max-w-md text-[15px] text-muted-foreground">
+        Our editorial team is preparing in-depth reviews, comparisons, and
+        compliance guides for UK businesses. Subscribe to our briefing to be
+        notified when new content goes live.
+      </p>
+      <Link
+        href="/newsletter"
+        className="mt-7 inline-flex h-11 items-center gap-2 rounded-full bg-brand px-7 text-sm font-semibold text-white transition-colors hover:bg-brand/90"
+      >
+        Subscribe to the Briefing <ArrowRight className="h-3.5 w-3.5" />
+      </Link>
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   Internal: alternating category layouts for visual rhythm.
+   Each category section gets one of three layouts so the page feels
+   designed rather than templated.
    ────────────────────────────────────────────────────────────────── */
 
 function CategorySection({
@@ -283,26 +332,28 @@ function CategorySection({
   articles: ArticleRow[];
   variant: number;
 }) {
-  // Variant 0: feature + 3 standard (4 total)
+  /* Variant 0: full-width Magazine + 3-up grid below */
   if (variant === 0) {
     const lead = articles[0];
     const rest = articles.slice(1, 4);
     return (
-      <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:gap-12">
-        {lead && <ArticleCardFeature article={lead} />}
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-2">
-          {rest.map((a) => (
-            <ArticleCardStandard key={a.id} article={a} />
-          ))}
-        </div>
+      <div className="mt-14">
+        {lead && <ArticleCardMagazine article={lead} />}
+        {rest.length > 0 && (
+          <div className="mt-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+            {rest.map((a) => (
+              <ArticleCardStandard key={a.id} article={a} />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
 
-  // Variant 1: 3-up standard grid
+  /* Variant 1: 3-up Standard grid (clean catalogue look) */
   if (variant === 1) {
     return (
-      <div className="mt-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
         {articles.slice(0, 6).map((a) => (
           <ArticleCardStandard key={a.id} article={a} />
         ))}
@@ -310,19 +361,21 @@ function CategorySection({
     );
   }
 
-  // Variant 2: poster + 2 horizontal
+  /* Variant 2: Poster + 3 horizontal rail */
   const poster = articles[0];
   const list = articles.slice(1, 4);
   return (
-    <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] lg:gap-12">
+    <div className="mt-14 grid gap-12 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-16">
       {poster && <ArticleCardPoster article={poster} />}
-      <div className="flex flex-col divide-y divide-border-subtle">
-        {list.map((a) => (
-          <div key={a.id} className="py-5 first:pt-0 last:pb-0">
-            <ArticleCardHorizontal article={a} />
-          </div>
-        ))}
-      </div>
+      {list.length > 0 && (
+        <div className="flex flex-col divide-y divide-border-subtle">
+          {list.map((a) => (
+            <div key={a.id} className="py-6 first:pt-0 last:pb-0">
+              <ArticleCardHorizontal article={a} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
