@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   other: {
-    "impact-site-verification": "fdb5ed90-b8f3-4624-b062-3fef178dc996",
+    "impact-site-verification": "39a4f840-3d9b-4ca2-878f-56906886667a",
   },
 };
 

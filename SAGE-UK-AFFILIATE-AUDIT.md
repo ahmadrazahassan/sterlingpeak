@@ -321,16 +321,16 @@ When you re-fill the Impact.com newsletter property form, use the exact answers 
 | Field | Value |
 |---|---|
 | Email/Newsletter name | The SterlingPeak Briefing |
-| Send-from email | briefing@sterlingpeak.uk |
+| Send-from email | hello@sterlingpeak.uk |
 | Mailing list size | Newsletter launching — currently fewer than 50 confirmed subscribers; growing weekly via organic UK search and LinkedIn |
-| Sign-up URL | https://sterlingpeak.uk/newsletter |
+| Sign-up URL | https://sterlingpeak.uk/#newsletter |
 | Sign-up type | Double opt-in |
-| Acquisition method | 100% organic — newsletter sign-up form on sterlingpeak.uk/newsletter, in-article forms across editorial coverage, and editor's LinkedIn distribution. No paid acquisition, no co-registration, no list rental. |
+| Acquisition method | 100% organic — newsletter sign-up section on sterlingpeak.uk/#newsletter, in-article forms across editorial coverage, and editor's LinkedIn distribution. No paid acquisition, no co-registration, no list rental. |
 | Acquisition narrative | We acquire subscribers entirely through our own editorial coverage of UK accounting, payroll, and tax software at sterlingpeak.uk. We never buy, exchange, or share lists. Every subscriber confirms their email through a double opt-in confirmation message before being added. We process subscriber data under UK GDPR; SterlingPeak is the controller and our email service provider acts as a data processor under contract. |
 | Audience country | United Kingdom (≥ 95%) |
 | Language | English (United Kingdom) |
 | Frequency | Weekly, every Thursday |
-| ESP / sending platform | [your real choice — Mailchimp, Beehiiv, Kit, or similar] |
+| ESP / sending platform | Kit (formerly ConvertKit) |
 
 ---
 
