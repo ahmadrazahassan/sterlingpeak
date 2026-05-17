@@ -16,29 +16,6 @@ export const metadata: Metadata = {
     "SterlingPeak is an independent UK editorial publication run by Hafiza Ayesha Waheed, covering accounting, payroll, tax, and software for British SMEs.",
 };
 
-const journey = [
-  {
-    year: "2024",
-    title: "The first notebook",
-    body: "Ayesha starts collecting research notes on UK accounting software while advising small business owners. The phrase 'sterling peak' lands in a side margin — the brand starts here.",
-  },
-  {
-    year: "2025",
-    title: "Editorial framework",
-    body: "A structured editorial framework is built around UK-specific compliance: Making Tax Digital, VAT schemes, PAYE RTI, auto-enrolment, CIS, and Self Assessment. Reviews must answer: who is this product genuinely for, and where does it break?",
-  },
-  {
-    year: "Early 2026",
-    title: "SterlingPeak launches",
-    body: "sterlingpeak.uk goes live with the first set of long-form reviews and comparisons covering Sage, Xero, QuickBooks, FreeAgent and the wider UK SME stack. The SterlingPeak Briefing newsletter starts the same week.",
-  },
-  {
-    year: "Today",
-    title: "An independent UK desk",
-    body: "SterlingPeak is read across England, Scotland, Wales, and Northern Ireland by sole traders, finance managers, bookkeepers, and accountants. Coverage is verified each VAT cycle. Editorial decisions sit with one named editor.",
-  },
-];
-
 const principles = [
   {
     label: "01",
@@ -210,46 +187,6 @@ export default function AboutPage() {
               we get something wrong.
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* ── JOURNEY / TIMELINE ── */}
-      <section className="py-24 md:py-28">
-        <div className="mx-auto max-w-4xl px-6 md:px-8">
-          <div className="max-w-2xl">
-            <p className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.22em] text-cta">
-              The journey
-            </p>
-            <h2 className="mt-3 font-heading text-[2rem] font-semibold leading-[1.08] tracking-[-0.018em] text-brand md:text-[2.5rem]">
-              How we got here.
-            </h2>
-            <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-              SterlingPeak is a small publication with deliberate scope. The
-              short version of how the desk came together.
-            </p>
-          </div>
-
-          <ol className="mt-14 space-y-10 border-l border-border-subtle pl-8 md:space-y-12 md:pl-10">
-            {journey.map((step) => (
-              <li key={step.year} className="relative">
-                <span
-                  aria-hidden
-                  className="absolute -left-[37px] top-1.5 inline-flex h-3 w-3 items-center justify-center rounded-full bg-page ring-1 ring-border-subtle md:-left-[41px]"
-                >
-                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-cta" />
-                </span>
-                <p className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.22em] text-cta">
-                  {step.year}
-                </p>
-                <p className="mt-2 font-heading text-[1.25rem] font-semibold tracking-[-0.012em] text-brand md:text-[1.4rem]">
-                  {step.title}
-                </p>
-                <p className="mt-3 max-w-2xl text-[14.5px] leading-relaxed text-muted-foreground">
-                  {step.body}
-                </p>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
 
