@@ -36,6 +36,14 @@
   }
 }
 
+/* Smooth scroll for in-page anchor jumps (e.g. /#newsletter).
+   Disabled automatically when prefers-reduced-motion is set. */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
 body {
   background: var(--page);
   color: var(--brand);

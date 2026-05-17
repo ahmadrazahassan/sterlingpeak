@@ -103,7 +103,13 @@ create table if not exists public.related_articles (
   check (article_id <> related_article_id)
 );
 
--- Newsletter subscribers: public sign-up, admin reads.
+-- Newsletter subscribers: optional local audit log.
+-- The actual sender is Kit (kit.com / formerly ConvertKit). Forms post
+-- directly from the browser to Kit's public per-form endpoint, so this
+-- table is not on the subscribe path. It exists for cases where future
+-- code wants a controller-side log of consent events (e.g. a Vercel
+-- Edge Middleware that mirrors form posts asynchronously). Treat it as
+-- opt-in: rows here are NOT the source of truth — Kit is.
 create table if not exists public.newsletter_subscribers (
   id         uuid primary key default gen_random_uuid(),
   email      text not null unique,
@@ -112,6 +118,38 @@ create table if not exists public.newsletter_subscribers (
   status     text not null default 'active' check (status in ('active', 'unsubscribed')),
   created_at timestamptz not null default now()
 );
+
+-- Migration safety for installs that ran an earlier draft of this
+-- schema with extra audit columns. Drops the old wider check
+-- constraint and removes the unused columns so Supabase Studio
+-- doesn't show stale fields.
+do $$
+begin
+  if exists (
+    select 1 from pg_constraint
+    where conname = 'newsletter_subscribers_status_check'
+  ) then
+    alter table public.newsletter_subscribers
+      drop constraint newsletter_subscribers_status_check;
+  end if;
+
+  alter table public.newsletter_subscribers
+    add constraint newsletter_subscribers_status_check
+    check (status in ('active', 'unsubscribed'));
+
+  alter table public.newsletter_subscribers
+    alter column status set default 'active';
+
+  alter table public.newsletter_subscribers
+    drop column if exists esp_subscription_id,
+    drop column if exists beehiiv_subscription_id,
+    drop column if exists confirmed_at,
+    drop column if exists unsubscribed_at;
+end$$;
+
+drop index if exists idx_newsletter_subs_beehiiv_id;
+drop index if exists idx_newsletter_subs_esp_id;
+drop index if exists idx_newsletter_subs_status;
 
 -- Contact messages: public form submissions.
 create table if not exists public.contact_messages (

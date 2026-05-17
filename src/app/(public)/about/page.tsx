@@ -314,7 +314,7 @@ export default function AboutPage() {
                 time for fluff.
               </p>
               <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-                <PillButton href="/newsletter" variant="cta" size="md" tone="dark">
+                <PillButton href="/#newsletter" variant="cta" size="md" tone="dark">
                   Join the Briefing
                 </PillButton>
                 <Link

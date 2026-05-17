@@ -222,7 +222,7 @@ export function HomePage({
       {/* ── MID-PAGE NEWSLETTER ──
            Flat brand-coloured card. No radial gradient. Editorial
            framing matches the rest of the site.                       */}
-      <MotionSection className="py-20 md:py-28">
+      <MotionSection id="newsletter" className="scroll-mt-24 py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6 md:px-8">
           <div className="overflow-hidden rounded-[2rem] bg-brand">
             <div className="grid gap-10 px-8 py-14 md:grid-cols-[1fr_1.1fr] md:gap-14 md:px-14 md:py-20">
@@ -405,7 +405,7 @@ function EmptyState() {
         comparisons — will land in your inbox the day they go live.
       </p>
       <div className="mt-7 inline-flex">
-        <PillButton href="/newsletter" variant="cta" size="md">
+        <PillButton href="/#newsletter" variant="cta" size="md">
           Subscribe to the Briefing
         </PillButton>
       </div>

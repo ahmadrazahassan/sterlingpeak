@@ -191,7 +191,7 @@ export function SiteHeader({ softwareFeatured, comparisonArticles }: Props) {
               {/* Subscribe pill — sits flush-right, full-height */}
               <li className="flex items-center border-l border-brand/10">
                 <Link
-                  href="/newsletter"
+                  href="/#newsletter"
                   className="group/cta inline-flex h-[60px] items-center bg-cta px-7 text-[12.5px] font-heading font-semibold text-white transition-colors hover:bg-cta/90"
                 >
                   Subscribe
@@ -530,7 +530,7 @@ function MobileDrawer({
 
         <div className="shrink-0 border-t border-border-subtle px-5 py-5">
           <Link
-            href="/newsletter"
+            href="/#newsletter"
             onClick={onClose}
             className="flex h-12 w-full items-center justify-center gap-1.5 bg-cta text-[14px] font-heading font-semibold text-white transition-colors hover:bg-cta/90"
           >
