@@ -130,12 +130,6 @@ export function SiteHeader({ softwareFeatured, comparisonArticles }: Props) {
               className="inline-flex items-baseline"
             >
               <Logo variant="full" size="md" asLink={false} />
-              <span
-                aria-hidden
-                className="ml-1 self-start font-heading text-[10px] font-medium leading-none text-brand/35"
-              >
-                ®
-              </span>
             </Link>
           </div>
 
