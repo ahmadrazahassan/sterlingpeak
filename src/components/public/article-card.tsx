@@ -302,7 +302,7 @@ export function ArticleCardHorizontal({ article, className }: BaseProps) {
         className,
       )}
     >
-      <div className="w-full shrink-0 sm:w-[190px] md:w-[210px] lg:w-[240px]">
+      <div className="w-full shrink-0 sm:w-[210px] md:w-[240px] lg:w-[270px]">
         <FramedThumb
           article={article}
           rounded="rounded-[0.85rem]"

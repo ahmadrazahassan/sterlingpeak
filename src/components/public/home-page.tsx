@@ -130,7 +130,7 @@ export function HomePage({
           {latestArticles.length === 0 && <EmptyState />}
 
           {latestLead && (
-            <div className="mt-14 grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+            <div className="mt-14 grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1.05fr)]">
               <ArticleCardFeature article={latestLead} />
               {latestSide.length > 0 && (
                 <div className="flex flex-col gap-6">
