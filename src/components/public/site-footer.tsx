@@ -1,12 +1,7 @@
 import Link from "next/link";
 import { Mail } from "lucide-react";
 import { Logo } from "@/components/public/logo";
-import { LinkedInBrand } from "@/components/public/linkedin-brand";
 import { ManageCookiesLink } from "@/components/public/manage-cookies-link";
-import { NewsletterForm } from "@/components/public/newsletter-form";
-
-const EDITOR_LINKEDIN_URL =
-  "https://www.linkedin.com/in/hafiza-ayesha-waheed-4a457440a/";
 
 type FooterSettings = {
   statement: string;
@@ -50,19 +45,6 @@ export function SiteFooter({ footer }: Props) {
   return (
     <footer className="relative mt-auto">
       <div className="bg-brand rounded-t-[2.5rem] text-white">
-        {/* Newsletter strip */}
-        <div className="border-b border-white/8">
-          <div className="mx-auto grid max-w-7xl items-center gap-8 px-6 pb-12 pt-14 md:grid-cols-[1fr_1.2fr] md:px-8 md:pt-16">
-            <div>
-              <p className="font-heading text-xl font-semibold">The SterlingPeak Briefing</p>
-              <p className="mt-2 text-sm text-white/55">
-                UK software updates, HMRC changes, and editorial analysis — weekly.
-              </p>
-            </div>
-            <NewsletterForm source="footer" variant="dark" />
-          </div>
-        </div>
-
         {/* Main footer grid */}
         <div className="mx-auto max-w-7xl px-6 py-14 md:px-8">
           <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
@@ -80,18 +62,6 @@ export function SiteFooter({ footer }: Props) {
                   >
                     <Mail className="h-3.5 w-3.5 shrink-0" />
                     <span>hello@sterlingpeak.uk</span>
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href={EDITOR_LINKEDIN_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label="Editor on LinkedIn"
-                    className="inline-flex items-center gap-2.5 text-white/55 transition-colors hover:text-white"
-                  >
-                    <LinkedInBrand className="h-3.5 w-3.5 shrink-0" variant="mono" />
-                    <span>LinkedIn</span>
                   </a>
                 </li>
               </ul>

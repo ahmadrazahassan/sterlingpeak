@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/public/breadcrumbs";
-import { NewsletterForm } from "@/components/public/newsletter-form";
 import {
   ArticleCardHero,
   ArticleCardHorizontal,
@@ -128,8 +126,8 @@ export default async function CategoryPage({ params }: Props) {
                   No articles in this category yet
                 </p>
                 <p className="mx-auto mt-3 max-w-md text-[15px] text-muted-foreground">
-                  Our editorial team is working on coverage. Subscribe to the
-                  briefing to be notified when new articles publish.
+                  Our editorial team is working on coverage. Check back soon for
+                  new articles in this category.
                 </p>
               </div>
             </section>
@@ -154,34 +152,6 @@ export default async function CategoryPage({ params }: Props) {
           </section>
         )}
 
-        {/* ── NEWSLETTER ── */}
-        <section className="rounded-[1.75rem] border border-border-subtle bg-card p-10 shadow-card md:p-14">
-          <div className="grid gap-10 md:grid-cols-[1fr_1.2fr] md:items-center md:gap-14">
-            <div>
-              <p className="text-[11px] font-heading font-semibold uppercase tracking-[0.2em] text-accent">
-                The SterlingPeak Briefing
-              </p>
-              <h2 className="mt-3 font-heading text-[1.85rem] font-semibold leading-tight tracking-[-0.014em] text-brand md:text-[2.25rem]">
-                Stay current on UK {category.name.toLowerCase()}
-              </h2>
-              <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground">
-                A weekly editorial briefing for UK finance professionals. Free,
-                Thursday mornings, around a five-minute read.
-              </p>
-              <p className="mt-5 text-[12px] text-muted-foreground/80">
-                Double opt-in. UK GDPR compliant.{" "}
-                <Link
-                  href="/privacy-policy"
-                  className="text-accent underline-offset-2 hover:underline"
-                >
-                  Privacy Policy
-                </Link>
-                .
-              </p>
-            </div>
-            <NewsletterForm source={`category-${slug}`} className="max-w-lg" />
-          </div>
-        </section>
       </div>
     </div>
   );

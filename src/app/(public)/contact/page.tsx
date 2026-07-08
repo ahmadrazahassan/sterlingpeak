@@ -11,12 +11,9 @@ import {
   Clock,
   Mail,
   MapPin,
+  User,
 } from "lucide-react";
-import { LinkedInBrand } from "@/components/public/linkedin-brand";
 import { cn } from "@/lib/utils";
-
-const EDITOR_LINKEDIN_URL =
-  "https://www.linkedin.com/in/hafiza-ayesha-waheed-4a457440a/";
 
 const schema = z.object({
   name: z.string().min(1, "Please enter your name"),
@@ -73,7 +70,7 @@ export default function ContactPage() {
           </h1>
           <p className="mx-auto mt-5 max-w-xl text-[1.05rem] leading-relaxed text-muted-foreground">
             Editorial corrections, affiliate enquiries, product review
-            requests, press, and reader feedback — every message is read by
+            requests, press and reader feedback. Every message is read by
             the SterlingPeak desk.
           </p>
         </div>
@@ -102,10 +99,7 @@ export default function ContactPage() {
             <ContactFact
               eyebrow="Editor"
               value="Hafiza Ayesha Waheed"
-              caption="LinkedIn"
-              href={EDITOR_LINKEDIN_URL}
-              external
-              Icon={LinkedInBrand}
+              Icon={User}
             />
           </div>
         </div>

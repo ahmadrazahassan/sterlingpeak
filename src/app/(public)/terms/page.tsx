@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions — SterlingPeak",
+  title: "Terms & Conditions | SterlingPeak",
   description:
-    "Terms governing the use of sterlingpeak.uk, including content disclaimers, intellectual property, and limitation of liability.",
+    "Terms governing the use of sterlingpeak.uk, including content disclaimers, intellectual property and limitation of liability.",
 };
 
 export default function TermsPage() {
@@ -38,9 +38,9 @@ export default function TermsPage() {
 
           <Section title="2. Nature of content">
             <p>
-              All content published on the Site — including articles, guides,
-              reviews, and comparisons — is for general informational purposes
-              only. It does not constitute financial, legal, tax, or professional
+              All content published on the Site, including articles, guides,
+              reviews and comparisons, is for general informational purposes
+              only. It does not constitute financial, legal, tax or professional
               advice. Software features, pricing, and regulatory requirements
               change frequently; always verify details directly with the vendor
               and consult a qualified professional before making business

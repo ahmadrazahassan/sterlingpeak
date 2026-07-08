@@ -34,7 +34,7 @@ const CATEGORIES: CategoryDef[] = [
     key: "essential",
     title: "Essential",
     description:
-      "Required for the site to function — session management, security, and storing your cookie preferences. These are always on.",
+      "Required for the site to function: session management, security and storing your cookie preferences. These are always on.",
     locked: true,
   },
   {
@@ -178,7 +178,7 @@ export function CookieConsent() {
             <button
               type="button"
               onClick={handleRejectAll}
-              className="inline-flex h-10 items-center justify-center rounded-full border border-border-subtle bg-card px-4 text-[13px] font-medium text-brand transition-colors hover:border-brand/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+              className="inline-flex h-10 items-center justify-center rounded-[9px] bg-gradient-to-b from-white to-[#eef1f2] px-4 text-[13px] font-medium text-brand shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_1px_2px_rgba(0,55,72,0.08)] ring-1 ring-inset ring-brand/[0.12] transition-[transform,filter] duration-300 hover:-translate-y-px hover:brightness-[1.02] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
             >
               Reject all
             </button>
@@ -191,7 +191,7 @@ export function CookieConsent() {
                 });
                 setPrefsOpen(true);
               }}
-              className="inline-flex h-10 items-center justify-center gap-1.5 rounded-full border border-border-subtle bg-card px-4 text-[13px] font-medium text-brand transition-colors hover:border-brand/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+              className="inline-flex h-10 items-center justify-center gap-1.5 rounded-[9px] bg-gradient-to-b from-white to-[#eef1f2] px-4 text-[13px] font-medium text-brand shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_1px_2px_rgba(0,55,72,0.08)] ring-1 ring-inset ring-brand/[0.12] transition-[transform,filter] duration-300 hover:-translate-y-px hover:brightness-[1.02] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
             >
               <Settings2 className="h-3.5 w-3.5" aria-hidden />
               Customise
@@ -199,7 +199,7 @@ export function CookieConsent() {
             <button
               type="button"
               onClick={handleAcceptAll}
-              className="inline-flex h-10 items-center justify-center rounded-full bg-brand px-4 text-[13px] font-semibold text-white transition-colors hover:bg-brand/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+              className="inline-flex h-10 items-center justify-center rounded-[9px] bg-gradient-to-b from-[#0c5064] via-[#003748] to-[#002938] px-4 text-[13px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-1px_0_rgba(0,0,0,0.28),0_1px_2px_rgba(0,55,72,0.2)] transition-[transform,filter] duration-300 hover:-translate-y-px hover:brightness-[1.06] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
             >
               Accept all
             </button>
@@ -266,7 +266,7 @@ export function CookieConsent() {
             <button
               type="button"
               onClick={handleRejectAll}
-              className="inline-flex h-10 items-center justify-center rounded-full px-4 text-[13px] font-medium text-brand/70 transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+              className="inline-flex h-10 items-center justify-center rounded-[9px] px-4 text-[13px] font-medium text-brand/70 transition-colors hover:text-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
             >
               Reject non-essential
             </button>
@@ -274,14 +274,14 @@ export function CookieConsent() {
               <button
                 type="button"
                 onClick={handleSavePreferences}
-                className="inline-flex h-10 items-center justify-center rounded-full border border-border-subtle bg-card px-5 text-[13px] font-medium text-brand transition-colors hover:border-brand/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                className="inline-flex h-10 items-center justify-center rounded-[9px] bg-gradient-to-b from-white to-[#eef1f2] px-5 text-[13px] font-medium text-brand shadow-[inset_0_1px_0_rgba(255,255,255,0.95),0_1px_2px_rgba(0,55,72,0.08)] ring-1 ring-inset ring-brand/[0.12] transition-[transform,filter] duration-300 hover:-translate-y-px hover:brightness-[1.02] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
               >
                 Save preferences
               </button>
               <button
                 type="button"
                 onClick={handleAcceptAll}
-                className="inline-flex h-10 items-center justify-center rounded-full bg-brand px-5 text-[13px] font-semibold text-white transition-colors hover:bg-brand/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+                className="inline-flex h-10 items-center justify-center rounded-[9px] bg-gradient-to-b from-[#0c5064] via-[#003748] to-[#002938] px-5 text-[13px] font-semibold text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.22),inset_0_-1px_0_rgba(0,0,0,0.28),0_1px_2px_rgba(0,55,72,0.2)] transition-[transform,filter] duration-300 hover:-translate-y-px hover:brightness-[1.06] active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
               >
                 Accept all
               </button>

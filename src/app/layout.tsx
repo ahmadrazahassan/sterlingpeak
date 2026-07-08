@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     template: "%s | SterlingPeak",
   },
   description:
-    "Independent UK business software insights for growing SMEs — accounting, payroll, tax, comparisons, and operations.",
+    "Independent UK business software insights for growing SMEs: accounting, payroll, tax, comparisons and operations.",
   openGraph: {
     type: "website",
     locale: "en_GB",

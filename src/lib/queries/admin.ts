@@ -32,16 +32,6 @@ export async function adminListAuthors() {
   return data ?? [];
 }
 
-export async function adminListNewsletter() {
-  const supabase = await createClient();
-  const { data } = await supabase
-    .from("newsletter_subscribers")
-    .select("*")
-    .order("created_at", { ascending: false })
-    .limit(500);
-  return data ?? [];
-}
-
 export async function adminListContacts() {
   const supabase = await createClient();
   const { data } = await supabase
@@ -68,14 +58,12 @@ export async function adminDashboardCounts() {
     articles,
     published,
     drafts,
-    subs,
     contacts,
     cats,
   ] = await Promise.all([
     supabase.from("articles").select("id", { count: "exact", head: true }),
     supabase.from("articles").select("id", { count: "exact", head: true }).eq("status", "published"),
     supabase.from("articles").select("id", { count: "exact", head: true }).eq("status", "draft"),
-    supabase.from("newsletter_subscribers").select("id", { count: "exact", head: true }),
     supabase.from("contact_messages").select("id", { count: "exact", head: true }),
     supabase.from("categories").select("id", { count: "exact", head: true }),
   ]);
@@ -83,7 +71,6 @@ export async function adminDashboardCounts() {
     totalArticles: articles.count ?? 0,
     published: published.count ?? 0,
     drafts: drafts.count ?? 0,
-    subscribers: subs.count ?? 0,
     contactMessages: contacts.count ?? 0,
     categories: cats.count ?? 0,
   };

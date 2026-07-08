@@ -38,11 +38,6 @@ export type ToolkitItem = {
 
 export type ToolkitSectionJson = { title: string; subtitle: string };
 
-export type NewsletterSectionJson = {
-  title: string;
-  description: string;
-};
-
 export type TrustColumn = { title: string; body: string };
 
 export type TrustSectionJson = { title: string; columns: TrustColumn[] };

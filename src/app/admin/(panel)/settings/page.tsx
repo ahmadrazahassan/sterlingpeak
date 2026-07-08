@@ -12,7 +12,6 @@ const homepageKeys = [
   "toolkit_section",
   "toolkit_items",
   "homepage_industries",
-  "newsletter_section",
   "trust_section",
   "final_cta",
   "footer",

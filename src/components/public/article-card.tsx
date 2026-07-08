@@ -2,24 +2,26 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { ArticleRow } from "@/lib/queries/articles";
+import { ActionButton } from "@/components/public/action-button";
 import { cn } from "@/lib/utils";
 
 /* ──────────────────────────────────────────────────────────────────
-   ArticleCard — visual system for SterlingPeak.
+   ArticleCard — the "framed tile" system.
 
-   All thumbnail variants are 16:9 to match the source artwork
-   so the embedded titles and branding inside the thumbnail are
-   never clipped. Sizes are tuned to feel like a professional
-   UK finance publication rather than a generic blog grid.
+   Every article sits on a raised white card with the artwork mounted
+   inside a slim frame, gallery-style. The thumbnail is always full
+   16:9 — the source artwork carries its own titles and branding, so
+   it is never cropped, squared or clipped. The category floats as a
+   glass chip pinned to the artwork itself.
 
    Variants:
-     1. Hero       — lead post on a section (massive image + big headline)
-     2. Magazine   — wide horizontal split, image on one side
-     3. Feature    — primary 2-up card
-     4. Standard   — 3-up grid card
-     5. Horizontal — compact image-left, text-right
-     6. Index      — numbered ranking entry (square thumb on right)
-     7. Poster     — full-bleed image with overlay headline
+     1. Hero       — full-width lead tile (huge image, big headline)
+     2. Magazine   — wide split tile, artwork one side, type the other
+     3. Feature    — large 2-up tile
+     4. Standard   — 3-up grid tile
+     5. Horizontal — compact row tile, artwork left
+     6. Index      — numbered leaderboard row (lives inside a panel)
+     7. Poster     — framed full-bleed artwork with overlay headline
    ────────────────────────────────────────────────────────────────── */
 
 type BaseProps = {
@@ -27,50 +29,56 @@ type BaseProps = {
   className?: string;
 };
 
-/* ────── shared bits ────── */
+/* ────── shared: the raised card surface ────── */
 
-function Eyebrow({
-  article,
-  tone = "accent",
-}: {
-  article: ArticleRow;
-  tone?: "accent" | "white";
-}) {
-  const color = tone === "white" ? "text-white/85" : "text-accent";
-  const categoryName = article.category?.name?.toLowerCase() ?? "";
+const surface = cn(
+  "group relative flex flex-col overflow-hidden rounded-[1.4rem] bg-card p-1.5",
+  "ring-1 ring-brand/[0.07]",
+  "shadow-[0_1px_2px_rgba(0,55,72,0.05),0_24px_48px_-32px_rgba(0,55,72,0.35)]",
+  "transition-[transform,box-shadow] duration-500 ease-out",
+  "hover:-translate-y-1 hover:shadow-[0_1px_3px_rgba(0,55,72,0.08),0_36px_64px_-30px_rgba(0,55,72,0.45)]",
+);
+
+/* ────── shared: category chip pinned to the artwork ────── */
+
+function CategoryChip({ article }: { article: ArticleRow }) {
+  const categoryName = article.category?.name ?? null;
   // Hide the redundant Comparison chip when the article is already in
-  // the Comparisons category — otherwise we get COMPARISONS  +  COMPARISON
-  // showing on every card in that section.
+  // the Comparisons category.
   const showComparisonChip =
-    article.is_comparison && !categoryName.includes("comparison");
+    article.is_comparison &&
+    !(categoryName?.toLowerCase().includes("comparison") ?? false);
+
+  if (!categoryName && !showComparisonChip) return null;
 
   return (
-    <div className="flex items-center gap-2.5">
-      {article.category && (
-        <span
-          className={cn(
-            "text-[11px] font-heading font-semibold uppercase tracking-[0.18em]",
-            color,
-          )}
-        >
-          {article.category.name}
+    <div className="pointer-events-none absolute left-3.5 top-3.5 z-10 flex flex-wrap items-center gap-2">
+      {categoryName && (
+        <span className="rounded-full bg-white/90 px-3 py-1.5 text-[10px] font-heading font-semibold uppercase tracking-[0.16em] text-brand shadow-[0_2px_10px_rgba(0,55,72,0.15)] backdrop-blur-md">
+          {categoryName}
         </span>
       )}
       {showComparisonChip && (
-        <span
-          className={cn(
-            "rounded-full px-2.5 py-0.5 text-[10px] font-heading font-semibold uppercase tracking-[0.14em]",
-            tone === "white"
-              ? "bg-white/15 text-white/90"
-              : "bg-cta/10 text-cta",
-          )}
-        >
+        <span className="rounded-full bg-cta px-3 py-1.5 text-[10px] font-heading font-semibold uppercase tracking-[0.16em] text-white shadow-[0_2px_10px_rgba(34,173,1,0.35)]">
           Comparison
         </span>
       )}
     </div>
   );
 }
+
+/* ────── shared: text eyebrow for tight placements without a chip ────── */
+
+function TextEyebrow({ article }: { article: ArticleRow }) {
+  if (!article.category) return null;
+  return (
+    <p className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.18em] text-accent">
+      {article.category.name}
+    </p>
+  );
+}
+
+/* ────── shared: byline / reading time ────── */
 
 function Meta({
   article,
@@ -90,32 +98,34 @@ function Meta({
   return <p className={cn(text, color)}>{parts.join("  ·  ")}</p>;
 }
 
-function Thumb({
+/* ────── shared: framed 16:9 artwork ────── */
+
+function FramedThumb({
   article,
-  ratio = "aspect-[16/9]",
-  rounded = "rounded-[1.25rem]",
+  rounded = "rounded-[1rem]",
+  chip = true,
   className,
 }: {
   article: ArticleRow;
-  ratio?: string;
   rounded?: string;
+  chip?: boolean;
   className?: string;
 }) {
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden bg-brand/[0.04] ring-1 ring-inset ring-brand/[0.04]",
-        ratio,
+        "relative aspect-[16/9] w-full overflow-hidden bg-brand/[0.05]",
         rounded,
         className,
       )}
     >
+      {chip && <CategoryChip article={article} />}
       {article.thumbnail_url ? (
         <img
           src={article.thumbnail_url}
           alt=""
           loading="lazy"
-          className="h-full w-full object-cover object-center transition-transform duration-[600ms] ease-out group-hover:scale-[1.03]"
+          className="h-full w-full object-cover object-center transition-transform duration-[650ms] ease-out group-hover:scale-[1.04]"
         />
       ) : (
         <div className="flex h-full w-full items-center justify-center">
@@ -128,43 +138,60 @@ function Thumb({
   );
 }
 
+/* ────── shared: card footer — meta left, affordance right ────── */
+
+function CardFooter({
+  article,
+  cta = false,
+}: {
+  article: ArticleRow;
+  cta?: boolean;
+}) {
+  return (
+    <div className="mt-auto flex items-center justify-between gap-4 pt-5">
+      <Meta article={article} />
+      {cta ? (
+        <ActionButton asSpan variant="cta" size="sm">
+          Read article
+        </ActionButton>
+      ) : (
+        <span
+          aria-hidden
+          className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-brand/[0.06] text-brand transition-colors duration-300 group-hover:bg-cta group-hover:text-white"
+        >
+          <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
+        </span>
+      )}
+    </div>
+  );
+}
+
 /* ──────────────────────────────────────────────────────────────────
-   1. HERO — section lead. Massive 16:9 image with editorial headline
-   directly underneath. Used once per section.
+   1. HERO — full-width lead tile. Used once per section.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardHero({ article, className }: BaseProps) {
   return (
-    <Link
-      href={`/article/${article.slug}`}
-      className={cn("group block", className)}
-    >
-      <Thumb
-        article={article}
-        ratio="aspect-[16/9]"
-        rounded="rounded-[1.5rem] md:rounded-[2rem]"
-      />
-      <div className="mt-8 max-w-3xl md:mt-10">
-        <Eyebrow article={article} />
-        <h3 className="mt-4 font-heading text-[1.85rem] font-semibold leading-[1.1] tracking-[-0.022em] text-brand transition-colors group-hover:text-accent md:text-[2.5rem] lg:text-[2.75rem]">
+    <Link href={`/article/${article.slug}`} className={cn(surface, className)}>
+      <FramedThumb article={article} rounded="rounded-[1.1rem]" />
+      <div className="flex flex-1 flex-col px-5 pb-5 pt-7 md:px-8 md:pb-7 md:pt-9">
+        <h3 className="max-w-3xl font-heading text-[1.7rem] font-semibold leading-[1.12] tracking-[-0.02em] text-brand transition-colors group-hover:text-accent md:text-[2.3rem]">
           {article.title}
         </h3>
         {article.excerpt && (
-          <p className="mt-5 text-[1.05rem] leading-relaxed text-muted-foreground line-clamp-2 md:line-clamp-3">
+          <p className="mt-4 max-w-2xl text-[15.5px] leading-relaxed text-muted-foreground line-clamp-2 md:line-clamp-3">
             {article.excerpt}
           </p>
         )}
-        <div className="mt-6">
-          <Meta article={article} size="md" />
-        </div>
+        <CardFooter article={article} cta />
       </div>
     </Link>
   );
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   2. MAGAZINE — wide horizontal split. One large image on one side,
-   typography on the other.
+   2. MAGAZINE — wide split tile. Artwork mounted on one side, the
+   typography set on the other.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardMagazine({
@@ -176,35 +203,37 @@ export function ArticleCardMagazine({
     <Link
       href={`/article/${article.slug}`}
       className={cn(
-        "group grid items-center gap-10 lg:gap-14",
+        surface,
+        "lg:grid lg:items-center lg:gap-2.5",
         reverse
-          ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]"
-          : "lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]",
+          ? "lg:grid-cols-[minmax(0,1fr)_minmax(0,1.35fr)]"
+          : "lg:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]",
         className,
       )}
     >
-      <Thumb
+      <FramedThumb
         article={article}
-        ratio="aspect-[16/9]"
-        rounded="rounded-[1.5rem] md:rounded-[2rem]"
-        className={cn(reverse ? "lg:order-2" : "")}
+        rounded="rounded-[1.05rem]"
+        className={cn(reverse && "lg:order-2")}
       />
-      <div className={cn("max-w-xl", reverse ? "lg:order-1" : "")}>
-        <Eyebrow article={article} />
-        <h3 className="mt-4 font-heading text-[1.5rem] font-semibold leading-[1.14] tracking-[-0.014em] text-brand transition-colors group-hover:text-accent md:text-[1.85rem] lg:text-[2rem]">
+      <div
+        className={cn(
+          "flex flex-col px-4 pb-4 pt-6 lg:px-9 lg:py-8",
+          reverse && "lg:order-1",
+        )}
+      >
+        <h3 className="font-heading text-[1.45rem] font-semibold leading-[1.14] tracking-[-0.014em] text-brand transition-colors group-hover:text-accent md:text-[1.8rem]">
           {article.title}
         </h3>
         {article.excerpt && (
-          <p className="mt-4 text-[15.5px] leading-relaxed text-muted-foreground line-clamp-3">
+          <p className="mt-4 text-[15px] leading-relaxed text-muted-foreground line-clamp-3">
             {article.excerpt}
           </p>
         )}
-        <div className="mt-6 flex items-center gap-5">
-          <span className="inline-flex items-center gap-1.5 text-[13px] font-heading font-semibold text-cta">
+        <div className="mt-7 flex flex-wrap items-center gap-5">
+          <ActionButton asSpan variant="cta" size="sm">
             Read article
-            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </span>
-          <span className="h-1 w-1 rounded-full bg-brand/15" aria-hidden />
+          </ActionButton>
           <Meta article={article} />
         </div>
       </div>
@@ -213,65 +242,54 @@ export function ArticleCardMagazine({
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   3. FEATURE — primary 2-up card.
+   3. FEATURE — large 2-up tile.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardFeature({ article, className }: BaseProps) {
   return (
-    <Link
-      href={`/article/${article.slug}`}
-      className={cn("group block", className)}
-    >
-      <Thumb article={article} ratio="aspect-[16/9]" rounded="rounded-[1.5rem]" />
-      <div className="mt-6">
-        <Eyebrow article={article} />
-        <h3 className="mt-3 font-heading text-[1.5rem] font-semibold leading-[1.16] tracking-[-0.012em] text-brand transition-colors group-hover:text-accent md:text-[1.7rem]">
+    <Link href={`/article/${article.slug}`} className={cn(surface, className)}>
+      <FramedThumb article={article} />
+      <div className="flex flex-1 flex-col px-4 pb-4 pt-6 md:px-5 md:pb-5">
+        <h3 className="font-heading text-[1.35rem] font-semibold leading-[1.18] tracking-[-0.012em] text-brand transition-colors group-hover:text-accent md:text-[1.55rem]">
           {article.title}
         </h3>
         {article.excerpt && (
-          <p className="mt-3.5 text-[15px] leading-relaxed text-muted-foreground line-clamp-2">
+          <p className="mt-3.5 text-[14.5px] leading-relaxed text-muted-foreground line-clamp-2">
             {article.excerpt}
           </p>
         )}
-        <div className="mt-5">
-          <Meta article={article} />
-        </div>
+        <CardFooter article={article} cta />
       </div>
     </Link>
   );
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   4. STANDARD — 3-up grid card.
+   4. STANDARD — 3-up grid tile.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardStandard({ article, className }: BaseProps) {
   return (
-    <Link
-      href={`/article/${article.slug}`}
-      className={cn("group block", className)}
-    >
-      <Thumb article={article} ratio="aspect-[16/9]" rounded="rounded-[1.25rem]" />
-      <div className="mt-5">
-        <Eyebrow article={article} />
-        <h3 className="mt-2.5 font-heading text-[1.2rem] font-semibold leading-[1.2] tracking-[-0.01em] text-brand transition-colors group-hover:text-accent line-clamp-3 md:text-[1.3rem]">
+    <Link href={`/article/${article.slug}`} className={cn(surface, className)}>
+      <FramedThumb article={article} />
+      <div className="flex flex-1 flex-col px-4 pb-4 pt-5">
+        <h3 className="font-heading text-[1.15rem] font-semibold leading-[1.22] tracking-[-0.01em] text-brand transition-colors group-hover:text-accent line-clamp-3 md:text-[1.22rem]">
           {article.title}
         </h3>
         {article.excerpt && (
-          <p className="mt-3 text-[14px] leading-relaxed text-muted-foreground line-clamp-2">
+          <p className="mt-3 text-[13.5px] leading-relaxed text-muted-foreground line-clamp-2">
             {article.excerpt}
           </p>
         )}
-        <div className="mt-4">
-          <Meta article={article} />
-        </div>
+        <CardFooter article={article} />
       </div>
     </Link>
   );
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   5. HORIZONTAL — compact image-left, text-right.
+   5. HORIZONTAL — compact row tile. Full-width artwork on mobile,
+   generous fixed-width artwork from sm up.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardHorizontal({ article, className }: BaseProps) {
@@ -279,30 +297,24 @@ export function ArticleCardHorizontal({ article, className }: BaseProps) {
     <Link
       href={`/article/${article.slug}`}
       className={cn(
-        "group flex gap-6 rounded-2xl border border-transparent p-3 transition-colors hover:border-border-subtle hover:bg-card/70",
+        surface,
+        "p-2 sm:flex-row sm:items-center sm:gap-1",
         className,
       )}
     >
-      <div className="relative aspect-[16/9] w-[180px] shrink-0 overflow-hidden rounded-xl bg-brand/[0.04] ring-1 ring-inset ring-brand/[0.04] sm:w-[230px] md:w-[260px]">
-        {article.thumbnail_url ? (
-          <img
-            src={article.thumbnail_url}
-            alt=""
-            loading="lazy"
-            className="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-sm font-medium text-brand/20">
-            SterlingPeak
-          </div>
-        )}
+      <div className="w-full shrink-0 sm:w-[190px] md:w-[210px] lg:w-[240px]">
+        <FramedThumb
+          article={article}
+          rounded="rounded-[0.85rem]"
+          chip={false}
+        />
       </div>
-      <div className="min-w-0 self-center">
-        <Eyebrow article={article} />
-        <h3 className="mt-2.5 font-heading text-[1.1rem] font-semibold leading-[1.22] tracking-[-0.008em] text-brand transition-colors group-hover:text-accent line-clamp-3 sm:text-[1.2rem]">
+      <div className="min-w-0 flex-1 px-3.5 pb-3.5 pt-4 sm:py-3 sm:pl-5 sm:pr-4">
+        <TextEyebrow article={article} />
+        <h3 className="mt-2 font-heading text-[1.05rem] font-semibold leading-[1.24] tracking-[-0.008em] text-brand transition-colors group-hover:text-accent line-clamp-3 sm:text-[1.12rem]">
           {article.title}
         </h3>
-        <div className="mt-3">
+        <div className="mt-2.5">
           <Meta article={article} />
         </div>
       </div>
@@ -311,9 +323,9 @@ export function ArticleCardHorizontal({ article, className }: BaseProps) {
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   6. INDEX — numbered ranking entry. Big numeral on the left, content
-   in the middle, small square thumb on the right. Used for ranked
-   editorial lists.
+   6. INDEX — numbered leaderboard row. Designed to live inside a
+   panel (rounded surface with row dividers), not to carry its own
+   card surface.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardIndex({
@@ -325,64 +337,51 @@ export function ArticleCardIndex({
     <Link
       href={`/article/${article.slug}`}
       className={cn(
-        "group grid items-center gap-6 py-7 md:grid-cols-[auto_minmax(0,1fr)_auto] md:gap-10",
+        "group grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-4 gap-y-4 px-5 py-6 transition-colors hover:bg-page/70 sm:grid-cols-[auto_minmax(0,1fr)_auto] sm:gap-x-6 md:px-7",
         className,
       )}
     >
       <span
-        className="font-heading text-[3rem] font-semibold leading-none tracking-[-0.04em] text-brand/15 transition-colors duration-300 group-hover:text-accent/80 md:text-[4rem]"
         aria-hidden
+        className="font-heading text-[1.6rem] font-semibold leading-none tracking-[-0.03em] text-brand/20 transition-colors duration-300 group-hover:text-cta md:text-[2rem]"
       >
         {String(index).padStart(2, "0")}
       </span>
 
       <div className="min-w-0">
-        <Eyebrow article={article} />
-        <h3 className="mt-2.5 font-heading text-[1.2rem] font-semibold leading-[1.22] tracking-[-0.01em] text-brand transition-colors group-hover:text-accent line-clamp-2 md:text-[1.45rem]">
+        <TextEyebrow article={article} />
+        <h3 className="mt-1.5 font-heading text-[1.05rem] font-semibold leading-[1.24] tracking-[-0.008em] text-brand transition-colors group-hover:text-accent line-clamp-2 md:text-[1.2rem]">
           {article.title}
         </h3>
-        {article.excerpt && (
-          <p className="mt-2.5 hidden text-[14px] leading-relaxed text-muted-foreground line-clamp-2 md:block">
-            {article.excerpt}
-          </p>
-        )}
-        <div className="mt-3">
+        <div className="mt-2">
           <Meta article={article} />
         </div>
       </div>
 
-      <div className="relative hidden aspect-square w-[140px] shrink-0 overflow-hidden rounded-2xl bg-brand/[0.04] ring-1 ring-inset ring-brand/[0.04] md:block lg:w-[170px]">
-        {article.thumbnail_url ? (
-          <img
-            src={article.thumbnail_url}
-            alt=""
-            loading="lazy"
-            className="h-full w-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center text-sm font-medium text-brand/20">
-            SterlingPeak
-          </div>
-        )}
+      {/* Full-width artwork below the text on mobile, wide 16:9 on the right from sm up. */}
+      <div className="col-span-2 w-full sm:col-span-1 sm:w-[270px] md:w-[330px] lg:w-[390px]">
+        <FramedThumb
+          article={article}
+          rounded="rounded-[0.85rem]"
+          chip={false}
+        />
       </div>
     </Link>
   );
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   7. POSTER — full-bleed image with overlay headline.
+   7. POSTER — framed full-bleed artwork with overlay headline.
    ────────────────────────────────────────────────────────────────── */
 
 export function ArticleCardPoster({ article, className }: BaseProps) {
   return (
     <Link
       href={`/article/${article.slug}`}
-      className={cn(
-        "group relative block overflow-hidden rounded-[1.5rem] md:rounded-[2rem]",
-        className,
-      )}
+      className={cn(surface, "block", className)}
     >
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-brand/[0.05]">
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-[1.05rem] bg-brand/[0.05]">
+        <CategoryChip article={article} />
         {article.thumbnail_url ? (
           <img
             src={article.thumbnail_url}
@@ -397,10 +396,9 @@ export function ArticleCardPoster({ article, className }: BaseProps) {
             </span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-brand/95 via-brand/55 to-transparent" />
-        <div className="absolute inset-x-0 bottom-0 p-7 md:p-10 lg:p-12">
-          <Eyebrow article={article} tone="white" />
-          <h3 className="mt-4 max-w-3xl font-heading text-[1.65rem] font-semibold leading-[1.12] tracking-[-0.012em] text-white transition-transform duration-300 group-hover:translate-y-[-2px] md:text-[2.25rem] lg:text-[2.5rem]">
+        <div className="absolute inset-0 bg-gradient-to-t from-brand/95 via-brand/45 to-transparent" />
+        <div className="absolute inset-x-0 bottom-0 p-6 md:p-10 lg:p-12">
+          <h3 className="max-w-3xl font-heading text-[1.5rem] font-semibold leading-[1.12] tracking-[-0.012em] text-white transition-transform duration-300 group-hover:-translate-y-0.5 md:text-[2.15rem] lg:text-[2.4rem]">
             {article.title}
           </h3>
           {article.excerpt && (
@@ -408,10 +406,10 @@ export function ArticleCardPoster({ article, className }: BaseProps) {
               {article.excerpt}
             </p>
           )}
-          <div className="mt-6 flex flex-wrap items-center gap-4">
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-5 py-2.5 text-[13px] font-heading font-semibold text-brand transition-transform duration-300 group-hover:translate-x-1">
-              Read article <ArrowUpRight className="h-3.5 w-3.5" />
-            </span>
+          <div className="mt-7 flex flex-wrap items-center gap-5">
+            <ActionButton asSpan variant="cta" size="md" tone="dark">
+              Read article
+            </ActionButton>
             <Meta article={article} tone="white" />
           </div>
         </div>
@@ -421,7 +419,33 @@ export function ArticleCardPoster({ article, className }: BaseProps) {
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   SectionHeader — used across listings for consistent section openers.
+   ListPanel — the shared rounded surface that Index rows sit inside.
+   Exported so sections can build leaderboards consistently.
+   ────────────────────────────────────────────────────────────────── */
+
+export function ListPanel({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div
+      className={cn(
+        "overflow-hidden rounded-[1.4rem] bg-card ring-1 ring-brand/[0.07]",
+        "shadow-[0_1px_2px_rgba(0,55,72,0.05),0_24px_48px_-32px_rgba(0,55,72,0.35)]",
+        className,
+      )}
+    >
+      {children}
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────────
+   SectionHeader — used across listings for consistent section
+   openers. `tone="dark"` for sections set on the brand slab.
    ────────────────────────────────────────────────────────────────── */
 
 export function SectionHeader({
@@ -431,6 +455,7 @@ export function SectionHeader({
   href,
   ctaLabel = "View all",
   align = "default",
+  tone = "light",
 }: {
   eyebrow?: string;
   title: string;
@@ -438,8 +463,10 @@ export function SectionHeader({
   href?: string;
   ctaLabel?: string;
   align?: "default" | "center";
+  tone?: "light" | "dark";
 }) {
   const isCenter = align === "center";
+  const isDark = tone === "dark";
   return (
     <div
       className={cn(
@@ -455,23 +482,36 @@ export function SectionHeader({
             {eyebrow}
           </p>
         )}
-        <h2 className="mt-3 font-heading text-[2.1rem] font-semibold leading-[1.08] tracking-[-0.02em] text-brand md:text-[2.75rem]">
+        <h2
+          className={cn(
+            "mt-3 font-heading text-[2.1rem] font-semibold leading-[1.08] tracking-[-0.02em] md:text-[2.75rem]",
+            isDark ? "text-white" : "text-brand",
+          )}
+        >
           {title}
         </h2>
         {description && (
-          <p className="mt-4 text-[15.5px] leading-relaxed text-muted-foreground">
+          <p
+            className={cn(
+              "mt-4 text-[15.5px] leading-relaxed",
+              isDark ? "text-white/60" : "text-muted-foreground",
+            )}
+          >
             {description}
           </p>
         )}
       </div>
       {href && (
-        <Link
-          href={href}
-          className="group inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-border-subtle bg-card px-5 py-2.5 text-[13px] font-heading font-semibold text-brand transition-colors hover:border-accent/40 hover:text-accent md:self-end"
-        >
-          {ctaLabel}
-          <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-        </Link>
+        <div className="shrink-0 self-start md:self-end">
+          <ActionButton
+            href={href}
+            variant="ghost"
+            size="md"
+            tone={isDark ? "dark" : "light"}
+          >
+            {ctaLabel}
+          </ActionButton>
+        </div>
       )}
     </div>
   );

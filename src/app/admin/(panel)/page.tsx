@@ -3,7 +3,7 @@ import {
   adminContentHealth,
   adminDashboardCounts,
 } from "@/lib/queries/admin";
-import { FileText, Users, Mail, MessageSquare, FolderTree, TrendingUp } from "lucide-react";
+import { FileText, MessageSquare, FolderTree, TrendingUp } from "lucide-react";
 
 export default async function AdminDashboardPage() {
   const [counts, health] = await Promise.all([
@@ -15,7 +15,6 @@ export default async function AdminDashboardPage() {
     { label: "Articles", value: counts.totalArticles, icon: FileText, href: "/admin/articles" },
     { label: "Published", value: counts.published, icon: TrendingUp, href: "/admin/articles" },
     { label: "Drafts", value: counts.drafts, icon: FileText, href: "/admin/articles" },
-    { label: "Subscribers", value: counts.subscribers, icon: Mail, href: "/admin/newsletter" },
     { label: "Messages", value: counts.contactMessages, icon: MessageSquare, href: "/admin/contact-messages" },
     { label: "Categories", value: counts.categories, icon: FolderTree, href: "/admin/categories" },
   ];

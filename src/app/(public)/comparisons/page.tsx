@@ -47,8 +47,8 @@ export default async function ComparisonsPage({
             Business software comparisons for UK SMEs
           </h1>
           <p className="mt-6 max-w-3xl text-[1.1rem] leading-relaxed text-muted-foreground">
-            Side-by-side analysis of UK accounting, payroll, HR, and ERP tools —
-            evaluated on real pricing, MTD compliance, feature depth, and
+            Side-by-side analysis of UK accounting, payroll, HR and ERP tools,
+            evaluated on real pricing, MTD compliance, feature depth and
             operational fit. Updated as products and HMRC rules change.
           </p>
 

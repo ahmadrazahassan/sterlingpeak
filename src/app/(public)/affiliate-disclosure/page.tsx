@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Affiliate Disclosure — SterlingPeak",
+  title: "Affiliate Disclosure | SterlingPeak",
   description:
-    "How SterlingPeak uses affiliate links, maintains editorial independence, and funds free content for UK businesses.",
+    "How SterlingPeak uses affiliate links, maintains editorial independence and funds free content for UK businesses.",
 };
 
 export default function AffiliateDisclosurePage() {

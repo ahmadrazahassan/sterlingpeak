@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — SterlingPeak",
+  title: "Privacy Policy | SterlingPeak",
   description:
-    "How SterlingPeak collects, uses, and protects your personal information in accordance with UK GDPR and the Data Protection Act 2018.",
+    "How SterlingPeak collects, uses and protects your personal information in accordance with UK GDPR and the Data Protection Act 2018.",
 };
 
 const POLICY_LAST_UPDATED = "16 May 2026";

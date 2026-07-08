@@ -10,7 +10,6 @@ import type {
   FeaturedComparisonsSectionJson,
   HeroJson,
   LatestSectionJson,
-  NewsletterSectionJson,
   TrustSectionJson,
 } from "@/lib/settings-types";
 import type { Metadata } from "next";
@@ -22,7 +21,7 @@ const fallbacks = {
     eyebrow: "Independent UK Finance Publication",
     heading: "UK accounting and payroll software, reviewed properly.",
     description:
-      "Editorial reviews and head-to-head comparisons of Sage, Xero, QuickBooks, FreeAgent, and the payroll, VAT, and operations software UK SMEs actually run on. Written for HMRC, Making Tax Digital, and UK GAAP — not US tax law translated into pounds.",
+      "Editorial reviews and head-to-head comparisons of Sage, Xero, QuickBooks, FreeAgent and the payroll, VAT and operations software UK SMEs actually run on. Written for HMRC, Making Tax Digital and UK GAAP, not US tax law translated into pounds.",
     ctaPrimaryLabel: "Read the comparisons",
     ctaPrimaryHref: "/comparisons",
     ctaSecondaryLabel: "Editorial guides",
@@ -34,18 +33,13 @@ const fallbacks = {
       "Real GBP pricing, MTD support, payroll and HR fit, and where each platform breaks. Updated as vendors and HMRC rules change.",
   } satisfies FeaturedComparisonsSectionJson,
   latest_section: { title: "From the desk" } satisfies LatestSectionJson,
-  newsletter_section: {
-    title: "One UK finance email a week. Worth opening.",
-    description:
-      "Software pricing changes, HMRC updates, MTD deadlines, and the editorial analysis the desk thinks UK finance teams should read this week.",
-  } satisfies NewsletterSectionJson,
   trust_section: DEFAULT_TRUST,
 };
 
 export const metadata: Metadata = {
-  title: "SterlingPeak — UK Accounting & Business Software Intelligence",
+  title: "SterlingPeak | UK Accounting & Business Software Intelligence",
   description:
-    "Independent editorial coverage of Sage, Xero, QuickBooks, payroll, tax compliance, and business operations for UK SMEs.",
+    "Independent editorial coverage of Sage, Xero, QuickBooks, payroll, tax compliance and business operations for UK SMEs.",
 };
 
 export default async function Page() {
@@ -60,11 +54,6 @@ export default async function Page() {
     settings,
     "latest_section",
     fallbacks.latest_section,
-  );
-  const newsletterSection = getSetting<NewsletterSectionJson>(
-    settings,
-    "newsletter_section",
-    fallbacks.newsletter_section,
   );
   const trustSection = getSetting<TrustSectionJson>(
     settings,
@@ -117,7 +106,6 @@ export default async function Page() {
         hero={hero}
         featuredSection={featuredSection}
         latestSection={latestSection}
-        newsletterSection={newsletterSection}
         trustSection={trustSection.columns?.length ? trustSection : DEFAULT_TRUST}
         featuredComparisons={featuredComparisons}
         latestArticles={latestArticles}

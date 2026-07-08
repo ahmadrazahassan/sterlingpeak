@@ -34,10 +34,6 @@ export default async function AdminAuthorsPage() {
             <input name="avatar_url" className="mt-1 h-9 w-full rounded-lg border border-black/[0.06] bg-[#f9f9f9] px-3 text-[13px] text-brand outline-none focus:border-cta/30" />
           </div>
           <div>
-            <label className="text-[11px] font-medium text-brand/50">LinkedIn</label>
-            <input name="linkedin_url" className="mt-1 h-9 w-full rounded-lg border border-black/[0.06] bg-[#f9f9f9] px-3 text-[13px] text-brand outline-none focus:border-cta/30" />
-          </div>
-          <div>
             <label className="text-[11px] font-medium text-brand/50">X / Twitter</label>
             <input name="twitter_url" className="mt-1 h-9 w-full rounded-lg border border-black/[0.06] bg-[#f9f9f9] px-3 text-[13px] text-brand outline-none focus:border-cta/30" />
           </div>

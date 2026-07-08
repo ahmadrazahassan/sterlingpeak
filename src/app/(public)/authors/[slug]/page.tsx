@@ -58,11 +58,6 @@ export default async function AuthorPage({ params }: Props) {
                 <p className="mt-4 max-w-2xl text-muted-foreground">{author.bio}</p>
               )}
               <div className="mt-4 flex flex-wrap gap-4 text-sm">
-                {author.linkedin_url && (
-                  <a href={author.linkedin_url} className="text-accent hover:underline">
-                    LinkedIn
-                  </a>
-                )}
                 {author.twitter_url && (
                   <a href={author.twitter_url} className="text-accent hover:underline">
                     X

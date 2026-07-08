@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Editorial Policy — SterlingPeak",
+  title: "Editorial Policy | SterlingPeak",
   description:
-    "How SterlingPeak researches, writes, and maintains the accuracy of UK accounting and business software content.",
+    "How SterlingPeak researches, writes and maintains the accuracy of UK accounting and business software content.",
 };
 
 export default function EditorialPolicyPage() {
@@ -65,21 +65,21 @@ export default function EditorialPolicyPage() {
               finance teams consider when choosing software:
             </p>
             <ul className="mt-3 list-disc space-y-2 pl-6">
-              <li>HMRC compliance — Making Tax Digital, VAT, CIS, PAYE RTI</li>
+              <li>HMRC compliance: Making Tax Digital, VAT, CIS, PAYE RTI</li>
               <li>
-                Feature depth — invoicing, bank reconciliation, multi-currency,
+                Feature depth: invoicing, bank reconciliation, multi-currency,
                 project costing
               </li>
-              <li>Payroll — auto-enrolment, statutory pay, P11D, P60</li>
+              <li>Payroll: auto-enrolment, statutory pay, P11D, P60</li>
               <li>
-                Ecosystem — integrations with banks, payment providers, and other
+                Ecosystem: integrations with banks, payment providers and other
                 business tools
               </li>
               <li>
-                Pricing — total cost including add-ons, per-user fees, and
+                Pricing: total cost including add-ons, per-user fees and
                 scaling costs
               </li>
-              <li>Usability — onboarding, learning curve, and support quality</li>
+              <li>Usability: onboarding, learning curve and support quality</li>
             </ul>
             <p className="mt-3">
               We clearly state the date of our most recent review so readers
@@ -144,9 +144,9 @@ export default function EditorialPolicyPage() {
               is where most of our readers operate.
             </p>
             <p>
-              We cover the full Sage UK product line at the editorial level —
+              We cover the full Sage UK product line at the editorial level:
               Sage Sole Trader, Sage Accounting, Sage 50, Sage Payroll, Sage
-              HR, Sage 200, Sage Intacct, and Sage X3. SterlingPeak
+              HR, Sage 200, Sage Intacct and Sage X3. SterlingPeak
               participates in the Sage UK affiliate programme. Where Sage is
               genuinely the best fit for a UK business profile we say so;
               where another product is the better fit (FreeAgent for some

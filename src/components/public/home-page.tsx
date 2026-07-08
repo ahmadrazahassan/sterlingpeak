@@ -1,31 +1,24 @@
 import Link from "next/link";
-import {
-  ArrowRight,
-  Briefcase,
-  Building2,
-  Calculator,
-  ClipboardList,
-  Landmark,
-  UserRound,
-} from "lucide-react";
-import { NewsletterForm } from "@/components/public/newsletter-form";
+import { ArrowUpRight } from "lucide-react";
 import { LogoMarquee } from "@/components/public/logo-marquee";
 import {
+  ArticleCardFeature,
   ArticleCardHorizontal,
   ArticleCardIndex,
   ArticleCardMagazine,
   ArticleCardPoster,
   ArticleCardStandard,
+  ListPanel,
   SectionHeader,
 } from "@/components/public/article-card";
-import { PillButton } from "@/components/public/pill-button";
+import { ActionButton } from "@/components/public/action-button";
+import { cn } from "@/lib/utils";
 import type { ArticleRow } from "@/lib/queries/articles";
 import type { CategoryRow } from "@/lib/queries/categories";
 import type {
   FeaturedComparisonsSectionJson,
   HeroJson,
   LatestSectionJson,
-  NewsletterSectionJson,
   TrustSectionJson,
 } from "@/lib/settings-types";
 import { MotionSection } from "@/components/public/motion-section";
@@ -34,7 +27,6 @@ type Props = {
   hero: HeroJson;
   featuredSection: FeaturedComparisonsSectionJson;
   latestSection: LatestSectionJson;
-  newsletterSection: NewsletterSectionJson;
   trustSection: TrustSectionJson;
   featuredComparisons: ArticleRow[];
   latestArticles: ArticleRow[];
@@ -46,7 +38,6 @@ export function HomePage({
   hero,
   featuredSection,
   latestSection,
-  newsletterSection,
   trustSection,
   featuredComparisons,
   latestArticles,
@@ -59,8 +50,8 @@ export function HomePage({
 
   /* Recently published partition */
   const latestLead = latestArticles[0];
-  const latestRanked = latestArticles.slice(1, 6); // 5 numbered items
-  const latestRow = latestArticles.slice(6, 9); // 3 standard cards below
+  const latestSide = latestArticles.slice(1, 3); // 2 compact tiles beside the lead
+  const latestRanked = latestArticles.slice(3, 9); // leaderboard panel rows
 
   /* Comparisons partition */
   const compLead = featuredComparisons[0];
@@ -68,30 +59,54 @@ export function HomePage({
 
   return (
     <>
-      {/* ── HERO (centered) ── */}
+      {/* ──────────────────────────────────────────────────────────
+         HERO — broadsheet front page.
+
+         Not the centred badge/headline/buttons template. A folio
+         line runs across the top (publication left, place and date
+         right), the statement sets left-aligned underneath, and a
+         numbered "On the desk" index panel sits in the right rail —
+         the front-page contents box every serious paper carries.
+         ────────────────────────────────────────────────────────── */}
       <section>
-        <div className="mx-auto max-w-4xl px-6 pb-10 pt-16 text-center md:pb-12 md:pt-24">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-card px-4 py-1.5 text-[11px] font-heading font-medium text-brand">
-            <span className="h-1.5 w-1.5 rounded-full bg-cta" />
-            {hero.eyebrow}
-          </span>
-          <h1 className="mx-auto mt-7 max-w-3xl font-heading text-[2.25rem] font-semibold leading-[1.08] tracking-[-0.025em] text-brand md:text-[3.5rem]">
-            {hero.heading}
-          </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-[1.05rem] leading-relaxed text-muted-foreground">
-            {hero.description}
-          </p>
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
-            <PillButton href={hero.ctaPrimaryHref} variant="cta" size="lg">
-              {hero.ctaPrimaryLabel}
-            </PillButton>
-            <PillButton href={hero.ctaSecondaryHref} variant="primary" size="lg">
-              {hero.ctaSecondaryLabel}
-            </PillButton>
+        <div className="mx-auto max-w-7xl px-6 pb-14 pt-10 md:px-8 md:pb-20 md:pt-14">
+          {/* Folio line */}
+          <div className="border-b border-brand/15 pb-4">
+            <p className="text-[11px] font-heading font-semibold uppercase tracking-[0.24em] text-brand">
+              {hero.eyebrow}
+            </p>
           </div>
 
-          {/* Read by — liquid-glass capsule, lives inside the hero */}
-          <ReadByCapsule />
+          <div className="mt-10 grid gap-12 md:mt-14 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-16">
+            {/* Statement */}
+            <div>
+              <h1 className="max-w-[17ch] font-heading text-[2.5rem] font-semibold leading-[1.04] tracking-[-0.028em] text-brand md:text-[3.3rem] lg:text-[3.7rem]">
+                {hero.heading}
+              </h1>
+              <p className="mt-6 max-w-xl text-[1.02rem] leading-relaxed text-muted-foreground md:text-[1.08rem]">
+                {hero.description}
+              </p>
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <ActionButton href={hero.ctaPrimaryHref} variant="cta" size="lg">
+                  {hero.ctaPrimaryLabel}
+                </ActionButton>
+                <ActionButton href={hero.ctaSecondaryHref} variant="ghost" size="lg">
+                  {hero.ctaSecondaryLabel}
+                </ActionButton>
+              </div>
+              <p className="mt-10 flex max-w-xl items-center gap-2.5 border-t border-border-subtle pt-5 text-[12.5px] leading-relaxed text-brand/55">
+                <span
+                  aria-hidden
+                  className="inline-block h-[7px] w-[7px] shrink-0 rounded-[2px] bg-cta"
+                />
+                Read by sole traders, limited company directors, bookkeepers
+                and accountants across the UK.
+              </p>
+            </div>
+
+            {/* Front-page index */}
+            <HeroDeskPanel articles={latestArticles.slice(0, 3)} />
+          </div>
         </div>
       </section>
 
@@ -100,9 +115,8 @@ export function HomePage({
 
       {/* ──────────────────────────────────────────────────────────
          RECENTLY PUBLISHED
-         Single identity: section header on top, lead magazine card,
-         numbered "Most read" list. The list does not need its own
-         secondary headline next to the section header.
+         Bento opener: one big lead tile beside two stacked compact
+         tiles, then the "Most read" leaderboard panel underneath.
          ────────────────────────────────────────────────────────── */}
       <MotionSection className="py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-6 md:px-8">
@@ -116,41 +130,48 @@ export function HomePage({
           {latestArticles.length === 0 && <EmptyState />}
 
           {latestLead && (
-            <div className="mt-14">
-              <ArticleCardMagazine article={latestLead} />
+            <div className="mt-14 grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+              <ArticleCardFeature article={latestLead} />
+              {latestSide.length > 0 && (
+                <div className="flex flex-col gap-6">
+                  {latestSide.map((a) => (
+                    <ArticleCardHorizontal
+                      key={a.id}
+                      article={a}
+                      className="flex-1"
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
           {latestRanked.length > 0 && (
-            <div className="mt-20 border-t border-border-subtle pt-14">
-              <div className="flex items-baseline justify-between gap-6">
+            <div className="mt-16">
+              <div className="flex items-center justify-between gap-6">
                 <p className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.22em] text-brand/55">
                   Most read this week
                 </p>
-                <Link
-                  href="/categories/accounting"
-                  className="hidden items-center gap-1.5 text-[12.5px] font-heading font-semibold text-brand/65 transition-colors hover:text-cta sm:inline-flex"
-                >
-                  See all
-                  <ArrowRight className="h-3 w-3" />
-                </Link>
+                <div className="hidden sm:block">
+                  <ActionButton
+                    href="/categories/accounting"
+                    variant="ghost"
+                    size="sm"
+                  >
+                    See all
+                  </ActionButton>
+                </div>
               </div>
 
-              <ol className="mt-8 divide-y divide-border-subtle">
-                {latestRanked.map((a, i) => (
-                  <li key={a.id}>
-                    <ArticleCardIndex article={a} index={i + 1} />
-                  </li>
-                ))}
-              </ol>
-            </div>
-          )}
-
-          {latestRow.length > 0 && (
-            <div className="mt-20 grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-              {latestRow.map((a) => (
-                <ArticleCardStandard key={a.id} article={a} />
-              ))}
+              <ListPanel className="mt-6">
+                <ol className="divide-y divide-border-subtle">
+                  {latestRanked.map((a, i) => (
+                    <li key={a.id}>
+                      <ArticleCardIndex article={a} index={i + 1} />
+                    </li>
+                  ))}
+                </ol>
+              </ListPanel>
             </div>
           )}
         </div>
@@ -158,13 +179,15 @@ export function HomePage({
 
       {/* ──────────────────────────────────────────────────────────
          COMPARISONS
-         Card-tinted slab. Poster lead + 3-up grid. The previous
-         third row (2-up Feature below) was content stuffing.
+         Full brand slab — the one dark passage on the page. White
+         tiles and the framed poster sit on deep navy so the
+         head-to-head verdicts read as the flagship section.
          ────────────────────────────────────────────────────────── */}
       {featuredComparisons.length > 0 && (
-        <MotionSection className="border-y border-border-subtle bg-card py-20 md:py-28">
+        <MotionSection className="bg-brand py-20 md:py-28">
           <div className="mx-auto max-w-7xl px-6 md:px-8">
             <SectionHeader
+              tone="dark"
               eyebrow="Head-to-head"
               title={featuredSection.title}
               description={featuredSection.subtitle}
@@ -179,7 +202,7 @@ export function HomePage({
             )}
 
             {compTrio.length > 0 && (
-              <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+              <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {compTrio.map((a) => (
                   <ArticleCardStandard key={a.id} article={a} />
                 ))}
@@ -189,7 +212,7 @@ export function HomePage({
         </MotionSection>
       )}
 
-      {/* ── ARTICLES BY CATEGORY (alternating layouts) ──
+      {/* ── ARTICLES BY CATEGORY (alternating tile layouts) ──
            Eyebrow = category name (uppercased), title = category
            description. No redundant "Category · {name}" prefix.       */}
       {topCategories.map((cat, idx) => {
@@ -202,7 +225,7 @@ export function HomePage({
             className={
               idx % 2 === 0
                 ? "py-20 md:py-28"
-                : "border-y border-border-subtle bg-card/40 py-20 md:py-28"
+                : "border-y border-border-subtle bg-brand/[0.04] py-20 md:py-28"
             }
           >
             <div className="mx-auto max-w-7xl px-6 md:px-8">
@@ -218,44 +241,6 @@ export function HomePage({
           </MotionSection>
         );
       })}
-
-      {/* ── MID-PAGE NEWSLETTER ──
-           Flat brand-coloured card. No radial gradient. Editorial
-           framing matches the rest of the site.                       */}
-      <MotionSection id="newsletter" className="scroll-mt-24 py-20 md:py-28">
-        <div className="mx-auto max-w-7xl px-6 md:px-8">
-          <div className="overflow-hidden rounded-[2rem] bg-brand">
-            <div className="grid gap-10 px-8 py-14 md:grid-cols-[1fr_1.1fr] md:gap-14 md:px-14 md:py-20">
-              <div>
-                <p className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.22em] text-cta/85">
-                  The SterlingPeak Briefing
-                </p>
-                <h2 className="mt-4 font-heading text-[1.85rem] font-semibold leading-[1.08] tracking-[-0.014em] text-white md:text-[2.5rem]">
-                  {newsletterSection.title}
-                </h2>
-                <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/55">
-                  {newsletterSection.description}
-                </p>
-                <div className="mt-7 flex items-center gap-5 text-[12px] text-white/45">
-                  <span className="inline-flex items-center gap-1.5">
-                    <span aria-hidden className="inline-block h-1 w-1 rounded-full bg-cta" />
-                    Free, every Thursday
-                  </span>
-                  <span aria-hidden className="h-3 w-px bg-white/15" />
-                  <span>Around a 5-minute read</span>
-                </div>
-              </div>
-
-              <div className="md:max-w-md md:justify-self-end">
-                <NewsletterForm source="homepage" variant="dark" />
-                <p className="mt-4 text-[11px] text-white/40">
-                  Double opt-in. UK GDPR compliant. Unsubscribe in one click.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </MotionSection>
 
       {/* ── EDITORIAL STANDARDS ──
            Eyebrow + structural three-column commitment block.         */}
@@ -313,79 +298,87 @@ export function HomePage({
 }
 
 /* ──────────────────────────────────────────────────────────────────
-   Read by — liquid-glass readership capsule that lives inside the
-   hero block. iOS-style frosted glass, soft white reflection, gentle
-   ambient shadow. Uses real, recognisable lucide icons (no spark/zap).
+   On the desk — the hero's right rail. A numbered front-page index
+   of the latest stories, drawn live from the database. Before any
+   articles exist it falls back to three true editorial commitments,
+   never invented numbers.
    ────────────────────────────────────────────────────────────────── */
 
-function ReadByCapsule() {
-  const audience = [
-    { label: "Sole traders", Icon: UserRound },
-    { label: "Freelancers", Icon: Briefcase },
-    { label: "Ltd directors", Icon: Building2 },
-    { label: "Finance managers", Icon: ClipboardList },
-    { label: "Bookkeepers", Icon: Calculator },
-    { label: "Accountants", Icon: Landmark },
-  ];
+const DESK_FACTS = [
+  "Pricing re-verified at the start of each VAT quarter",
+  "Written for HMRC, Making Tax Digital and UK GAAP",
+  "One named editor. Nothing ghost written.",
+];
 
+function HeroDeskPanel({ articles }: { articles: ArticleRow[] }) {
   return (
-    <div className="mt-14 md:mt-16">
-      {/* Top meta strip */}
-      <div className="mx-auto flex max-w-3xl items-center gap-4">
-        <span aria-hidden className="h-px flex-1 bg-brand/10" />
-        <span className="inline-flex items-center gap-2 text-[10.5px] font-heading font-semibold uppercase tracking-[0.24em] text-brand/55">
-          <span aria-hidden className="inline-block h-[6px] w-[6px] rounded-[1.5px] bg-cta" />
-          Read by professionals at
-        </span>
-        <span aria-hidden className="h-px flex-1 bg-brand/10" />
-      </div>
-
-      {/* Audience grid */}
-      <div className="mx-auto mt-7 max-w-4xl">
-        <div className="flex flex-wrap items-stretch justify-center gap-2.5 sm:gap-3">
-          {audience.map(({ label, Icon }) => (
-            <span
-              key={label}
-              className={[
-                "group inline-flex items-center gap-2 rounded-full px-4 py-2",
-                // Liquid-glass tile
-                "bg-white/55 backdrop-blur-[18px] backdrop-saturate-150",
-                "ring-1 ring-inset ring-white/70",
-                "shadow-[0_8px_24px_-16px_rgba(0,55,72,0.18),inset_0_1px_0_rgba(255,255,255,0.9)]",
-                // Type
-                "text-[12.5px] font-heading font-medium tracking-[0.005em] text-brand/85",
-                // Subtle hover lift
-                "transition-all duration-300 hover:bg-white/80 hover:shadow-[0_14px_32px_-18px_rgba(0,55,72,0.25),inset_0_1px_0_rgba(255,255,255,0.95)] hover:-translate-y-[1px]",
-              ].join(" ")}
-            >
-              <span
-                aria-hidden
-                className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-cta/10 text-cta"
-              >
-                <Icon className="h-3 w-3" strokeWidth={2} />
-              </span>
-              {label}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Bottom region line */}
-      <div className="mx-auto mt-7 flex max-w-3xl items-center gap-4">
-        <span aria-hidden className="h-px flex-1 bg-brand/10" />
-        <span className="inline-flex items-center gap-2 text-[11.5px] font-heading font-medium tracking-[0.005em] text-brand/55">
-          <span
-            aria-hidden
-            className="relative flex h-1.5 w-1.5"
-          >
+    <aside className="flex flex-col self-start overflow-hidden rounded-[1.25rem] border border-border-subtle bg-card shadow-[0_28px_60px_-34px_rgba(0,55,72,0.3)]">
+      <div className="border-b border-border-subtle px-6 py-4">
+        <p className="inline-flex items-center gap-2.5 text-[10.5px] font-heading font-semibold uppercase tracking-[0.26em] text-brand/60">
+          <span aria-hidden className="relative flex h-1.5 w-1.5">
             <span className="absolute inset-0 animate-ping rounded-full bg-cta/50" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cta" />
           </span>
-          England &middot; Scotland &middot; Wales &middot; Northern Ireland
-        </span>
-        <span aria-hidden className="h-px flex-1 bg-brand/10" />
+          On the desk
+        </p>
       </div>
-    </div>
+
+      {articles.length > 0 ? (
+        <ol>
+          {articles.map((a, i) => (
+            <li
+              key={a.id}
+              className={cn(i > 0 && "border-t border-border-subtle")}
+            >
+              <Link
+                href={`/article/${a.slug}`}
+                className="group flex gap-4 px-6 py-5 transition-colors hover:bg-page/60"
+              >
+                <span className="font-mono text-[12px] leading-[1.5] tabular-nums text-cta/70">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="font-heading text-[14.5px] font-medium leading-[1.35] text-brand transition-colors group-hover:text-cta">
+                  {a.title}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <ul>
+          {DESK_FACTS.map((fact, i) => (
+            <li
+              key={fact}
+              className={cn(
+                "flex gap-4 px-6 py-5",
+                i > 0 && "border-t border-border-subtle",
+              )}
+            >
+              <span className="font-mono text-[12px] leading-[1.5] tabular-nums text-cta/70">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="font-heading text-[14.5px] font-medium leading-[1.35] text-brand">
+                {fact}
+              </span>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <div className="border-t border-border-subtle bg-page/40 px-6 py-4">
+        <Link
+          href="/editorial-policy"
+          className="group inline-flex items-center gap-1.5 text-[12px] font-heading font-semibold text-brand/60 transition-colors hover:text-cta"
+        >
+          How the desk works
+          <ArrowUpRight
+            className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]"
+            strokeWidth={1.8}
+            aria-hidden
+          />
+        </Link>
+      </div>
+    </aside>
   );
 }
 
@@ -400,14 +393,13 @@ function EmptyState() {
         First issues publishing soon
       </p>
       <p className="mx-auto mt-3 max-w-md text-[15px] leading-relaxed text-muted-foreground">
-        SterlingPeak is in editorial setup. Subscribe to the Briefing and the
-        first articles — UK accounting reviews, MTD guides, and head-to-head
-        comparisons — will land in your inbox the day they go live.
+        SterlingPeak is in editorial setup. The first articles go live shortly:
+        UK accounting reviews, MTD guides and head-to-head comparisons.
       </p>
       <div className="mt-7 inline-flex">
-        <PillButton href="/#newsletter" variant="cta" size="md">
-          Subscribe to the Briefing
-        </PillButton>
+        <ActionButton href="/comparisons" variant="cta" size="md">
+          Browse the comparisons
+        </ActionButton>
       </div>
     </div>
   );
@@ -415,8 +407,8 @@ function EmptyState() {
 
 /* ──────────────────────────────────────────────────────────────────
    Internal: alternating category layouts for visual rhythm.
-   Each category section gets one of three layouts so the page feels
-   designed rather than templated.
+   Each category section gets one of three tile compositions so the
+   page feels designed rather than templated.
    ────────────────────────────────────────────────────────────────── */
 
 function CategorySection({
@@ -426,7 +418,7 @@ function CategorySection({
   articles: ArticleRow[];
   variant: number;
 }) {
-  /* Variant 0: Magazine + 3-up grid */
+  /* Variant 0: wide Magazine split tile + 3-up tile row */
   if (variant === 0) {
     const lead = articles[0];
     const rest = articles.slice(1, 4);
@@ -434,7 +426,7 @@ function CategorySection({
       <div className="mt-14">
         {lead && <ArticleCardMagazine article={lead} />}
         {rest.length > 0 && (
-          <div className="mt-16 grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((a) => (
               <ArticleCardStandard key={a.id} article={a} />
             ))}
@@ -444,29 +436,38 @@ function CategorySection({
     );
   }
 
-  /* Variant 1: 3-up Standard grid */
+  /* Variant 1: Feature 2-up (big artwork) + 3-up tile row */
   if (variant === 1) {
+    const pair = articles.slice(0, 2);
+    const row = articles.slice(2, 5);
     return (
-      <div className="mt-14 grid gap-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-        {articles.slice(0, 6).map((a) => (
-          <ArticleCardStandard key={a.id} article={a} />
-        ))}
+      <div className="mt-14">
+        <div className="grid gap-6 md:grid-cols-2">
+          {pair.map((a) => (
+            <ArticleCardFeature key={a.id} article={a} />
+          ))}
+        </div>
+        {row.length > 0 && (
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {row.map((a) => (
+              <ArticleCardStandard key={a.id} article={a} />
+            ))}
+          </div>
+        )}
       </div>
     );
   }
 
-  /* Variant 2: Poster + 3 horizontal rail */
+  /* Variant 2: framed Poster + stacked compact tiles */
   const poster = articles[0];
   const list = articles.slice(1, 4);
   return (
-    <div className="mt-14 grid gap-12 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-16">
+    <div className="mt-14 grid gap-6 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)]">
       {poster && <ArticleCardPoster article={poster} />}
       {list.length > 0 && (
-        <div className="flex flex-col divide-y divide-border-subtle">
+        <div className="flex flex-col gap-6">
           {list.map((a) => (
-            <div key={a.id} className="py-6 first:pt-0 last:pb-0">
-              <ArticleCardHorizontal article={a} />
-            </div>
+            <ArticleCardHorizontal key={a.id} article={a} className="flex-1" />
           ))}
         </div>
       )}

@@ -5,17 +5,12 @@ import { ArticleBody } from "@/components/public/article-body";
 import { Breadcrumbs } from "@/components/public/breadcrumbs";
 import { ArticleCardStandard } from "@/components/public/article-card";
 import { JsonLd } from "@/components/public/json-ld";
-import { LinkedInBrand } from "@/components/public/linkedin-brand";
-import { NewsletterForm } from "@/components/public/newsletter-form";
 import {
   fetchArticleBySlug,
   fetchRelatedArticles,
 } from "@/lib/queries/articles";
 import { ShieldCheck } from "lucide-react";
 import type { Metadata } from "next";
-
-const EDITOR_LINKEDIN_URL =
-  "https://www.linkedin.com/in/hafiza-ayesha-waheed-4a457440a/";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -195,7 +190,7 @@ export default async function ArticlePage({ params }: Props) {
                   </span>{" "}
                   This article contains affiliate links to UK software products,
                   including Sage UK. SterlingPeak may earn a referral commission
-                  if you sign up for a paid plan — at no extra cost to you.
+                  if you sign up for a paid plan, at no extra cost to you.
                   Commission never decides which products we recommend or how we
                   score them. Pricing was last verified on{" "}
                   <strong className="text-brand">{ukDate(verifiedOn)}</strong>.
@@ -247,7 +242,7 @@ export default async function ArticlePage({ params }: Props) {
                 {ukDate(verifiedOn)}.
               </span>{" "}
               SterlingPeak re-verifies vendor pricing each VAT cycle. Features
-              and pricing may have changed since — confirm directly with the
+              and pricing may have changed since, so confirm directly with the
               provider before purchase.
             </p>
           </div>
@@ -273,10 +268,9 @@ export default async function ArticlePage({ params }: Props) {
                   Founder &amp; Editor-in-Chief, SterlingPeak
                 </p>
                 <p className="mt-3 max-w-prose text-[14.5px] leading-relaxed text-muted-foreground">
-                  Ayesha covers UK accounting software, payroll, and Making Tax
-                  Digital for sole traders, SMEs, and finance teams. She writes
-                  every issue of The SterlingPeak Briefing from Greater
-                  Manchester, England.
+                  Ayesha covers UK accounting software, payroll and Making Tax
+                  Digital for sole traders, SMEs and finance teams, writing from
+                  Greater Manchester, England.
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12.5px] font-heading font-medium">
                   <Link
@@ -285,15 +279,6 @@ export default async function ArticlePage({ params }: Props) {
                   >
                     All articles by Ayesha →
                   </Link>
-                  <a
-                    href={EDITOR_LINKEDIN_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-brand transition-colors hover:text-cta"
-                  >
-                    <LinkedInBrand className="h-3.5 w-3.5" />
-                    LinkedIn
-                  </a>
                   <Link
                     href="/contact"
                     className="text-brand/55 transition-colors hover:text-cta"
@@ -326,34 +311,6 @@ export default async function ArticlePage({ params }: Props) {
         </section>
       )}
 
-      {/* ── NEWSLETTER ── */}
-      <section className="py-16 md:py-20">
-        <div className="mx-auto max-w-7xl px-5 md:px-8">
-          <div className="overflow-hidden rounded-[2rem] bg-brand">
-            <div className="grid gap-10 px-8 py-14 md:grid-cols-[1fr_1.1fr] md:gap-14 md:px-14 md:py-16">
-              <div>
-                <p className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.22em] text-cta/85">
-                  The SterlingPeak Briefing
-                </p>
-                <h2 className="mt-4 font-heading text-[1.7rem] font-semibold leading-[1.1] tracking-[-0.014em] text-white md:text-[2.1rem]">
-                  UK accounting &amp; compliance, every Thursday.
-                </h2>
-                <p className="mt-4 max-w-md text-[14.5px] leading-relaxed text-white/55">
-                  Software pricing changes, HMRC updates, MTD deadlines, and the
-                  editorial analysis Ayesha thinks UK finance teams should read
-                  this week.
-                </p>
-              </div>
-              <div className="md:max-w-md md:justify-self-end">
-                <NewsletterForm source={`article-${slug}`} variant="dark" />
-                <p className="mt-4 text-[11px] text-white/40">
-                  Double opt-in. UK GDPR compliant. Unsubscribe in one click.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   );
 }
