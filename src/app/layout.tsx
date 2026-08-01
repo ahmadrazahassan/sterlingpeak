@@ -44,7 +44,14 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   other: {
-    "impact-site-verification": "39a4f840-3d9b-4ca2-878f-56906886667a",
+    /* One token per Impact media property. Both render as their own
+       meta tag in the head, so verifying a new property never
+       invalidates one that already passed. Remove a value only when
+       the matching property is deleted in Impact. */
+    "impact-site-verification": [
+      "39a4f840-3d9b-4ca2-878f-56906886667a",
+      "9b7d0d19-16bb-4267-bc82-19b61e85085a",
+    ],
   },
 };
 
