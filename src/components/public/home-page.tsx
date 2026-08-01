@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { LogoMarquee } from "@/components/public/logo-marquee";
 import {
   ArticleCardFeature,
@@ -12,7 +11,6 @@ import {
   SectionHeader,
 } from "@/components/public/article-card";
 import { ActionButton } from "@/components/public/action-button";
-import { cn } from "@/lib/utils";
 import type { ArticleRow } from "@/lib/queries/articles";
 import type { CategoryRow } from "@/lib/queries/categories";
 import type {
@@ -60,53 +58,51 @@ export function HomePage({
   return (
     <>
       {/* ──────────────────────────────────────────────────────────
-         HERO — broadsheet front page.
+         HERO — centred editorial statement.
 
-         Not the centred badge/headline/buttons template. A folio
-         line runs across the top (publication left, place and date
-         right), the statement sets left-aligned underneath, and a
-         numbered "On the desk" index panel sits in the right rail —
-         the front-page contents box every serious paper carries.
+         A single column, centred on the page. A quiet eyebrow pill,
+         one confident headline, a short standfirst, the two action
+         buttons, and a line naming exactly who reads the publication.
+         A soft brand wash sits behind the type so the section reads
+         as a considered opening rather than a plain block of text.
          ────────────────────────────────────────────────────────── */}
-      <section>
-        <div className="mx-auto max-w-7xl px-6 pb-14 pt-10 md:px-8 md:pb-20 md:pt-14">
-          {/* Folio line */}
-          <div className="border-b border-brand/15 pb-4">
-            <p className="text-[11px] font-heading font-semibold uppercase tracking-[0.24em] text-brand">
-              {hero.eyebrow}
-            </p>
+      <section className="relative overflow-hidden">
+        {/* Soft centred wash behind the headline */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 mx-auto h-[560px] max-w-4xl bg-[radial-gradient(60%_60%_at_50%_0%,rgba(34,173,1,0.07),transparent_70%)]"
+        />
+
+        <div className="mx-auto max-w-3xl px-6 pb-16 pt-16 text-center md:pb-24 md:pt-24">
+          <span className="inline-flex items-center gap-2 rounded-full border border-border-subtle bg-card px-4 py-1.5 text-[11px] font-heading font-medium uppercase tracking-[0.2em] text-brand">
+            <span className="h-1.5 w-1.5 rounded-full bg-cta" />
+            {hero.eyebrow}
+          </span>
+
+          <h1 className="mx-auto mt-8 max-w-[16ch] font-heading text-[2.6rem] font-semibold leading-[1.02] tracking-[-0.03em] text-brand md:text-[4rem]">
+            {hero.heading}
+          </h1>
+
+          <p className="mx-auto mt-6 max-w-xl text-[1.05rem] leading-relaxed text-muted-foreground md:text-[1.15rem]">
+            Clear comparisons, practical guides and honest analysis of Sage,
+            Xero, QuickBooks and the accounting, payroll and tax software UK
+            businesses rely on every day. Written for British rules, never
+            American ones translated into pounds.
+          </p>
+
+          <div className="mt-9 flex flex-wrap items-center justify-center gap-3">
+            <ActionButton href={hero.ctaPrimaryHref} variant="cta" size="lg">
+              {hero.ctaPrimaryLabel}
+            </ActionButton>
+            <ActionButton href={hero.ctaSecondaryHref} variant="ghost" size="lg">
+              {hero.ctaSecondaryLabel}
+            </ActionButton>
           </div>
 
-          <div className="mt-10 grid gap-12 md:mt-14 lg:grid-cols-[minmax(0,1.55fr)_minmax(0,1fr)] lg:gap-16">
-            {/* Statement */}
-            <div>
-              <h1 className="max-w-[17ch] font-heading text-[2.5rem] font-semibold leading-[1.04] tracking-[-0.028em] text-brand md:text-[3.3rem] lg:text-[3.7rem]">
-                {hero.heading}
-              </h1>
-              <p className="mt-6 max-w-xl text-[1.02rem] leading-relaxed text-muted-foreground md:text-[1.08rem]">
-                {hero.description}
-              </p>
-              <div className="mt-9 flex flex-wrap items-center gap-3">
-                <ActionButton href={hero.ctaPrimaryHref} variant="cta" size="lg">
-                  {hero.ctaPrimaryLabel}
-                </ActionButton>
-                <ActionButton href={hero.ctaSecondaryHref} variant="ghost" size="lg">
-                  {hero.ctaSecondaryLabel}
-                </ActionButton>
-              </div>
-              <p className="mt-10 flex max-w-xl items-center gap-2.5 border-t border-border-subtle pt-5 text-[12.5px] leading-relaxed text-brand/55">
-                <span
-                  aria-hidden
-                  className="inline-block h-[7px] w-[7px] shrink-0 rounded-[2px] bg-cta"
-                />
-                Read by sole traders, limited company directors, bookkeepers
-                and accountants across the UK.
-              </p>
-            </div>
-
-            {/* Front-page index */}
-            <HeroDeskPanel articles={latestArticles.slice(0, 3)} />
-          </div>
+          <p className="mx-auto mt-11 max-w-md text-center text-[12.5px] font-heading font-medium uppercase tracking-[0.12em] leading-relaxed text-brand/50">
+            Read by sole traders, company directors, bookkeepers and accountants
+            across the UK.
+          </p>
         </div>
       </section>
 
@@ -294,91 +290,6 @@ export function HomePage({
         </div>
       </MotionSection>
     </>
-  );
-}
-
-/* ──────────────────────────────────────────────────────────────────
-   On the desk — the hero's right rail. A numbered front-page index
-   of the latest stories, drawn live from the database. Before any
-   articles exist it falls back to three true editorial commitments,
-   never invented numbers.
-   ────────────────────────────────────────────────────────────────── */
-
-const DESK_FACTS = [
-  "Pricing re-verified at the start of each VAT quarter",
-  "Written for HMRC, Making Tax Digital and UK GAAP",
-  "One named editor. Nothing ghost written.",
-];
-
-function HeroDeskPanel({ articles }: { articles: ArticleRow[] }) {
-  return (
-    <aside className="flex flex-col self-start overflow-hidden rounded-[1.25rem] border border-border-subtle bg-card shadow-[0_28px_60px_-34px_rgba(0,55,72,0.3)]">
-      <div className="border-b border-border-subtle px-6 py-4">
-        <p className="inline-flex items-center gap-2.5 text-[10.5px] font-heading font-semibold uppercase tracking-[0.26em] text-brand/60">
-          <span aria-hidden className="relative flex h-1.5 w-1.5">
-            <span className="absolute inset-0 animate-ping rounded-full bg-cta/50" />
-            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-cta" />
-          </span>
-          On the desk
-        </p>
-      </div>
-
-      {articles.length > 0 ? (
-        <ol>
-          {articles.map((a, i) => (
-            <li
-              key={a.id}
-              className={cn(i > 0 && "border-t border-border-subtle")}
-            >
-              <Link
-                href={`/article/${a.slug}`}
-                className="group flex gap-4 px-6 py-5 transition-colors hover:bg-page/60"
-              >
-                <span className="font-mono text-[12px] leading-[1.5] tabular-nums text-cta/70">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="font-heading text-[14.5px] font-medium leading-[1.35] text-brand transition-colors group-hover:text-cta">
-                  {a.title}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ol>
-      ) : (
-        <ul>
-          {DESK_FACTS.map((fact, i) => (
-            <li
-              key={fact}
-              className={cn(
-                "flex gap-4 px-6 py-5",
-                i > 0 && "border-t border-border-subtle",
-              )}
-            >
-              <span className="font-mono text-[12px] leading-[1.5] tabular-nums text-cta/70">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="font-heading text-[14.5px] font-medium leading-[1.35] text-brand">
-                {fact}
-              </span>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <div className="border-t border-border-subtle bg-page/40 px-6 py-4">
-        <Link
-          href="/editorial-policy"
-          className="group inline-flex items-center gap-1.5 text-[12px] font-heading font-semibold text-brand/60 transition-colors hover:text-cta"
-        >
-          How the desk works
-          <ArrowUpRight
-            className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-[1px] group-hover:-translate-y-[1px]"
-            strokeWidth={1.8}
-            aria-hidden
-          />
-        </Link>
-      </div>
-    </aside>
   );
 }
 

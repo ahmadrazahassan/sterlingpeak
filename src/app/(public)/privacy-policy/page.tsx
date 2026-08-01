@@ -34,8 +34,8 @@ export default function PrivacyPolicyPage() {
               SterlingPeak (sterlingpeak.uk) is an independent UK editorial
               publication covering accounting, payroll, tax, and business
               software for UK SMEs. SterlingPeak is operated by{" "}
-              <strong className="text-brand">Hafiza Ayesha Waheed</strong>, a
-              sole-trader publisher based in Greater Manchester, England,
+              <strong className="text-brand">Muhammad Ilyas</strong>, a
+              sole trader publisher based in Greater Manchester, England,
               United Kingdom, who is the data controller for personal
               information collected through this website. You can reach the
               controller at{" "}

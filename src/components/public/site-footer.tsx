@@ -110,7 +110,7 @@ export function SiteFooter({ footer }: Props) {
                   Publisher
                 </dt>
                 <dd className="mt-2 text-white/65">
-                  Hafiza Ayesha Waheed, sole-trader publisher based in
+                  Muhammad Ilyas, sole trader publisher based in
                   Greater Manchester, England, United Kingdom.
                 </dd>
               </div>

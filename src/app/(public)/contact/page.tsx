@@ -93,12 +93,12 @@ export default function ContactPage() {
             />
             <ContactFact
               eyebrow="Reply window"
-              value="1–2 business days"
+              value="1 to 2 business days"
               Icon={Clock}
             />
             <ContactFact
               eyebrow="Editor"
-              value="Hafiza Ayesha Waheed"
+              value="Muhammad Ilyas"
               Icon={User}
             />
           </div>
@@ -120,8 +120,8 @@ export default function ContactPage() {
                 Message received.
               </h2>
               <p className="mx-auto mt-3 max-w-md text-[14.5px] leading-relaxed text-muted-foreground">
-                Thanks for reaching out. The desk replies within 1–2 business
-                days. Editorial corrections are prioritised.
+                Thanks for reaching out. The desk replies within 1 to 2
+                business days. Editorial corrections are prioritised.
               </p>
               <button
                 type="button"

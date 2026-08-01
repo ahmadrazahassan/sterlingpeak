@@ -67,11 +67,17 @@ export default async function ArticlePage({ params }: Props) {
 
   const verifiedOn = article.updated_at ?? article.published_at ?? "";
 
-  /* Always render the editor's real headshot. If the DB row carries an
-     avatar_url we prefer that; otherwise we fall back to the local portrait
-     so SterlingPeak articles never render with empty initials. */
-  const authorPortrait =
-    article.author?.avatar_url ?? "/Ayesha.jpeg";
+  /* Use the author's avatar when the DB row carries one; otherwise we render
+     a monogram so articles never fall back to an unrelated portrait. */
+  const authorAvatar = article.author?.avatar_url ?? null;
+  const authorInitials = article.author?.name
+    ? article.author.name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0]?.toUpperCase() ?? "")
+        .join("")
+    : "SP";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -143,11 +149,17 @@ export default async function ArticlePage({ params }: Props) {
                 href={`/authors/${article.author.slug}`}
                 className="inline-flex items-center gap-2 font-heading font-medium text-brand transition-colors hover:text-cta"
               >
-                <img
-                  src={authorPortrait}
-                  alt=""
-                  className="h-7 w-7 rounded-full object-cover ring-1 ring-inset ring-brand/10"
-                />
+                {authorAvatar ? (
+                  <img
+                    src={authorAvatar}
+                    alt=""
+                    className="h-7 w-7 rounded-full object-cover ring-1 ring-inset ring-brand/10"
+                  />
+                ) : (
+                  <span className="flex h-7 w-7 items-center justify-center rounded-full bg-brand text-[10px] font-semibold text-white ring-1 ring-inset ring-brand/10">
+                    {authorInitials}
+                  </span>
+                )}
                 {article.author.name}
               </Link>
             )}
@@ -252,11 +264,17 @@ export default async function ArticlePage({ params }: Props) {
         {article.author && (
           <div className="mt-14 border-t border-border-subtle pt-10">
             <div className="flex flex-col gap-5 sm:flex-row sm:gap-6">
-              <img
-                src={authorPortrait}
-                alt={article.author.name}
-                className="h-16 w-16 shrink-0 rounded-full object-cover ring-1 ring-inset ring-brand/10"
-              />
+              {authorAvatar ? (
+                <img
+                  src={authorAvatar}
+                  alt={article.author.name}
+                  className="h-16 w-16 shrink-0 rounded-full object-cover ring-1 ring-inset ring-brand/10"
+                />
+              ) : (
+                <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-brand font-heading text-[1.15rem] font-semibold text-white ring-1 ring-inset ring-brand/10">
+                  {authorInitials}
+                </span>
+              )}
               <div className="min-w-0">
                 <p className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.22em] text-cta">
                   Written by
@@ -268,16 +286,16 @@ export default async function ArticlePage({ params }: Props) {
                   Founder &amp; Editor-in-Chief, SterlingPeak
                 </p>
                 <p className="mt-3 max-w-prose text-[14.5px] leading-relaxed text-muted-foreground">
-                  Ayesha covers UK accounting software, payroll and Making Tax
-                  Digital for sole traders, SMEs and finance teams, writing from
-                  Greater Manchester, England.
+                  {article.author.name} covers UK accounting software, payroll
+                  and Making Tax Digital for sole traders, SMEs and finance
+                  teams, writing from Greater Manchester, England.
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12.5px] font-heading font-medium">
                   <Link
                     href={`/authors/${article.author.slug}`}
                     className="text-brand transition-colors hover:text-cta"
                   >
-                    All articles by Ayesha →
+                    All articles by {article.author.name} →
                   </Link>
                   <Link
                     href="/contact"
