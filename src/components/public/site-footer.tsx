@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Mail } from "lucide-react";
 import { Logo } from "@/components/public/logo";
 import { ManageCookiesLink } from "@/components/public/manage-cookies-link";
+import { NewsletterForm } from "@/components/public/newsletter-form";
 
 type FooterSettings = {
   statement: string;
@@ -26,6 +27,7 @@ const resources = [
 const company = [
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
+  { label: "Newsletter", href: "/newsletter" },
   { label: "Editorial Policy", href: "/editorial-policy" },
   { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
 ];
@@ -45,6 +47,39 @@ export function SiteFooter({ footer }: Props) {
   return (
     <footer className="relative mt-auto">
       <div className="bg-brand rounded-t-[2.5rem] text-white">
+        {/* ── Briefing sign-up ──────────────────────────────────────
+           Sits above the link columns, on its own rule. Deliberately
+           quiet: a label, one line of copy, and the form. The reader
+           who wants it will find it, and it does not shout over the
+           navigation underneath.
+           ────────────────────────────────────────────────────────── */}
+        <div className="border-b border-white/8">
+          <div className="mx-auto max-w-7xl px-6 py-12 md:px-8">
+            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:items-center lg:gap-16">
+              <div>
+                <p className="text-[10.5px] font-heading font-semibold uppercase tracking-[0.22em] text-white/35">
+                  The SterlingPeak Briefing
+                </p>
+                <p className="mt-3 max-w-sm font-heading text-[1.25rem] font-semibold leading-[1.25] tracking-[-0.012em] text-white">
+                  UK accounting and payroll, once a week
+                </p>
+                <p className="mt-2.5 max-w-sm text-[13px] leading-relaxed text-white/55">
+                  Thursday mornings. What changed at HMRC, what the software
+                  shipped, and what it costs now.{" "}
+                  <Link
+                    href="/newsletter"
+                    className="text-white underline underline-offset-2 transition-colors hover:text-cta"
+                  >
+                    See what is inside
+                  </Link>
+                  .
+                </p>
+              </div>
+              <NewsletterForm source="footer" tone="dark" className="lg:ml-auto" />
+            </div>
+          </div>
+        </div>
+
         {/* Main footer grid */}
         <div className="mx-auto max-w-7xl px-6 py-14 md:px-8">
           <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">

@@ -11,6 +11,7 @@ import {
   SectionHeader,
 } from "@/components/public/article-card";
 import { ActionButton } from "@/components/public/action-button";
+import { NewsletterCta } from "@/components/public/newsletter-cta";
 import type { ArticleRow } from "@/lib/queries/articles";
 import type { CategoryRow } from "@/lib/queries/categories";
 import type {
@@ -237,6 +238,12 @@ export function HomePage({
           </MotionSection>
         );
       })}
+
+      {/* ── THE BRIEFING ──
+           Sits after the reader has seen the archive and before the
+           standards block, so the ask lands once they know what the
+           desk actually publishes.                                    */}
+      <NewsletterCta />
 
       {/* ── EDITORIAL STANDARDS ──
            Eyebrow + structural three-column commitment block.         */}

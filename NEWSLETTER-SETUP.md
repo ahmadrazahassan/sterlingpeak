@@ -1,101 +1,83 @@
-# Newsletter setup — Kit (formerly ConvertKit)
+# Newsletter — The SterlingPeak Briefing
 
-SterlingPeak's newsletter sign-up form posts **directly** to Kit's
-public per-form endpoint from the browser. No backend route, no API
-key in env, no webhook. The pattern is the same one Kit's own embed
-widget uses — we've just styled the form to match the rest of the
-site.
+Sign-ups are captured by our own API route and stored in Supabase. No
+third party ESP is wired in, no API key, no webhook. This replaces an
+earlier draft of this document that described a Kit (ConvertKit)
+integration which was never built.
 
 ## How it works
 
 ```
 [NewsletterForm in browser]
-       │
-       │  POST https://app.kit.com/forms/9453668/subscriptions
-       │  body: email_address, first_name, referrer
+       │  POST /api/newsletter
+       │  body: email, consent, source, website (honeypot)
        ▼
-[ Kit ]
-       │  - records subscriber
-       │  - sends double opt-in confirmation email
-       │  - manages bounces / unsubscribes / GDPR
+[ /api/newsletter/route.ts ]
+       │  - zod validation, consent must be literal true
+       │  - honeypot filled  → returns ok, writes nothing
+       │  - lowercases + trims the address
        ▼
-[ Subscriber inbox ]
-       click confirm → marked Active in Kit dashboard
+[ Supabase: public.newsletter_subscribers ]
+       email · first_name · source · status · created_at
 ```
 
-The "successfully subscribed" panel on the website is rendered locally
-by `NewsletterForm`. The actual confirmation email is sent by Kit
-asynchronously after the POST returns.
+A duplicate address hits the unique index on `email`, returns Postgres
+`23505`, and the route answers `{ ok: true, already: true }`. The form
+then shows "You are already on the list" rather than an error.
 
-## Where the form ID lives
+## Where the pieces live
 
-Hard-coded in:
+| Piece | Path |
+|---|---|
+| Form (both tones) | `src/components/public/newsletter-form.tsx` |
+| Home page block | `src/components/public/newsletter-cta.tsx` |
+| Dedicated page | `src/app/(public)/newsletter/page.tsx` |
+| API route | `src/app/api/newsletter/route.ts` |
+| Footer block | `src/components/public/site-footer.tsx` |
+| Table | `supabase/sterlingpeak.sql` |
 
-```
-src/components/public/newsletter-form.tsx
-  → const KIT_FORM_ACTION = "https://app.kit.com/forms/9453668/subscriptions"
-```
+## Placements and the `source` column
 
-It is a public identifier — exposed in any Kit embed snippet — so
-keeping it in source is fine. To change the form, edit that constant.
+Every row records where it came from, so you can see what converts:
 
-## To swap to a different Kit form
+- `homepage` — The Briefing block on `/`
+- `newsletter-page` — masthead form on `/newsletter`
+- `newsletter-page-footer` — closing form on `/newsletter`
+- `footer` — site footer, every page
 
-1. In Kit dashboard → **Grow → Forms** → open or create the form.
-2. Make sure the form has **double opt-in** enabled:
-   Settings → **Incentive** → **"Auto-confirm new subscribers"** must
-   be **OFF**. (Off = double opt-in is on.)
-3. **Save & Publish** the form.
-4. Click **Embed** → **HTML**. Find the `action="..."` URL, e.g.
-   `https://app.kit.com/forms/<NEW_ID>/subscriptions`.
-5. Paste that URL into `KIT_FORM_ACTION` in `newsletter-form.tsx`.
+## Consent and UK GDPR
 
-## Where subscribers show up
+The consent tick is required on the client **and** enforced on the
+server (`consent: z.literal(true)`), so no row can exist without an
+affirmative opt-in behind it. `created_at` is the consent timestamp.
+Together with `source` that is enough to answer "when and where did
+this person agree" if a subscriber or the ICO ever asks.
 
-Kit dashboard → **Grow → Subscribers**. Each row shows the email,
-status (`Pending` until confirmed, `Confirmed` after), source/referrer,
-and date. Use Kit's filters and exports for affiliate-program audits
-or analytics.
+This is **single opt-in with logged consent**, which is lawful under UK
+GDPR and PECR. It is not double opt-in, because nothing here can send
+email yet. See below.
 
-## What's NOT in this setup
+## What is not built yet
 
-- No `KIT_API_KEY` env var (not needed for direct form post).
-- No webhook endpoint. If you ever want a Supabase audit log, register
-  a Kit webhook against a future API route — the table
-  `public.newsletter_subscribers` already exists for that purpose.
-- No `/newsletter` page. The form lives at `/#newsletter` on the
-  homepage, plus the footer + selected article and category pages.
+**Sending.** There is no delivery mechanism. Addresses collect in
+Supabase and nothing goes out. Before promoting the Briefing anywhere,
+either:
 
-## Sending a test issue
+1. Export the list and send from an ESP (Kit, Buttondown, MailerLite),
+   or
+2. Add a transactional sender (Resend, Postmark) plus a broadcast flow.
 
-In Kit: **Send → Broadcasts → New Broadcast**. Compose, preview, send
-to yourself first. Once you're happy, schedule for Thursday 07:00 UK.
+**Double opt-in.** Requires a sender, plus a `confirmed_at` column and
+a `/newsletter/confirm` route carrying a signed token. Worth adding
+once an ESP is in place, since some affiliate reviewers look for it.
 
-## Design + content rules
+**Unsubscribe.** The copy promises one click unsubscribe. The `status`
+column already supports `unsubscribed`, but the route and the link do
+not exist yet. Build this at the same time as sending, and before the
+first issue goes out.
 
-The confirmation email template lives in Kit (Settings → Incentive →
-**Edit Email Contents**). Suggested copy:
+## Reading the list
 
-```
-Subject: Confirm your SterlingPeak Briefing subscription
-
-Hi there,
-
-Thanks for subscribing to The SterlingPeak Briefing — UK accounting,
-payroll, and tax software analysis, every Thursday.
-
-Click the button below to confirm your subscription. Without this
-step, we won't add you to the list.
-
-[Confirm subscription]
-
-— Hafiza Ayesha Waheed
-Founder & Editor-in-Chief, SterlingPeak
-hello@sterlingpeak.uk
-```
-
-After-confirm redirect URL (also in Settings → Incentive):
-
-```
-https://sterlingpeak.uk/#newsletter
-```
+Supabase Studio → Table editor → `newsletter_subscribers`. Filter on
+`status = 'active'` for the current list, group by `source` to see
+which placement is working.
